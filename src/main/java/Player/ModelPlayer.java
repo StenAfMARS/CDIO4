@@ -3,7 +3,7 @@ package Player;
 public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
-    private boolean _outOfJail;
+    private boolean _outOfJailFree;
 
     /**
      * Keeps information about a player
@@ -12,18 +12,18 @@ public class ModelPlayer {
     public ModelPlayer(String name){
         _name = name;
         _account = new ModelAccount(30000);
-        _outOfJail = false;
+        _outOfJailFree = false;
     }
 
     public String get_name() {
         return _name;
     }
-    public boolean is_outOfJail() {
-        return _outOfJail;
+    public boolean is_outOfJailFree() {
+        return _outOfJailFree;
     }
 
-    public void set_outOfJail(boolean outOfJail) {
-        _outOfJail = outOfJail;
+    public void set_outOfJailFree(boolean outOfJailFree) {
+        _outOfJailFree = outOfJailFree;
     }
 
     public ModelAccount get_account() {

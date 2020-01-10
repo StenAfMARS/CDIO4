@@ -1,26 +1,26 @@
 package Player;
 
 public class ModelPlayer {
-    private String name;
-    private ModelAccount account;
-    private boolean outOfJail = false;
+    private String _name;
+    private ModelAccount _account;
+    private boolean _outOfJail = false;
     public ModelPlayer(String name){
-        this.name = name;
-        account = new ModelAccount(30000);
+        _name = name;
+        _account = new ModelAccount(30000);
     }
 
-    public String getName() {
-        return name;
+    public String get_name() {
+        return _name;
     }
-    public boolean isOutOfJail() {
-        return outOfJail;
-    }
-
-    public void setOutOfJail(boolean outOfJail) {
-        this.outOfJail = outOfJail;
+    public boolean is_outOfJail() {
+        return _outOfJail;
     }
 
-    public ModelAccount getAccount() {
-        return account;
+    public void set_outOfJail(boolean outOfJail) {
+        _outOfJail = _outOfJail;
+    }
+
+    public ModelAccount get_account() {
+        return _account;
     }
 }

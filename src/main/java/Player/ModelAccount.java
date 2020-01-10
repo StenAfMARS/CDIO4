@@ -1,14 +1,14 @@
 package Player;
 
 public class ModelAccount {
-    private int money;
+    private int _money;
     public ModelAccount(int money){
-        this.money = money;
+        _money = money;
     }
-    public int getMoney(){
-        return money;
+    public int get_money(){
+        return _money;
     }
-    public void setMoney(int money){
-        this.money = money;
+    public void set_money(int money){
+        _money = _money;
     }
 }

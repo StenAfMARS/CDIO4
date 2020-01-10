@@ -9,9 +9,9 @@ public class ModelPlayer {
      * Keeps information about a player
      * @param name takes String for name to player
      */
-    public ModelPlayer(String name){
+    public ModelPlayer(String name,int money){
         _name = name;
-        _account = new ModelAccount(30000);
+        _account = new ModelAccount(money);
         _outOfJailFree = false;
     }
 

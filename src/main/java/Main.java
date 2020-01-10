@@ -1,3 +1,5 @@
+import Fields.ModelFerry;
+import Fields.ModelProperty;
 import gui_main.GUI;
 import Language.LanguageManager;
 

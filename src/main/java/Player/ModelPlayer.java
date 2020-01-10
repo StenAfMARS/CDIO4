@@ -4,6 +4,11 @@ public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
     private boolean _outOfJail = false;
+
+    /**
+     * Keeps information about a player
+     * @param name takes String for name to player
+     */
     public ModelPlayer(String name){
         _name = name;
         _account = new ModelAccount(30000);
@@ -17,7 +22,7 @@ public class ModelPlayer {
     }
 
     public void set_outOfJail(boolean outOfJail) {
-        _outOfJail = _outOfJail;
+        _outOfJail = outOfJail;
     }
 
     public ModelAccount get_account() {

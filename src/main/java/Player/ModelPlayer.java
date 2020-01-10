@@ -12,6 +12,7 @@ public class ModelPlayer {
     public ModelPlayer(String name){
         _name = name;
         _account = new ModelAccount(30000);
+        _outOfJail = false;
     }
 
     public String get_name() {

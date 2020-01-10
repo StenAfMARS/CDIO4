@@ -3,7 +3,7 @@ package Player;
 public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
-    private boolean _outOfJail = false;
+    private boolean _outOfJail;
 
     /**
      * Keeps information about a player

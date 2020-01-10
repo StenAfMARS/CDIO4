@@ -10,6 +10,7 @@ public class ControllerPlayer {
     public void createPlayerArray(String[] names){
         for (int i = 0; i < names.length; i++) {
             _playerArray[i] = new ModelPlayer(names[i]);
+            _playerArray[i].set_outOfJail(false);
         }
     }
 

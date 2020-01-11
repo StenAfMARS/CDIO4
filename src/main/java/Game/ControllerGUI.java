@@ -7,6 +7,7 @@ import gui_main.GUI;
 
 public class ControllerGUI {
     private GUI _gui;
+
     public ControllerGUI(){
         _gui = new GUI();
     }
@@ -24,5 +25,9 @@ public class ControllerGUI {
             _gui.addPlayer(new GUI_Player(names[i],0));
         }
         return names;
+    }
+
+    public void displayDieOnBoard(int faceValue[]){
+        _gui.setDice(faceValue[0],faceValue[1]);
     }
 }

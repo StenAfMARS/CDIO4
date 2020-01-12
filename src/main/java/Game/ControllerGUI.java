@@ -46,7 +46,22 @@ public class ControllerGUI {
         /*for (GUI_Field gf:_gui.getFields()) {
         }*/
     }
-
+    //Is it better to return a reference to _gui instead of this?
+    public boolean getPlayerBoolean(String question, String yesOption, String noOption){
+        return _gui.getUserLeftButtonPressed(question,yesOption,noOption);
+    }
+    public int getPlayerInt(String question){
+        return _gui.getUserInteger(question);
+    }
+    public int getPlayerInt(String question,int minValue, int maxValue){
+        return _gui.getUserInteger(question,minValue,maxValue);
+    }
+    public void displayMessage(String message){
+        _gui.showMessage(message);
+    }
+    public void updatePlayer(int playerID, int money){
+        _players[playerID].setBalance(money);
+    }
     /**
      * Method for adding players on the game board and getting player names
      * @param startBalance How much money all the players is starting with
@@ -98,6 +113,9 @@ public class ControllerGUI {
                 _gui.showMessage("An error occurred");
             }
         }
+    }
+    public void placePlayerOnStart(int playerID) {
+        _gui.getFields()[0].setCar(_players[playerID], true);
     }
     public void placeHouse(int fieldID, int currentAmountOfHouses){
         try{

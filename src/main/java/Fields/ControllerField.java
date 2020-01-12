@@ -2,6 +2,7 @@ package Fields;
 
 public class ControllerField {
     private ModelField[] _fields;
+
     public void createBoard (){
         _fields = new ModelField[40];
         for (int i = 0; i < _fields.length; i++) {
@@ -9,6 +10,7 @@ public class ControllerField {
             new ModelEstate(new int[]{1,2,3,4,5,6}, 1);
         }
     }
+    
     public String getFieldTitle (int fieldID) {
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldTitle, fieldID out of boundary.");

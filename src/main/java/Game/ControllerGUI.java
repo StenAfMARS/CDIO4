@@ -6,17 +6,41 @@ import gui_main.GUI;
 
 public class ControllerGUI {
     private GUI _gui;
-    private LanguageManager _lang = LanguageManager.get();
+    private LanguageManager _lang;
     private GUI_Player[] _players;
     public ControllerGUI(){
         _gui = new GUI();
+        _lang = LanguageManager.get();
     }
 
-    public void changeBoardLanguage(String newLanguage){
-        _lang.setLanguage(newLanguage);
-    }
+    /**
+     * Allows the players to choose the language of the game
+     */
     public void changeBoardLanguage(){
-        _lang.setLanguage(_gui.getUserSelection(_lang.getString("selectLanguage"),_lang.getLanguages()));
+        changeBoardLanguage(_gui.getUserSelection(_lang.getString("gui.chooseLanguage"), _lang.getLanguages()));
+    }
+
+    /**
+     * Changes the language of the game
+     * @param newLanguage the new language of the game
+     */
+    public void changeBoardLanguage(String newLanguage){
+        for (String language:_lang.getLanguages()) {
+            if (language.equalsIgnoreCase(newLanguage)){
+                _lang.setLanguage(language);
+                break;
+            }
+        }
+
+        updateBoardLanguage();
+    }
+
+    /**
+     * Updates all text on the board to match the current language.
+     */
+    public void updateBoardLanguage(){
+        /*for (GUI_Field gf:_gui.getFields()) {
+        }*/
     }
 
     /**
@@ -41,7 +65,16 @@ public class ControllerGUI {
         return names;
     }
 
-    public void displayDieOnBoard(int[] faceValue){
+    /**
+     * Displays dice on the board
+     * @param faceValue
+     */
+    public void displayDieOnBoard(int faceValue[]){
+        if (faceValue.length != 2) {
+            System.out.println("WARNING: Wrong array size in ControllerGUI.displayDieOnBoard. Array size was: " + faceValue.length + "should be 2");
+            return;
+        }
+
         _gui.setDice(faceValue[0],faceValue[1]);
     }
 

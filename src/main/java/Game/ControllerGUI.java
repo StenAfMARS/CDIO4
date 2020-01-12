@@ -2,6 +2,7 @@ package Game;
 
 import Language.LanguageManager;
 import gui_fields.GUI_Player;
+import gui_fields.GUI_Street;
 import gui_main.GUI;
 
 public class ControllerGUI {
@@ -91,10 +92,53 @@ public class ControllerGUI {
             try {
                 sleep(100);
             } catch (InterruptedException e){
-                _gui.showMessage("An error occurred");
+                System.out.println("Thread.Sleep failed in ControllerGUI movePlayer");
+                _gui.showMessage("A small error occurred. Fixing");
             }
         }
     }
+
+    public void placeHouse(int fieldID, int currentAmountOfHouses){
+        try{
+            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
+            street.setHouses(currentAmountOfHouses + 1);
+        } catch (Exception e){
+            System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+    public void placeHouse(int fieldID, int currentAmountOfHouses, int amountOfHousesToPlace){
+        try{
+            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
+            street.setHouses(currentAmountOfHouses + 1);
+        } catch (Exception e){
+            System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+    public void removeHouses(int fieldID, int currentAmountOfHouses, int amountOfHousesToRemove){
+        try{
+            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
+            street.setHouses(currentAmountOfHouses - amountOfHousesToRemove);
+        } catch (Exception e){
+            System.out.println("WARNING: ControllerGUI removeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+    public void placeHotel(int fieldID){
+        try{
+            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
+            street.setHotel(true);
+        } catch (Exception e){
+            System.out.println("WARNING: ControllerGUI placehotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+    public void removeHotel(int fieldID){
+        try{
+            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
+            street.setHotel(false);
+        } catch (Exception e){
+            System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+
 
     /**
      * Private sleep function

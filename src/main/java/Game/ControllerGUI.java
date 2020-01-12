@@ -49,10 +49,10 @@ public class ControllerGUI {
      * @return A string array with all the player names
      */
     public String[] addPlayers(int startBalance){
-        String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("selectPlayerCount"),"3","4","5","6"))];
+        String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("gui.selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
         for (int i = 0; i < names.length; i++) {
-            names[i] = _gui.getUserString(_lang.getString("selectPlayerName"));
+            names[i] = _gui.getUserString(_lang.getString("gui.selectPlayerName"));
             //No players with the same name
             for (int j = 0; j < i; j++) {
                 if (names[i].equals(names[j])){

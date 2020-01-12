@@ -10,9 +10,6 @@ public class ControllerGame {
         ControllerField c_field = new ControllerField();
 
         c_gui.changeBoardLanguage();
-        c_player.createPlayerArray(c_gui.addPlayers());
-        ControllerPlayer c_player = new ControllerPlayer();
-        c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(0));
     }
 }

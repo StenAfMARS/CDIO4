@@ -1,9 +1,12 @@
 package Game;
 
 import Language.LanguageManager;
+import gui_fields.GUI_Ownable;
 import gui_fields.GUI_Player;
 import gui_fields.GUI_Street;
 import gui_main.GUI;
+
+import java.awt.*;
 
 public class ControllerGUI {
     private GUI _gui;
@@ -100,7 +103,7 @@ public class ControllerGUI {
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
             street.setHouses(currentAmountOfHouses + 1);
-        } catch (Exception e){
+        } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
@@ -108,7 +111,7 @@ public class ControllerGUI {
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
             street.setHouses(currentAmountOfHouses + 1);
-        } catch (Exception e){
+        } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
@@ -116,7 +119,7 @@ public class ControllerGUI {
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
             street.setHouses(currentAmountOfHouses - amountOfHousesToRemove);
-        } catch (Exception e){
+        } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI removeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
@@ -124,7 +127,7 @@ public class ControllerGUI {
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
             street.setHotel(true);
-        } catch (Exception e){
+        } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placehotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
@@ -132,8 +135,17 @@ public class ControllerGUI {
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
             street.setHotel(false);
-        } catch (Exception e){
+        } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+    public void setTileOwner(int fieldID,String name, Color color){
+        try{
+            GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            ownable.setBorder(color);
+            ownable.setOwnerName(name);
+        } catch (RuntimeException e){
+            System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
 

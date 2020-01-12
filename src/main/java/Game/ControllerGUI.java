@@ -14,32 +14,27 @@ public class ControllerGUI {
 
     public void changeBoardLanguage(String newLanguage){
         _lang.setLanguage(newLanguage);
-        for (int i = 0; i < _gui.getFields().length; i++) {
-            //Start field
-            if (i == 0){
-            }
-            //Chance field
-            else if(i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36){
-            }
-            //Park or Visit Jail
-            else if (i == 10 || i == 20){
-
-            }
-            //Go to jail
-            else if (i == 30){
-
-            }
-        }
     }
     public void changeBoardLanguage(){
         _lang.setLanguage(_gui.getUserSelection(_lang.getString("selectLanguage"),_lang.getLanguages()));
     }
 
+    /**
+     * Method for adding players on the game board and getting player names
+     * @param startBalance How much money all the players is starting with
+     * @return A string array with all the player names
+     */
     public String[] addPlayers(int startBalance){
         String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = _gui.getUserString(_lang.getString("selectPlayerName"));
+            //No players with the same name
+            for (int j = 0; j < i; j++) {
+                if (names[i].equals(names[j])){
+                    names[i] = names[j] + " ";
+                }
+            }
             _players[i] = new GUI_Player(names[i],startBalance);
             _gui.addPlayer(_players[i]);
         }
@@ -50,6 +45,12 @@ public class ControllerGUI {
         _gui.setDice(faceValue[0],faceValue[1]);
     }
 
+    /**
+     * Function to move player the player one field at a time. Can output error on GUI
+     * @param playerID Which player to move
+     * @param currentPosition Where the player currently is placed
+     * @param newPosition The position the player has to move to
+     */
     public void movePlayer(int playerID, int currentPosition, int newPosition){
         for (int i = currentPosition; i < newPosition; i++) {
             _gui.getFields()[i].setCar(_players[playerID],false);
@@ -61,7 +62,13 @@ public class ControllerGUI {
             }
         }
     }
-    private void sleep(long miliseconds) throws InterruptedException {
-        Thread.sleep(miliseconds);
+
+    /**
+     * Private sleep function
+     * @param milliseconds How many milliseconds to sleep for
+     * @throws InterruptedException Throws exception from Thread.sleep
+     */
+    private void sleep(long milliseconds) throws InterruptedException {
+        Thread.sleep(milliseconds);
     }
 }

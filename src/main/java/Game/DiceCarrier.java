@@ -1,12 +1,13 @@
 package Game;
-/**
- *
- */
+
 public class DiceCarrier {
     private Die[] _diceArray;
-
     public DiceCarrier(int amountOfDices) {
-        _diceArray = new Die[amountOfDices];
+        _diceArray =  new Die[amountOfDices];
+        for (int i = 0; i < _diceArray.length; i++) {
+            _diceArray[i] = new Die(6);
+        }
+
     }
 
     /**
@@ -20,5 +21,18 @@ public class DiceCarrier {
             diceValues[i] = _diceArray[i].get_value();
         }
         return diceValues;
+    }
+
+    /**
+     *
+     * @return Returns the sum of the diceroll
+     */
+    public int getDiceValueSum(){
+        int sum = 0;
+        for (int i = 0; i < _diceArray.length; i++) {
+            int temp = _diceArray[i].get_value();
+            sum =+ temp;
+        }
+        return sum;
     }
 }

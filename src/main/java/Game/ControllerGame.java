@@ -24,12 +24,15 @@ public class ControllerGame {
         while (!won){
             //Main turn loop
             for (int i = 0; i < c_player.get_playerArray().length; i++) {
-                int currentPlayerAccount = c_player.get_playerArray()[i].get_account().get_money();
-                c_player.get_playerArray()[i].get_account().set_money(0);
-                c_gui.updatePlayer(i,currentPlayerAccount);
+                //c_player.get_playerArray()[i].get_account().set_money(0);
+                //c_gui.updatePlayer(i,c_player.get_playerArray()[i].get_account().get_money());
+
+
                 //Check if player has any fields that can have a house or hotel or has any houses or hotels
                 //Ask if player wants to build or sell a house/hotel
-
+                if (c_gui.getPlayerBoolean("Do you want to build a house?","Yes","No")){
+                }
+                c_gui.movePlayer(i,0,i);
 
                 //Roll dice
 
@@ -38,10 +41,11 @@ public class ControllerGame {
                 //Do field action
 
                 //Check if player lost as last action
-                if (currentPlayerAccount <= 0){
+                if (c_player.get_playerArray()[i].get_account().get_money() <= 0){
                     return;
                 }
             }
+            return;
         }
     }
 }

@@ -59,6 +59,12 @@ public class ControllerGUI {
     public void displayMessage(String message){
         _gui.showMessage(message);
     }
+
+    /**
+     * This functions updates the player account on GUI
+     * @param playerID Which player
+     * @param money New balance
+     */
     public void updatePlayer(int playerID, int money){
         _players[playerID].setBalance(money);
     }

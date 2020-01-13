@@ -17,6 +17,7 @@ public class ControllerGUI {
         _lang = LanguageManager.get();
     }
 
+
     /**
      * Allows the players to choose the language of the game
      */

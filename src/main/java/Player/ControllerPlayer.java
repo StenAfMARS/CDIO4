@@ -21,4 +21,7 @@ public class ControllerPlayer {
     public void changeAmountOfMoney(int moneyChange, int playerID){
         _playerArray[playerID].get_account().set_money(_playerArray[playerID].get_account().get_money() - moneyChange);
     }
+    public ModelPlayer[] get_playerArray(){
+        return _playerArray;
+    }
 }

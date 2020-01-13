@@ -71,9 +71,9 @@ public class ControllerGUI {
 
     /**
      * Displays dice on the board
-     * @param faceValue
+     * @param faceValue Takes int array an displays on GUI
      */
-    public void displayDieOnBoard(int faceValue[]){
+    public void displayDieOnBoard(int[] faceValue){
         if (faceValue.length != 2) {
             System.out.println("WARNING: Wrong array size in ControllerGUI.displayDieOnBoard. Array size was: " + faceValue.length + "should be 2");
             return;
@@ -110,7 +110,7 @@ public class ControllerGUI {
     public void placeHouse(int fieldID, int currentAmountOfHouses, int amountOfHousesToPlace){
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses + 1);
+            street.setHouses(currentAmountOfHouses + amountOfHousesToPlace);
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }

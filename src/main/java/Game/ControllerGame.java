@@ -55,8 +55,8 @@ public class ControllerGame {
 
         switch (groupType){
             case"tax":
-                int tax = c_ChanceCard.calculateTax(c_player.);
-                c_player.changeAmountOfMoney(tax, playerID);
+                //int tax = c_ChanceCard.calculateTax(c_player.);
+                c_player.changeAmountOfMoney(1, playerID);
                 break;
         }
     }

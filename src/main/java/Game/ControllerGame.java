@@ -2,12 +2,14 @@ package Game;
 
 import Fields.ControllerField;
 import Player.ControllerPlayer;
-
+import Chancecard.ControllerChanceCard;
 public class ControllerGame {
+    ControllerGUI c_gui = new ControllerGUI();
+    ControllerPlayer c_player = new ControllerPlayer();
+    ControllerField c_field = new ControllerField();
+
     public void playGame() {
-        ControllerGUI c_gui = new ControllerGUI();
-        ControllerPlayer c_player = new ControllerPlayer();
-        ControllerField c_field = new ControllerField();
+
 
         c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(30000));
@@ -46,6 +48,16 @@ public class ControllerGame {
                 }
             }
             return;
+        }
+    }
+    public void LandOnChanceCard(String groupType,int playerID){
+        ControllerChanceCard c_ChanceCard = new ControllerChanceCard();
+
+        switch (groupType){
+            case"tax":
+                int tax = c_ChanceCard.calculateTax(c_player.);
+                c_player.changeAmountOfMoney(tax, playerID);
+                break;
         }
     }
 }

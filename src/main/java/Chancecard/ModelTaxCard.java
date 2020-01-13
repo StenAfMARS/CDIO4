@@ -1,8 +1,8 @@
 package Chancecard;
 
 public class ModelTaxCard extends ModelChanceCard {
-    private int _pricePrHouse = 500;
-    private int _pricePrHotel = 1000;
+    private int _pricePrHouse;
+    private int _pricePrHotel;
 
     public ModelTaxCard(int pricePrHouse, int pricePrHotel){
         _pricePrHouse = pricePrHouse;

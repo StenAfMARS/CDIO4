@@ -1,14 +1,14 @@
 package Chancecard;
 
 public class ModelTaxCard {
-    private int pricePrHouse = 500;
-    private int pricePrHotel = 1000;
+    private int _pricePrHouse = 500;
+    private int _pricePrHotel = 1000;
 
     public int getPricePrHouse() {
-        return pricePrHouse;
+        return _pricePrHouse;
     }
 
     public int getPricePrHotel() {
-        return pricePrHotel;
+        return _pricePrHotel;
     }
 }

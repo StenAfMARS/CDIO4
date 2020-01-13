@@ -46,6 +46,19 @@ public class ControllerGUI {
         /*for (GUI_Field gf:_gui.getFields()) {
         }*/
     }
+    //Is it better to return a reference to _gui instead of this?
+    public boolean getPlayerBoolean(String question, String yesOption, String noOption){
+        return _gui.getUserLeftButtonPressed(question,yesOption,noOption);
+    }
+    public int getPlayerInt(String question){
+        return _gui.getUserInteger(question);
+    }
+    public int getPlayerInt(String question,int minValue, int maxValue){
+        return _gui.getUserInteger(question,minValue,maxValue);
+    }
+    public void displayMessage(String message){
+        _gui.showMessage(message);
+    }
 
     /**
      * This functions updates the player account on GUI
@@ -203,6 +216,16 @@ public class ControllerGUI {
             System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
+    public void setTileOwner(int fieldID,String name, Color color){
+        try{
+            GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            ownable.setBorder(color);
+            ownable.setOwnerName(name);
+        } catch (RuntimeException e){
+            System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
+
     /**
      * Sets the color and name of a field to indicate an owner of the field
      * @param fieldID Which field to change owner of

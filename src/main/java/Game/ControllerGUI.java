@@ -216,6 +216,15 @@ public class ControllerGUI {
             System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
+    public void setTileOwner(int fieldID,String name, Color color){
+        try{
+            GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            ownable.setBorder(color);
+            ownable.setOwnerName(name);
+        } catch (RuntimeException e){
+            System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
+        }
+    }
 
     /**
      * Sets the color and name of a field to indicate an owner of the field

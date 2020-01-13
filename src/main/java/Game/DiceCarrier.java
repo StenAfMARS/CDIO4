@@ -7,9 +7,7 @@ public class DiceCarrier {
         for (int i = 0; i < _diceArray.length; i++) {
             _diceArray[i] = new Die(6);
         }
-
     }
-
     /**
      * Gives a random value between 1 and 6
      * @return The values of the dice rolls as an array.
@@ -31,7 +29,7 @@ public class DiceCarrier {
         int sum = 0;
         for (int i = 0; i < _diceArray.length; i++) {
             int temp = _diceArray[i].get_value();
-            sum =+ temp;
+            sum += temp;
         }
         return sum;
     }

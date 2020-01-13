@@ -41,7 +41,7 @@ public class ControllerGame {
                 //Do field action
 
                 //Check if player lost as last action
-                if (c_player.get_playerArray()[i].get_account().get_money() <= 0){
+                if (c_player.get_playerArray()[i].get_account().get_money() < 0){
                     return;
                 }
             }

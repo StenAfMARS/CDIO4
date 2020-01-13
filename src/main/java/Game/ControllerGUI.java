@@ -93,9 +93,9 @@ public class ControllerGUI {
 
     /**
      * Displays dice on the board
-     * @param faceValue
+     * @param faceValue Takes int array an displays on GUI
      */
-    public void displayDieOnBoard(int faceValue[]){
+    public void displayDieOnBoard(int[] faceValue){
         if (faceValue.length != 2) {
             System.out.println("WARNING: Wrong array size in ControllerGUI.displayDieOnBoard. Array size was: " + faceValue.length + "should be 2");
             return;
@@ -151,13 +151,13 @@ public class ControllerGUI {
     /**
      * Place a house or mutliple on the GUI
      * @param fieldID Which field to place the house on
-     * @param currentAmountOfHouses Which field to place the house on
+     * @param currentAmountOfHouses How many houses on the field
      * @param amountOfHousesToPlace How many houses to add to the field on top of the current amount
      */
     public void placeHouse(int fieldID, int currentAmountOfHouses, int amountOfHousesToPlace){
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses + 1);
+            street.setHouses(currentAmountOfHouses + amountOfHousesToPlace);
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
@@ -178,7 +178,7 @@ public class ControllerGUI {
     }
     /**
      * Removes houses from a field
-     * @param fieldID Which field to remove from
+     * @param fieldID Which field to remove houses from
      * @param currentAmountOfHouses How many houses are on the field
      * @param amountOfHousesToRemove how many houses are to be removed
      */

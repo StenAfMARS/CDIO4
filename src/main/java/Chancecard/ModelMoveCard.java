@@ -1,6 +1,6 @@
 package Chancecard;
 
-public class ModelMoveCard {
+public class ModelMoveCard extends ModelChanceCard {
     private int _amount;
     public ModelMoveCard(int amount){
         _amount = amount;

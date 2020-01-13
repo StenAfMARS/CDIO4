@@ -150,7 +150,7 @@ public class ControllerGUI {
     /**
      * Place a house or mutliple on the GUI
      * @param fieldID Which field to place the house on
-     * @param currentAmountOfHouses Which field to place the house on
+     * @param currentAmountOfHouses How many houses on the field
      * @param amountOfHousesToPlace How many houses to add to the field on top of the current amount
      */
     public void placeHouse(int fieldID, int currentAmountOfHouses, int amountOfHousesToPlace){
@@ -177,7 +177,7 @@ public class ControllerGUI {
     }
     /**
      * Removes houses from a field
-     * @param fieldID Which field to remove from
+     * @param fieldID Which field to remove houses from
      * @param currentAmountOfHouses How many houses are on the field
      * @param amountOfHousesToRemove how many houses are to be removed
      */

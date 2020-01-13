@@ -1,10 +1,10 @@
 package controller;
 import model.ChanceCardDeck;
 
-public class CCD_Controller {
+public class ControllerChanceCard {
     private ChanceCardDeck chanceCardDeck;
 
-    public CCD_Controller(int numberOfPlayers){
+    public ControllerChanceCard(int numberOfPlayers){
         this.chanceCardDeck = new ChanceCardDeck(chanceCardTexts,numberOfPlayers);
         this.chanceCardDeck.shuffle();
     }

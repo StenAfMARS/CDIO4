@@ -1,5 +1,6 @@
 package Game;
 
+import Chancecard.ControllerChanceCard;
 import Fields.ControllerField;
 import Player.ControllerPlayer;
 
@@ -65,7 +66,19 @@ public class ControllerGame {
         }
     }
 
-    private void auction(int fieldID){
+    private void auction(int fieldID) {
 
+
+    }
+
+    public void LandOnChanceCard(String groupType,int playerID){
+        ControllerChanceCard c_ChanceCard = new ControllerChanceCard();
+
+        switch (groupType){
+            case"tax":
+                //int tax = c_ChanceCard.calculateTax(c_player.);
+                c_player.changeAmountOfMoney(1, playerID);
+                break;
+        }
     }
 }

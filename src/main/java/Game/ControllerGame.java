@@ -6,6 +6,8 @@ import Player.ControllerPlayer;
 
 public class ControllerGame {
     private int _currentPlayer;
+    private DiceCarrier diceCarrier = new DiceCarrier(2);
+    private int[] playerPosition;
 
     private ControllerGUI c_gui = new ControllerGUI();
     private ControllerPlayer c_player = new ControllerPlayer();
@@ -17,7 +19,6 @@ public class ControllerGame {
     public void startGame() {
         c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(30000));
-
         //Place players on start
         for (int i = 0; i < c_player.playerCount(); i++) {
             c_gui.placePlayerOnStart(i);
@@ -42,6 +43,11 @@ public class ControllerGame {
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
         }
+        c_gui.displayDieOnBoard(diceCarrier.rollDice());
+
+        c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
+        c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+
 
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){

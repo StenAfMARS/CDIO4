@@ -112,8 +112,8 @@ public class ControllerGUI {
      */
     public void movePlayer(int playerID, int currentPosition, int newPosition){
         for (int i = currentPosition; i < newPosition; i++) {
-            _gui.getFields()[i].setCar(_players[playerID],false);
-            _gui.getFields()[i+1].setCar(_players[playerID],true);
+            _gui.getFields()[i%40].setCar(_players[playerID],false);
+            _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
                 sleep(100);
             } catch (InterruptedException e){

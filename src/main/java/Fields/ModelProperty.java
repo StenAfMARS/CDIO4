@@ -1,11 +1,20 @@
 package Fields;
 
- abstract class ModelProperty extends ModelField {
+import java.awt.*;
+
+abstract class ModelProperty extends ModelField {
     private int _propertyPrice;
     private int _mortgage;
     private int _owner;
 
-     int get_propertyPrice() {
+    public ModelProperty(String name, Color backgroundColor,int propertyPrice, int mortgage, int owner) {
+        super(name,backgroundColor);
+        this._propertyPrice = propertyPrice;
+        this._mortgage = mortgage;
+        this._owner = owner;
+    }
+
+    int get_propertyPrice() {
         return _propertyPrice;
     }
      void set_propertyPrice(int _propertyPrice) {

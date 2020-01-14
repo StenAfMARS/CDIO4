@@ -57,7 +57,7 @@ public class LanguageManager {
     public String getString(String property){
         String returnValue = _loadedText.getProperty(property);
         if (returnValue == null) {
-            returnValue = "";
+            returnValue = " ";
             System.out.println("WARNING: You tried to load a language property that doesn't exist. You tried to load: " + property);
         }
         return returnValue;

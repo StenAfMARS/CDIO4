@@ -4,6 +4,7 @@ public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
     private boolean _outOfJailFree;
+    private int _position;
 
     /**
      * Keeps information about a player
@@ -13,6 +14,7 @@ public class ModelPlayer {
         _name = name;
         _account = new ModelAccount(money);
         _outOfJailFree = false;
+        _position = 0;
     }
 
     public String get_name() {
@@ -28,5 +30,13 @@ public class ModelPlayer {
 
     public ModelAccount get_account() {
         return _account;
+    }
+
+    public int get_position() {
+        return _position;
+    }
+
+    public void set_position(int _position) {
+        this._position = _position;
     }
 }

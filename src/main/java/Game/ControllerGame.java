@@ -52,9 +52,7 @@ public class ControllerGame {
 
     private void doTurn() {
         //Start of turn
-        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            manageProperty(currentPlayer());
-        }
+
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
         c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
         c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
@@ -62,6 +60,9 @@ public class ControllerGame {
         //Middle of turn
         c_field.landOnField(currentPlayer());
 
+        for (int i = 0; i < c_player.playerCount(); i++) {
+            c_gui.updatePlayer(i, c_player.getPlayerMoney(i));
+        }
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
@@ -84,7 +85,7 @@ public class ControllerGame {
     }
 
     private void manageProperty(int playerID){
-        if (c_gui.getPlayerBoolean("Do you want to build a house?", "Yes", "No")) {
+        if (c_gui.getPlayerBoolean("question.buildHouse", "Yes", "No")) {
         }
     }
 
@@ -94,9 +95,9 @@ public class ControllerGame {
 
         int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
-        while (lastBidder != currentBidder || (lastBidder==-1 && currentBidder==currentPlayer())){
+        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
             if (!c_player.hasPlayerLost(currentBidder)) {
-                if (c_gui.getPlayerBoolean("game.bid", "Yes", "No")) {
+                if (c_gui.getPlayerBoolean("game.bid", "yes", "no")) {
                     highestBid += round((int)(highestBid * 1.1), 50);
                     lastBidder = currentBidder;
                 }

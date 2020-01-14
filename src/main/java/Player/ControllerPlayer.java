@@ -1,5 +1,7 @@
 package Player;
 
+import Fields.ControllerField;
+
 public class ControllerPlayer {
     private ModelPlayer[] _playerArray;
 
@@ -29,7 +31,10 @@ public class ControllerPlayer {
      * @param playerID Which player to change
      */
     public void changeAmountOfMoney(int moneyChange, int playerID){
-        _playerArray[playerID].get_account().set_money(_playerArray[playerID].get_account().get_money() - moneyChange);
+        _playerArray[playerID].get_account().set_money(_playerArray[playerID].get_account().get_money() + moneyChange);
+    }
+    public int getPlayerMoney(int playerID){
+        return _playerArray[playerID].get_account().get_money();
     }
 
     public boolean hasPlayerLost(int playerID){
@@ -47,7 +52,7 @@ public class ControllerPlayer {
         return _playerArray[playerID].get_position();
     }
     public void setPlayerPosition(int playerID , int playerPosition){
-        _playerArray[playerID].set_position(playerPosition);
+        _playerArray[playerID].set_position(playerPosition% ControllerField.get().getFieldLength());
     }
     public void updatePlayerPosition(int playerID, int playerPosition){
         setPlayerPosition(playerID,getPlayerPosition(playerID) +  playerPosition);

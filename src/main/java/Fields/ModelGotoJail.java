@@ -1,4 +1,4 @@
 package Fields;
 
-public class ModelGotoJail {
+ class ModelGotoJail {
 }

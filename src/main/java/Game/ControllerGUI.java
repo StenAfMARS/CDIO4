@@ -12,7 +12,18 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    public ControllerGUI(){
+
+    private static ControllerGUI _instance;
+
+    public static ControllerGUI get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerGUI();
+        }
+        return _instance;
+    }
+
+    private ControllerGUI(){
         _gui = new GUI();
         _lang = LanguageManager.get();
     }
@@ -112,8 +123,8 @@ public class ControllerGUI {
      */
     public void movePlayer(int playerID, int currentPosition, int newPosition){
         for (int i = currentPosition; i < newPosition; i++) {
-            _gui.getFields()[i].setCar(_players[playerID],false);
-            _gui.getFields()[i+1].setCar(_players[playerID],true);
+            _gui.getFields()[i%40].setCar(_players[playerID],false);
+            _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
                 sleep(100);
             } catch (InterruptedException e){

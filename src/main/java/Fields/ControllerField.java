@@ -3,6 +3,20 @@ package Fields;
 public class ControllerField {
     private ModelField[] _fields;
 
+    private static ControllerField _instance;
+
+    public static ControllerField get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerField();
+        }
+        return _instance;
+    }
+
+    private ControllerField(){
+
+    }
+
     public void createBoard (){
         _fields = new ModelField[40];
         for (int i = 0; i < _fields.length; i++) {
@@ -64,5 +78,8 @@ public class ControllerField {
         }
 
         ((ModelProperty)_fields[fieldID]).set_owner(playerID);
+    }
+    public int getFieldLength (){
+        return this._fields.length;
     }
 }

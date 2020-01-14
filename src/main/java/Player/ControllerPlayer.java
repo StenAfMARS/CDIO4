@@ -2,6 +2,16 @@ package Player;
 
 public class ControllerPlayer {
     private ModelPlayer[] _playerArray;
+
+    private static ControllerPlayer _instance;
+
+    public static ControllerPlayer get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerPlayer();
+        }
+        return _instance;
+    }
     /**
      * Creates a list of players with given names
      * @param names Takes a String array to create a list of players
@@ -31,5 +41,15 @@ public class ControllerPlayer {
 
     public int playerCount(){
         return _playerArray.length;
+    }
+
+    public int getPlayerPosition(int playerID){
+        return _playerArray[playerID].get_position();
+    }
+    public void setPlayerPosition(int playerID , int playerPosition){
+        _playerArray[playerID].set_position(playerPosition);
+    }
+    public void updatePlayerPosition(int playerID, int playerPosition){
+        setPlayerPosition(playerID,getPlayerPosition(playerID) +  playerPosition);
     }
 }

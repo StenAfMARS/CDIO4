@@ -7,11 +7,11 @@ abstract class ModelProperty extends ModelField {
     private int _mortgage;
     private int _owner;
 
-    public ModelProperty(String name, Color backgroundColor,int propertyPrice, int mortgage, int owner) {
+    public ModelProperty(String name, Color backgroundColor,int propertyPrice, int mortgage) {
         super(name,backgroundColor);
         this._propertyPrice = propertyPrice;
         this._mortgage = mortgage;
-        this._owner = owner;
+        this._owner = -1;
     }
 
     int get_propertyPrice() {
@@ -38,5 +38,8 @@ abstract class ModelProperty extends ModelField {
     }
      void set_owner(int _owner) {
         this._owner = _owner;
+    }
+    boolean isOwned(){
+         return _owner == -1;
     }
 }

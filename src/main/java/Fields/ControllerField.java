@@ -2,6 +2,12 @@ package Fields;
 
 import java.awt.*;
 
+import Game.ControllerGUI;
+import Game.ControllerGame;
+import Player.ControllerPlayer;
+
+import java.awt.*;
+
 public class ControllerField {
     private ModelField[] _fields;
 
@@ -20,7 +26,6 @@ public class ControllerField {
     }
 
     public void createBoard (){
-        int[] oof = new int[]{0,1,2,3,4,5};
         _fields = new ModelField[40];
         _fields[0] = new ModelStart("start",null);
         _fields[1] = new ModelEstate("rødovrevej",Color.BLUE,1200, new int[]{50,250,750,2250,4000,6000}, 1000);
@@ -133,5 +138,23 @@ public class ControllerField {
 
     public int getHouseCount(int playerID){
         return 0;
+    }
+    public void landOnField(int playerID){
+        ModelField field = _fields[ControllerPlayer.get().getPlayerPosition(playerID)];
+        if (field instanceof ModelProperty){
+            ModelProperty property = (ModelProperty) field;
+            if (property.isOwned()){
+                ControllerPlayer.get().changeAmountOfMoney(- property.get_rent(),playerID);
+                ControllerPlayer.get().changeAmountOfMoney(property.get_rent(),property.get_owner());
+            }
+            else {
+                if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")){
+                    ControllerPlayer.get().changeAmountOfMoney(- property.get_propertyPrice(),playerID);
+                    property.set_owner(playerID);
+                }
+                ControllerGame.get().auction(ControllerPlayer.get().getPlayerPosition(playerID));
+
+            }
+        }
     }
 }

@@ -42,4 +42,14 @@ public class ControllerPlayer {
     public int playerCount(){
         return _playerArray.length;
     }
+
+    public int getPlayerPosition(int playerID){
+        return _playerArray[playerID].get_position();
+    }
+    public void setPlayerPosition(int playerID , int playerPosition){
+        _playerArray[playerID].set_position(playerPosition);
+    }
+    public void updatePlayerPosition(int playerID, int playerPosition){
+        setPlayerPosition(playerID,getPlayerPosition(playerID) +  playerPosition);
+    }
 }

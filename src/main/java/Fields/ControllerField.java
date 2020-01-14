@@ -79,4 +79,7 @@ public class ControllerField {
 
         ((ModelProperty)_fields[fieldID]).set_owner(playerID);
     }
+    public int getFieldLength (){
+        return this._fields.length;
+    }
 }

@@ -1,4 +1,4 @@
 package Chancecard;
 
-public abstract class ModelChanceCard {
+ abstract class ModelChanceCard {
 }

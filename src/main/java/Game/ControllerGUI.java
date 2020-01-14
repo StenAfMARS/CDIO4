@@ -126,7 +126,7 @@ public class ControllerGUI {
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
         for (int i = 0; i < playerID; i++) {
-            if (car.getPrimaryColor() == _ownedCarColors[i])
+            if (car.getPrimaryColor() == _ownedCarColors[i] && car.getPrimaryColor() == Color.WHITE)
                 car = createCar(playerID);
         }
         _ownedCarColors[playerID] = car.getPrimaryColor();

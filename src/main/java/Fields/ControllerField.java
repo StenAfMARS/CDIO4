@@ -125,7 +125,6 @@ public class ControllerField {
             System.out.println("WARNING: ControllerField, setPropertyOwner, fieldID not a property.");
             return;
         }
-
         ((ModelProperty)_fields[fieldID]).set_owner(playerID);
     }
     public int getFieldLength (){
@@ -151,6 +150,7 @@ public class ControllerField {
                 if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")){
                     ControllerPlayer.get().changeAmountOfMoney(-property.get_propertyPrice(),playerID);
                     property.set_owner(playerID);
+                    ControllerGUI.get().setFieldOwner(ControllerPlayer.get().getPlayerPosition(playerID),playerID);
                 }
                 else
                     ControllerGame.get().auction(ControllerPlayer.get().getPlayerPosition(playerID));

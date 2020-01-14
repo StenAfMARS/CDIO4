@@ -12,6 +12,7 @@ public class ControllerGUI {
     private LanguageManager _lang;
     private GUI_Player[] _players;
     private Color[] _ownedCarColors;
+
     private ControllerField c_field = ControllerField.get();
 
     private static ControllerGUI _instance;
@@ -64,15 +65,15 @@ public class ControllerGUI {
 
     //Is it better to return a reference to _gui instead of this?
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
-        return _gui.getUserLeftButtonPressed(question,yesOption,noOption);
+        return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
 
     public int getPlayerInt(String question){
-        return _gui.getUserInteger(question);
+        return _gui.getUserInteger(_lang.getString(question));
     }
 
     public int getPlayerInt(String question,int minValue, int maxValue){
-        return _gui.getUserInteger(question,minValue,maxValue);
+        return _gui.getUserInteger(_lang.getString(question),minValue,maxValue);
     }
 
     public void displayMessage(String message){
@@ -150,7 +151,7 @@ public class ControllerGUI {
             _gui.getFields()[i%40].setCar(_players[playerID],false);
             _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
-                sleep(100);
+                sleep(65);
             } catch (InterruptedException e){
                 _gui.showMessage("An error occurred");
             }

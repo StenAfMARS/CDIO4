@@ -12,7 +12,7 @@ class ModelEstate extends ModelProperty {
      * @param housePrice The price of a house on the Estate.
      */
      ModelEstate(String name, Color backgroundColor, int propertyPrice, int[] rent, int housePrice) {
-         super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
+         super(name,backgroundColor,propertyPrice,propertyPrice/2);
          _rent = rent.clone();
          this._housePrice = housePrice;
 

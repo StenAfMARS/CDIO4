@@ -2,7 +2,8 @@ package Chancecard;
 
 import Chancecard.ModelTaxCard;
 import Fields.ControllerField;
-import
+import Game.ControllerGUI;
+import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
 
@@ -70,7 +71,8 @@ public class ControllerChanceCard {
         }
     }
 
-    public ModelChanceCard draw(){
+    public ModelChanceCard draw(int playerID){
+
         ModelChanceCard upper= _chanceCards[0];
         for (int i=0; i<_chanceCards.length-1;i++){
             _chanceCards[i] =_chanceCards [i+1];
@@ -78,16 +80,20 @@ public class ControllerChanceCard {
         _chanceCards[_chanceCards.length-1]=upper;
         if (upper instanceof ModelChangeMoneyCard) {
              ModelChangeMoneyCard i = ((ModelChangeMoneyCard)upper);
-
+            ControllerPlayer.get().changeAmountOfMoney(i.get_amount(),playerID);
         }
         else if(upper instanceof ModelTaxCard){
-            calculateTax(3,3);// TEMPT
+            int tax = calculateTax(3,3);// TEMPT
+            ControllerPlayer.get().changeAmountOfMoney(tax,playerID);
         }
         else if(upper instanceof ModelMoveTo){
-
+            ModelMoveTo i = ((ModelMoveTo)upper);
+            ControllerGUI.get().movePlayer(playerID,ControllerPlayer.get().getPlayerPosition(playerID),i.get_destination()[0]);
         }
         else if(upper instanceof ModelMoveCard){
-
+            ModelMoveCard i = ((ModelMoveCard)upper);
+            int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+i.get_amount();
+            ControllerGUI.get().movePlayer(playerID,ControllerPlayer.get().getPlayerPosition(playerID),moveToField);
         }
 
         return upper;

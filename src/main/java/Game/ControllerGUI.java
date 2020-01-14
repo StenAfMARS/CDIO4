@@ -111,9 +111,12 @@ public class ControllerGUI {
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
         for (int i = 0; i < playerID; i++) {
-            if (_ownedCars[i] != null && car.getPrimaryColor() == _ownedCars[i].getPrimaryColor())
-                car = createCar(playerID);
-            else return car;
+            try {
+                if (car.getPrimaryColor() == _ownedCars[i].getPrimaryColor())
+                    car = createCar(playerID);
+            } catch (NullPointerException e) {
+                return car;
+            }
         }
         return car;
     }

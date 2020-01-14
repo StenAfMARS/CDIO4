@@ -7,10 +7,20 @@ import Player.ControllerPlayer;
 public class ControllerGame {
     private int _currentPlayer;
 
-    private ControllerGUI c_gui = new ControllerGUI();
-    private ControllerPlayer c_player = new ControllerPlayer();
-    private ControllerField c_field = new ControllerField();
-    ControllerChanceCard c_chanceCard = new ControllerChanceCard();
+    private ControllerGUI c_gui = ControllerGUI.get();
+    private ControllerPlayer c_player = ControllerPlayer.get();
+    private ControllerField c_field = ControllerField.get();
+    private ControllerChanceCard c_chanceCard = ControllerChanceCard.get();
+
+    private static ControllerGame _instance;
+
+    public static ControllerGame get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerGame();
+        }
+        return _instance;
+    }
 
     private boolean won = false;
 

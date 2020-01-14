@@ -6,7 +6,17 @@ import
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
 
-    public ControllerChanceCard(){
+    private static ControllerChanceCard _instance;
+
+    public static ControllerChanceCard get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerChanceCard();
+        }
+        return _instance;
+    }
+
+    private ControllerChanceCard(){
         _chanceCards = new ModelChanceCard[]{
                 new ModelChangeMoneyCard(100),
                 new ModelChangeMoneyCard(500),

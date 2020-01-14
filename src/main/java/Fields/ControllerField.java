@@ -16,7 +16,7 @@ public class ControllerField {
     }
 
     private ControllerField(){
-
+        createBoard();
     }
 
     public void createBoard (){

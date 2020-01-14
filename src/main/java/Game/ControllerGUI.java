@@ -1,5 +1,6 @@
 package Game;
 
+import Fields.ControllerField;
 import Language.LanguageManager;
 import gui_fields.*;
 import gui_main.GUI;
@@ -11,6 +12,7 @@ public class ControllerGUI {
     private LanguageManager _lang;
     private GUI_Player[] _players;
     private GUI_Car[] _ownedCars;
+    private ControllerField c_field = ControllerField.get();
 
     private static ControllerGUI _instance;
 
@@ -54,9 +56,9 @@ public class ControllerGUI {
      */
     public void updateBoardLanguage(){
         for (int i = 0; i < _gui.getFields().length; i++) {
-            _gui.getFields()[i].setTitle(_lang.getString("field.title." + i));
-            _gui.getFields()[i].setDescription(_lang.getString("field.description" + i));
-            _gui.getFields()[i].setSubText(_lang.getString("field.subtext" + i));
+            _gui.getFields()[i].setTitle(_lang.getString(c_field.getFieldTitle(i)));
+            _gui.getFields()[i].setDescription(_lang.getString(c_field.getFieldDescription(i)));
+            _gui.getFields()[i].setSubText(_lang.getString(c_field.getFieldSubtext(i)));
         }
     }
 

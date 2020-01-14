@@ -12,6 +12,7 @@ public class ControllerGUI {
     private LanguageManager _lang;
     private GUI_Player[] _players;
     private Color[] _ownedCarColors;
+
     private ControllerField c_field = ControllerField.get();
 
     private static ControllerGUI _instance;

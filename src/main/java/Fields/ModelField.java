@@ -8,6 +8,13 @@ import java.awt.*;
     private String _description;
     private Color _backgroundColor;
 
+    protected ModelField(String title, String subtext, String description, Color backgroundColor){
+        this._title = title;
+        this._subtext = subtext;
+        this. _description = description;
+        this._backgroundColor = backgroundColor;
+    }
+
      String get_title() {
         return _title;
     }

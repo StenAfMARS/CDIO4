@@ -49,15 +49,15 @@ public class ControllerGame {
     }
 
     private void doTurn() {
-
+        //Start of turn
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
         }
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-
         c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
         c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
+        //Middle of turn
 
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){

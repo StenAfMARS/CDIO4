@@ -60,6 +60,7 @@ public class ControllerGame {
         c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
         //Middle of turn
+        c_field.landOnField(currentPlayer());
 
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
@@ -87,7 +88,7 @@ public class ControllerGame {
         }
     }
 
-    private void auction(int fieldID) {
+    public void auction(int fieldID) {
         int lastBidder = -1;
         int highestBid = c_field.getPropertyPrice(fieldID);
 

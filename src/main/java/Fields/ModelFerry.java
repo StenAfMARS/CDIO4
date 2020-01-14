@@ -9,7 +9,7 @@ class ModelFerry extends ModelProperty {
      * @param rent The "rent" of the ferry
      */
      ModelFerry(String name, Color backgroundColor, int propertyPrice,int rent) {
-         super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
+         super(name,backgroundColor,propertyPrice,propertyPrice/2);
 
          // make sure rent is positive
         _rent = Math.max(rent, 0);

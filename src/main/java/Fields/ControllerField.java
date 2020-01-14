@@ -82,4 +82,12 @@ public class ControllerField {
     public int getFieldLength (){
         return this._fields.length;
     }
+
+    public int getHotelCount(int playerID){
+        return 0;
+    }
+
+    public int getHouseCount(int playerID){
+        return 0;
+    }
 }

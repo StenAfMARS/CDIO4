@@ -10,6 +10,8 @@ public class ControllerGame {
     private ControllerGUI c_gui = new ControllerGUI();
     private ControllerPlayer c_player = new ControllerPlayer();
     private ControllerField c_field = new ControllerField();
+    ControllerChanceCard c_chanceCard = new ControllerChanceCard();
+
     private boolean won = false;
 
     public void startGame() {
@@ -38,12 +40,14 @@ public class ControllerGame {
 
     private void doTurn() {
 
-
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-
+            manageProperty(currentPlayer());
         }
 
 
+        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
+            manageProperty(currentPlayer());
+        }
 
     }
 
@@ -71,8 +75,7 @@ public class ControllerGame {
 
     }
 
-    public void LandOnChanceCard(String groupType,int playerID){
-        ControllerChanceCard c_ChanceCard = new ControllerChanceCard();
+    public void LandOnChanceCard(String groupType, int playerID){
 
         switch (groupType){
             case"tax":

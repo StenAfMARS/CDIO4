@@ -1,5 +1,7 @@
 package Fields;
 
+import java.awt.*;
+
 import Game.ControllerGUI;
 import Game.ControllerGame;
 import Player.ControllerPlayer;
@@ -20,11 +22,10 @@ public class ControllerField {
     }
 
     private ControllerField(){
-
+        createBoard();
     }
 
     public void createBoard (){
-        int[] oof = new int[]{0,1,2,3,4,5};
         _fields = new ModelField[40];
         _fields[0] = new ModelStart("start",null);
         _fields[1] = new ModelEstate("rødovrevej",Color.BLUE,1200, new int[]{50,250,750,2250,4000,6000}, 1000);
@@ -80,7 +81,7 @@ public class ControllerField {
         }
 
         ModelField field = _fields[fieldID];
-        return field.get_name() + ".title";
+        return "field." + field.get_name() + ".title";
 
     }
     public String getFieldSubtext (int fieldID){
@@ -89,7 +90,7 @@ public class ControllerField {
             return "";
         }
         ModelField field = _fields[fieldID];
-        return field.get_name() + ".subtext";
+        return "field." + field.get_name() + ".subtext";
     }
     public String getFieldDescription (int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
@@ -97,7 +98,7 @@ public class ControllerField {
             return "";
         }
         ModelField field = _fields[fieldID];
-        return field.get_name() + ".description";
+        return "field." + field.get_name() + ".description";
     }
 
     public int getPropertyPrice(int fieldID){

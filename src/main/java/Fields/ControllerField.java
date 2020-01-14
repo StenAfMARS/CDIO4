@@ -2,7 +2,7 @@ package Fields;
 
 public class ControllerField {
     private ModelField[] _fields;
-
+    private
     public void createBoard (){
         _fields = new ModelField[40];
         for (int i = 0; i < _fields.length; i++) {

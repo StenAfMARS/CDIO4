@@ -152,8 +152,8 @@ public class ControllerField {
                     ControllerPlayer.get().changeAmountOfMoney(- property.get_propertyPrice(),playerID);
                     property.set_owner(playerID);
                 }
-                ControllerGame.get().auction(ControllerPlayer.get().getPlayerPosition(playerID));
-
+                else
+                    ControllerGame.get().auction(ControllerPlayer.get().getPlayerPosition(playerID));
             }
         }
     }

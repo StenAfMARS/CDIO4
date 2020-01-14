@@ -45,7 +45,6 @@ public class ControllerGame {
         while (!won) {
             if (!c_player.hasPlayerLost(currentPlayer()))
                 doTurn();
-                System.out.println(c_chanceCard.draw());
             nextPlayer();
         }
     }
@@ -113,22 +112,7 @@ public class ControllerGame {
         return (Math.round(number / roundTo) * roundTo);
     }
 
-    public void LandOnChanceCard(String groupType, int playerID){
-        switch (groupType){
-            case"moneychange":
-                c_player.changeAmountOfMoney();
-                break;
-            case"movePlayerFields":
-                int currentPlayerPosition = 1;
-                c_gui.movePlayer(playerID,currentPlayerPosition,6);// TEMP
 
-                break;
-            case"tax":
-                int tax = c_chanceCard.calculateTax(4,6);
-                c_player.changeAmountOfMoney(tax, playerID);
-                break;
-        }
-    }
 
 
 

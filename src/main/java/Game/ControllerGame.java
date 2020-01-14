@@ -4,48 +4,68 @@ import Fields.ControllerField;
 import Player.ControllerPlayer;
 
 public class ControllerGame {
-    public void playGame() {
-        ControllerGUI c_gui = new ControllerGUI();
-        ControllerPlayer c_player = new ControllerPlayer();
-        ControllerField c_field = new ControllerField();
+    private int _currentPlayer;
+
+    private ControllerGUI c_gui = new ControllerGUI();
+    private ControllerPlayer c_player = new ControllerPlayer();
+    private ControllerField c_field = new ControllerField();
+    private boolean won = false;
+
+    public void startGame() {
 
         c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(30000));
 
-        boolean won = false;
-        int[] playerPositions = new int[c_player.get_playerArray().length];
-
         //Place players on start
-        for (int i = 0; i < c_player.get_playerArray().length; i++) {
+        for (int i = 0; i < c_player.playerCount(); i++) {
             c_gui.placePlayerOnStart(i);
-            playerPositions[i] = 0;
         }
+
+        gameLoop();
+        endGame();
+    }
+
+    private void gameLoop(){
         //Main game loop
-        while (!won){
-            //Main turn loop
-            for (int i = 0; i < c_player.get_playerArray().length; i++) {
-                //c_player.get_playerArray()[i].get_account().set_money(0);
-                //c_gui.updatePlayer(i,c_player.get_playerArray()[i].get_account().get_money());
+        while (!won) {
+            if (!c_player.hasPlayerLost(currentPlayer()))
+                doTurn();
 
-
-                //Check if player has any fields that can have a house or hotel or has any houses or hotels
-                //Ask if player wants to build or sell a house/hotel
-                if (c_gui.getPlayerBoolean("Do you want to build a house?","Yes","No")){
-                }
-                c_gui.movePlayer(i,0,i);
-
-                //Roll dice
-
-                //Find field type
-
-                //Do field action
-
-                //Check if player lost as last action
-                if (c_player.get_playerArray()[i].get_account().get_money() < 0){
-                    return;
-                }
-            }
-            return;
+            nextPlayer();
         }
+    }
+
+    private void doTurn() {
+
+
+        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
+
+        }
+
+
+
+    }
+
+    private void endGame(){
+
+    }
+
+    private int nextPlayer(){
+        _currentPlayer++;
+        _currentPlayer %= c_player.playerCount();
+        return _currentPlayer;
+    }
+
+    private int currentPlayer() {
+        return _currentPlayer;
+    }
+
+    private void manageProperty(int playerID){
+        if (c_gui.getPlayerBoolean("Do you want to build a house?", "Yes", "No")) {
+        }
+    }
+
+    private void auction(int fieldID){
+
     }
 }

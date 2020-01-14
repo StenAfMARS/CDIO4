@@ -11,7 +11,8 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    private GUI_Car[] _ownedCars;
+    private Color[] _ownedCarColors;
+
     private ControllerField c_field = ControllerField.get();
 
     private static ControllerGUI _instance;
@@ -64,15 +65,15 @@ public class ControllerGUI {
 
     //Is it better to return a reference to _gui instead of this?
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
-        return _gui.getUserLeftButtonPressed(question,yesOption,noOption);
+        return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
 
     public int getPlayerInt(String question){
-        return _gui.getUserInteger(question);
+        return _gui.getUserInteger(_lang.getString(question));
     }
 
     public int getPlayerInt(String question,int minValue, int maxValue){
-        return _gui.getUserInteger(question,minValue,maxValue);
+        return _gui.getUserInteger(_lang.getString(question),minValue,maxValue);
     }
 
     public void displayMessage(String message){
@@ -96,6 +97,7 @@ public class ControllerGUI {
     public String[] addPlayers(int startBalance){
         String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("gui.selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
+        _ownedCarColors = new Color[names.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = _gui.getUserString(_lang.getString("gui.selectPlayerName"));
             //No players with the same name
@@ -110,16 +112,18 @@ public class ControllerGUI {
         return names;
     }
 
+    /**
+     * Create a unique color for the car
+     * @param playerID which player the car belongs too
+     * @return Returns a car with a unique color
+     */
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
         for (int i = 0; i < playerID; i++) {
-            try {
-                if (car.getPrimaryColor() == _ownedCars[i].getPrimaryColor())
-                    car = createCar(playerID);
-            } catch (NullPointerException e) {
-                return car;
-            }
+            if (car.getPrimaryColor() == _ownedCarColors[i])
+                car = createCar(playerID);
         }
+        _ownedCarColors[playerID] = car.getPrimaryColor();
         return car;
     }
 
@@ -147,7 +151,7 @@ public class ControllerGUI {
             _gui.getFields()[i%40].setCar(_players[playerID],false);
             _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
-                sleep(100);
+                sleep(65);
             } catch (InterruptedException e){
                 _gui.showMessage("An error occurred");
             }

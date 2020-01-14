@@ -1,12 +1,15 @@
 package Fields;
 
+import java.awt.*;
+
 public class ModelBrewery extends ModelProperty {
     private int _rent;
 
     /**Creates an instance of ModelBrewery
      * @param rent The "rent" of the brewery
      */
-    public ModelBrewery(int rent) {
+    public ModelBrewery(String name, Color backgroundColor, int propertyPrice, int rent) {
+        super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
         // make sure rent is positive
         _rent = Math.max(rent, 0);
     }

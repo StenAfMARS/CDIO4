@@ -11,7 +11,8 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    private GUI_Car[] _ownedCars;
+    private Color[] _ownedCarColors;
+
     private ControllerField c_field = ControllerField.get();
 
     private static ControllerGUI _instance;
@@ -96,6 +97,7 @@ public class ControllerGUI {
     public String[] addPlayers(int startBalance){
         String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("gui.selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
+        _ownedCarColors = new Color[names.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = _gui.getUserString(_lang.getString("gui.selectPlayerName"));
             //No players with the same name
@@ -110,16 +112,18 @@ public class ControllerGUI {
         return names;
     }
 
+    /**
+     * Create a unique color for the car
+     * @param playerID which player the car belongs too
+     * @return Returns a car with a unique color
+     */
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
         for (int i = 0; i < playerID; i++) {
-            try {
-                if (car.getPrimaryColor() == _ownedCars[i].getPrimaryColor())
-                    car = createCar(playerID);
-            } catch (NullPointerException e) {
-                return car;
-            }
+            if (car.getPrimaryColor() == _ownedCarColors[i])
+                car = createCar(playerID);
         }
+        _ownedCarColors[playerID] = car.getPrimaryColor();
         return car;
     }
 

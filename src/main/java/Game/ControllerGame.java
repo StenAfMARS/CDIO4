@@ -34,12 +34,14 @@ public class ControllerGame {
             c_gui.placePlayerOnStart(i);
         }
 
+
         gameLoop();
         endGame();
     }
 
     private void gameLoop(){
         //Main game loop
+        c_chanceCard.shuffle();
         while (!won) {
             if (!c_player.hasPlayerLost(currentPlayer()))
                 doTurn();
@@ -111,15 +113,6 @@ public class ControllerGame {
         return (Math.round(number / roundTo) * roundTo);
     }
 
-    public void LandOnChanceCard(String groupType, int playerID){
-
-        switch (groupType){
-            case"tax":
-                //int tax = c_ChanceCard.calculateTax(c_player.);
-                c_player.changeAmountOfMoney(1, playerID);
-                break;
-        }
-    }
 
 
 

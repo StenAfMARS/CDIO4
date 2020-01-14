@@ -1,9 +1,7 @@
 package Game;
 
 import Language.LanguageManager;
-import gui_fields.GUI_Ownable;
-import gui_fields.GUI_Player;
-import gui_fields.GUI_Street;
+import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
@@ -12,6 +10,7 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
+    private GUI_Car[] ownedCars;
 
     private static ControllerGUI _instance;
 
@@ -35,7 +34,6 @@ public class ControllerGUI {
     public void changeBoardLanguage(){
         changeBoardLanguage(_gui.getUserSelection(_lang.getString("gui.chooseLanguage"), _lang.getLanguages()));
     }
-
     /**
      * Changes the language of the game
      * @param newLanguage the new language of the game
@@ -55,21 +53,28 @@ public class ControllerGUI {
      * Updates all text on the board to match the current language.
      */
     public void updateBoardLanguage(){
-        /*for (GUI_Field gf:_gui.getFields()) {
-        }*/
+        for (int i = 0; i < _gui.getFields().length; i++) {
+            _gui.getFields()[i].setTitle(_lang.getString("field.title." + i));
+            _gui.getFields()[i].setDescription(_lang.getString("field.description" + i));
+            _gui.getFields()[i].setSubText(_lang.getString("field.subtext" + i));
+        }
     }
+
     //Is it better to return a reference to _gui instead of this?
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(question,yesOption,noOption);
     }
+
     public int getPlayerInt(String question){
         return _gui.getUserInteger(question);
     }
+
     public int getPlayerInt(String question,int minValue, int maxValue){
         return _gui.getUserInteger(question,minValue,maxValue);
     }
+
     public void displayMessage(String message){
-        _gui.showMessage(message);
+        _gui.showMessage(_lang.getString(message));
     }
 
     /**
@@ -80,6 +85,7 @@ public class ControllerGUI {
     public void updatePlayer(int playerID, int money){
         _players[playerID].setBalance(money);
     }
+
     /**
      * Method for adding players on the game board and getting player names
      * @param startBalance How much money all the players is starting with
@@ -96,10 +102,21 @@ public class ControllerGUI {
                     names[i] = names[j] + " ";
                 }
             }
-            _players[i] = new GUI_Player(names[i],startBalance);
+            ownedCars = new GUI_Car[_players.length];
+            _players[i] = new GUI_Player(names[i],startBalance,createCar());
             _gui.addPlayer(_players[i]);
         }
         return names;
+    }
+
+    public GUI_Car createCar(){
+        GUI_Car car = new GUI_Car();
+        for (int i = 0; i < _players.length; i++) {
+            if (car.getPrimaryColor() == ownedCars[i].getPrimaryColor()){
+                car = createCar();
+            }
+        }
+        return car;
     }
 
     /**
@@ -146,59 +163,16 @@ public class ControllerGUI {
     }
 
     /**
-     * Place a house or multiple on the GUI
+     * Sets the amount of houses on a street on the GUI
      * @param fieldID Which field to place the house on
-     * @param currentAmountOfHouses How many houses currently on the field
+     * @param houseCount How many houses should be on the street
      */
-    public void placeHouse(int fieldID, int currentAmountOfHouses){
+    public void setHouseCount(int fieldID, int houseCount){
         try{
             GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses + 1);
+            street.setHouses(houseCount);
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
-        }
-    }
-
-    /**
-     * Place a house or mutliple on the GUI
-     * @param fieldID Which field to place the house on
-     * @param currentAmountOfHouses How many houses on the field
-     * @param amountOfHousesToPlace How many houses to add to the field on top of the current amount
-     */
-    public void placeHouse(int fieldID, int currentAmountOfHouses, int amountOfHousesToPlace){
-        try{
-            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses + amountOfHousesToPlace);
-        } catch (RuntimeException e){
-            System.out.println("WARNING: ControllerGUI placeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
-        }
-    }
-
-    /**
-     * Remove a house from a field
-     * @param fieldID Which field to remove a house from
-     * @param currentAmountOfHouses How many houses are on the field
-     */
-    public void removeHouses(int fieldID, int currentAmountOfHouses){
-        try{
-            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses - 1);
-        } catch (RuntimeException e){
-            System.out.println("WARNING: ControllerGUI removeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
-        }
-    }
-    /**
-     * Removes houses from a field
-     * @param fieldID Which field to remove houses from
-     * @param currentAmountOfHouses How many houses are on the field
-     * @param amountOfHousesToRemove how many houses are to be removed
-     */
-    public void removeHouses(int fieldID, int currentAmountOfHouses, int amountOfHousesToRemove){
-        try{
-            GUI_Street street = (GUI_Street) _gui.getFields()[fieldID];
-            street.setHouses(currentAmountOfHouses - amountOfHousesToRemove);
-        } catch (RuntimeException e){
-            System.out.println("WARNING: ControllerGUI removeHouse() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
 
@@ -226,15 +200,6 @@ public class ControllerGUI {
             street.setHotel(false);
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
-        }
-    }
-    public void setTileOwner(int fieldID,String name, Color color){
-        try{
-            GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
-            ownable.setBorder(color);
-            ownable.setOwnerName(name);
-        } catch (RuntimeException e){
-            System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
 

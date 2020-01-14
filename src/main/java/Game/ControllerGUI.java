@@ -10,7 +10,7 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    private GUI_Car[] ownedCars;
+    private GUI_Car[] _ownedCars;
 
     private static ControllerGUI _instance;
 
@@ -102,19 +102,18 @@ public class ControllerGUI {
                     names[i] = names[j] + " ";
                 }
             }
-            ownedCars = new GUI_Car[_players.length];
-            _players[i] = new GUI_Player(names[i],startBalance,createCar());
+            _players[i] = new GUI_Player(names[i],startBalance,createCar(i));
             _gui.addPlayer(_players[i]);
         }
         return names;
     }
 
-    public GUI_Car createCar(){
+    private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
-        for (int i = 0; i < _players.length; i++) {
-            if (car.getPrimaryColor() == ownedCars[i].getPrimaryColor()){
-                car = createCar();
-            }
+        for (int i = 0; i < playerID; i++) {
+            if (_ownedCars[i] != null && car.getPrimaryColor() == _ownedCars[i].getPrimaryColor())
+                car = createCar(playerID);
+            else return car;
         }
         return car;
     }

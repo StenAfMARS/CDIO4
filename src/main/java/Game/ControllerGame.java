@@ -23,7 +23,6 @@ public class ControllerGame {
         //Place players on start
         for (int i = 0; i < c_player.playerCount(); i++) {
             c_gui.placePlayerOnStart(i);
-            playerPosition[i] = 0;
         }
 
         gameLoop();
@@ -41,17 +40,16 @@ public class ControllerGame {
     }
 
     private void doTurn() {
-        int placement = playerPosition[currentPlayer()];
+
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
         }
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
 
-        if (currentPlayer() + diceCarrier.getDiceValueSum() >= c_field.getFieldLength()) {
-            playerPosition[currentPlayer()] = playerPosition[currentPlayer()] + diceCarrier.getDiceValueSum() - 1 - c_field.getFieldLength();
-        } else {
-            c_gui.movePlayer(currentPlayer(), playerPosition[currentPlayer()], diceCarrier.getDiceValueSum() + playerPosition[currentPlayer()]);
-            playerPosition[currentPlayer()] += diceCarrier.getDiceValueSum(); }
+        c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
+        c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+
+
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());

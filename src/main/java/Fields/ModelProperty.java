@@ -7,8 +7,8 @@ abstract class ModelProperty extends ModelField {
     private int _mortgage;
     private int _owner;
 
-    public ModelProperty(String title, String subtext, String description, Color backgroundColor,int propertyPrice, int mortgage, int owner) {
-        super(title, subtext, description, backgroundColor);
+    public ModelProperty(String name, Color backgroundColor,int propertyPrice, int mortgage, int owner) {
+        super(name,backgroundColor);
         this._propertyPrice = propertyPrice;
         this._mortgage = mortgage;
         this._owner = owner;

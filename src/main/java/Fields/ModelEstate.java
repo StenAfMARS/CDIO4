@@ -11,10 +11,9 @@ class ModelEstate extends ModelProperty {
      * @param rent an array of how much rent is with x amount of houses. MUST be 6 long
      * @param housePrice The price of a house on the Estate.
      */
-     ModelEstate(String title, String subtext, String description, Color backgroundColor, int propertyPrice, int mortgage, int owner, int[] rent, int housePrice, int amountOfHouses) {
-         super(title,subtext,description,backgroundColor,propertyPrice,mortgage,owner);
+     ModelEstate(String name, Color backgroundColor, int propertyPrice, int[] rent, int housePrice) {
+         super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
          _rent = rent.clone();
-         this._amountOfHouses = amountOfHouses;
          this._housePrice = housePrice;
 
         // make sure rent is positive

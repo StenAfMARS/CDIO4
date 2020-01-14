@@ -8,8 +8,8 @@ class ModelFerry extends ModelProperty {
     /**Creates an instance of ModelFerry
      * @param rent The "rent" of the ferry
      */
-     ModelFerry(String title, String subtext, String description, Color backgroundColor, int propertyPrice, int mortgage, int owner,int rent) {
-         super(title,subtext,description,backgroundColor,propertyPrice,mortgage,owner);
+     ModelFerry(String name, Color backgroundColor, int propertyPrice,int rent) {
+         super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
 
          // make sure rent is positive
         _rent = Math.max(rent, 0);

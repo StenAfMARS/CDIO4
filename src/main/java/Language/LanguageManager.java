@@ -66,7 +66,7 @@ public class LanguageManager {
         }
         return returnValue;
     }
-    public String getString(String property, Object[] args){
+    public String getString(String property, Object... args){
         return MessageFormat.format(getString(property), args);
     }
 }

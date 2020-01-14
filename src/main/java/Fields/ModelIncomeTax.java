@@ -1,4 +1,9 @@
 package Fields;
 
- class ModelIncomeTax {
+import java.awt.*;
+
+class ModelIncomeTax extends ModelField{
+ public ModelIncomeTax(String name, Color backgroundColor) {
+  super(name, backgroundColor);
+ }
 }

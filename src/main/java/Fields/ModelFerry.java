@@ -1,13 +1,17 @@
 package Fields;
 
- class ModelFerry extends ModelProperty {
+import java.awt.*;
+
+class ModelFerry extends ModelProperty {
     private int _rent;
 
     /**Creates an instance of ModelFerry
      * @param rent The "rent" of the ferry
      */
-     ModelFerry(int rent) {
-        // make sure rent is positive
+     ModelFerry(String name, Color backgroundColor, int propertyPrice,int rent) {
+         super(name,backgroundColor,propertyPrice,propertyPrice/2,0);
+
+         // make sure rent is positive
         _rent = Math.max(rent, 0);
     }
 

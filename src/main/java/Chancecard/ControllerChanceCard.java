@@ -1,6 +1,8 @@
 package Chancecard;
 
 import Chancecard.ModelTaxCard;
+import Fields.ControllerField;
+import
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
 
@@ -51,7 +53,7 @@ public class ControllerChanceCard {
     }
 
     public void shuffle(){
-        for (int i=0; i<1000; i++ ){
+        for (int i=0; i<30000; i++ ){
             int a= (int) (Math.random()*_chanceCards.length);
             int b= (int) (Math.random()*_chanceCards.length);
             swap(a,b);
@@ -64,17 +66,35 @@ public class ControllerChanceCard {
             _chanceCards[i] =_chanceCards [i+1];
         }
         _chanceCards[_chanceCards.length-1]=upper;
+        if (upper instanceof ModelChangeMoneyCard) {
+             ModelChangeMoneyCard i = ((ModelChangeMoneyCard)upper);
+
+        }
+        else if(upper instanceof ModelTaxCard){
+            calculateTax(3,3);// TEMPT
+        }
+        else if(upper instanceof ModelMoveTo){
+
+        }
+        else if(upper instanceof ModelMoveCard){
+
+        }
+
         return upper;
+    }
+
+    public ModelChanceCard[] get_chanceCards() {
+        return _chanceCards;
     }
 
     public ModelChanceCard[] getChanceCards() {
         return _chanceCards;
     }
-    public int calculateTax(int amountOfHouses,int pricePrHouse,int amountOfHotel,int pricePrHotel){
-        ModelTaxCard mtc = new ModelTaxCard(pricePrHouse,pricePrHotel);
+    public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
-        tax = mtc.getPricePrHouse()*amountOfHouses + mtc.getPricePrHotel()*amountOfHotel;
+        tax = 500*amountOfHouses + 1000*amountOfHotel;
         return tax;
     }
+
 
 }

@@ -24,16 +24,18 @@ public class ControllerGame {
             c_gui.placePlayerOnStart(i);
         }
 
+
         gameLoop();
         endGame();
     }
 
     private void gameLoop(){
         //Main game loop
+        c_chanceCard.shuffle();
         while (!won) {
             if (!c_player.hasPlayerLost(currentPlayer()))
                 doTurn();
-
+                System.out.println(c_chanceCard.draw());
             nextPlayer();
         }
     }
@@ -76,11 +78,18 @@ public class ControllerGame {
     }
 
     public void LandOnChanceCard(String groupType, int playerID){
-
         switch (groupType){
+            case"moneychange":
+                c_player.changeAmountOfMoney();
+                break;
+            case"movePlayerFields":
+                int currentPlayerPosition = 1;
+                c_gui.movePlayer(playerID,currentPlayerPosition,6);// TEMP
+
+                break;
             case"tax":
-                //int tax = c_ChanceCard.calculateTax(c_player.);
-                c_player.changeAmountOfMoney(1, playerID);
+                int tax = c_chanceCard.calculateTax(4,6);
+                c_player.changeAmountOfMoney(tax, playerID);
                 break;
         }
     }

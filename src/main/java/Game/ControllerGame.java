@@ -85,7 +85,7 @@ public class ControllerGame {
     }
 
     private void manageProperty(int playerID){
-        if (c_gui.getPlayerBoolean("Do you want to build a house?", "yes", "no")) {
+        if (c_gui.getPlayerBoolean("question.buildHouse", "Yes", "No")) {
         }
     }
 

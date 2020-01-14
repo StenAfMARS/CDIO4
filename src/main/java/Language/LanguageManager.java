@@ -60,6 +60,10 @@ public class LanguageManager {
             returnValue = " ";
             System.out.println("WARNING: You tried to load a language property that doesn't exist. You tried to load: " + property);
         }
+        else if (returnValue.equals("")) {
+            returnValue = " ";
+            System.out.println("WARNING: You tried to load a language property that is empty. You tried to load: " + property);
+        }
         return returnValue;
     }
     public String getString(String property, Object[] args){

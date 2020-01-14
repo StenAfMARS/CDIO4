@@ -145,7 +145,7 @@ public class ControllerGUI {
             _gui.getFields()[i%40].setCar(_players[playerID],false);
             _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
-                sleep(100);
+                sleep(65);
             } catch (InterruptedException e){
                 _gui.showMessage("An error occurred");
             }

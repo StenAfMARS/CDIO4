@@ -40,6 +40,6 @@ abstract class ModelProperty extends ModelField {
         this._owner = _owner;
     }
     boolean isOwned(){
-         return _owner == -1;
+         return _owner != -1;
     }
 }

@@ -15,7 +15,6 @@ public class ControllerGame {
     private boolean won = false;
 
     public void startGame() {
-
         c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(30000));
 
@@ -71,8 +70,29 @@ public class ControllerGame {
     }
 
     private void auction(int fieldID) {
+        int lastBidder = -1;
+        int highestBid = c_field.getPropertyPrice(fieldID);
 
+        int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
+        while (lastBidder != currentBidder || (lastBidder==-1 && currentBidder==currentPlayer())){
+            if (!c_player.hasPlayerLost(currentBidder)) {
+                if (c_gui.getPlayerBoolean("game.bid", "Yes", "No")) {
+                    highestBid += round((int)(highestBid * 1.1), 50);
+                    lastBidder = currentBidder;
+                }
+            }
+
+            currentBidder++;
+            currentBidder %= c_player.playerCount();
+        }
+
+        c_field.setPropertyOwner(fieldID, lastBidder);
+        c_player.changeAmountOfMoney(highestBid, lastBidder);
+    }
+
+    private int round(int number, int roundTo){
+        return (Math.round(number / roundTo) * roundTo);
     }
 
     public void LandOnChanceCard(String groupType, int playerID){
@@ -84,4 +104,7 @@ public class ControllerGame {
                 break;
         }
     }
+
+
+
 }

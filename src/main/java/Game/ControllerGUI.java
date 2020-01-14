@@ -12,7 +12,18 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    public ControllerGUI(){
+
+    private static ControllerGUI _instance;
+
+    public static ControllerGUI get()
+    {
+        if (_instance == null) {
+            _instance = new ControllerGUI();
+        }
+        return _instance;
+    }
+
+    private ControllerGUI(){
         _gui = new GUI();
         _lang = LanguageManager.get();
     }

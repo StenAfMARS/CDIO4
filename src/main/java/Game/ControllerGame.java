@@ -6,6 +6,7 @@ import Player.ControllerPlayer;
 
 public class ControllerGame {
     private int _currentPlayer;
+    private DiceCarrier diceCarrier = new DiceCarrier(2);
 
     private ControllerGUI c_gui = new ControllerGUI();
     private ControllerPlayer c_player = new ControllerPlayer();
@@ -43,7 +44,8 @@ public class ControllerGame {
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
         }
-
+        diceCarrier.rollDice();
+        c_gui.movePlayer(currentPlayer(), ,);
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());

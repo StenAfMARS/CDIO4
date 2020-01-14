@@ -1,9 +1,7 @@
 package Game;
 
 import Language.LanguageManager;
-import gui_fields.GUI_Ownable;
-import gui_fields.GUI_Player;
-import gui_fields.GUI_Street;
+import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
@@ -12,6 +10,7 @@ public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
+    private GUI_Car[] ownedCars;
 
     private static ControllerGUI _instance;
 
@@ -54,8 +53,11 @@ public class ControllerGUI {
      * Updates all text on the board to match the current language.
      */
     public void updateBoardLanguage(){
-        /*for (GUI_Field gf:_gui.getFields()) {
-        }*/
+        for (int i = 0; i < _gui.getFields().length; i++) {
+            _gui.getFields()[i].setTitle(_lang.getString("field.title." + i));
+            _gui.getFields()[i].setDescription(_lang.getString("field.description" + i));
+            _gui.getFields()[i].setSubText(_lang.getString("field.subtext" + i));
+        }
     }
 
     //Is it better to return a reference to _gui instead of this?
@@ -100,10 +102,21 @@ public class ControllerGUI {
                     names[i] = names[j] + " ";
                 }
             }
-            _players[i] = new GUI_Player(names[i],startBalance);
+            ownedCars = new GUI_Car[_players.length];
+            _players[i] = new GUI_Player(names[i],startBalance,createCar());
             _gui.addPlayer(_players[i]);
         }
         return names;
+    }
+
+    public GUI_Car createCar(){
+        GUI_Car car = new GUI_Car();
+        for (int i = 0; i < _players.length; i++) {
+            if (car.getPrimaryColor() == ownedCars[i].getPrimaryColor()){
+                car = createCar();
+            }
+        }
+        return car;
     }
 
     /**

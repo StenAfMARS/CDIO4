@@ -149,7 +149,7 @@ public class ControllerField {
             }
             else {
                 if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")){
-                    ControllerPlayer.get().changeAmountOfMoney(- property.get_propertyPrice(),playerID);
+                    ControllerPlayer.get().changeAmountOfMoney(-property.get_propertyPrice(),playerID);
                     property.set_owner(playerID);
                 }
                 else

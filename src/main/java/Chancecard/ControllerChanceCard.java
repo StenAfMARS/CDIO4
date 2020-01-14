@@ -1,8 +1,5 @@
 package Chancecard;
 
-import Chancecard.ModelTaxCard;
-import Fields.ControllerField;
-import Game.ControllerGUI;
 import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
@@ -56,7 +53,7 @@ public class ControllerChanceCard {
                 new ModelMoveTo(new int[]{7,17,27,37})
         };
     }
-    public void swap(int a, int b){
+    private void swap(int a, int b){
         ModelChanceCard cardA = _chanceCards[a];
         ModelChanceCard cardB = _chanceCards[b];
         _chanceCards[a] = cardB;
@@ -77,36 +74,32 @@ public class ControllerChanceCard {
         for (int i=0; i<_chanceCards.length-1;i++){
             _chanceCards[i] =_chanceCards [i+1];
         }
+
         _chanceCards[_chanceCards.length-1]=upper;
+
         if (upper instanceof ModelChangeMoneyCard) {
-             ModelChangeMoneyCard i = ((ModelChangeMoneyCard)upper);
-            ControllerPlayer.get().changeAmountOfMoney(i.get_amount(),playerID);
+             ModelChangeMoneyCard card = ((ModelChangeMoneyCard)upper);
+             ControllerPlayer.get().setPlayerMoney(card.get_amount(),playerID);
         }
         else if(upper instanceof ModelTaxCard){
+            ModelTaxCard card = ((ModelTaxCard)upper);
             int tax = calculateTax(3,3);// TEMPT
-            ControllerPlayer.get().changeAmountOfMoney(tax,playerID);
+            ControllerPlayer.get().setPlayerMoney(tax,playerID);
         }
         else if(upper instanceof ModelMoveTo){
-            ModelMoveTo i = ((ModelMoveTo)upper);
-            ControllerGUI.get().movePlayer(playerID,ControllerPlayer.get().getPlayerPosition(playerID),i.get_destination()[0]);
+            ModelMoveTo card = ((ModelMoveTo)upper);
+            ControllerPlayer.get().setPlayerPosition(playerID,card.get_destination()[0]);
         }
         else if(upper instanceof ModelMoveCard){
-            ModelMoveCard i = ((ModelMoveCard)upper);
-            int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+i.get_amount();
-            ControllerGUI.get().movePlayer(playerID,ControllerPlayer.get().getPlayerPosition(playerID),moveToField);
+            ModelMoveCard card = ((ModelMoveCard)upper);
+            int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+card.get_amount();
+            ControllerPlayer.get().setPlayerPosition(playerID,moveToField);
         }
 
         return upper;
     }
 
-    public ModelChanceCard[] get_chanceCards() {
-        return _chanceCards;
-    }
-
-    public ModelChanceCard[] getChanceCards() {
-        return _chanceCards;
-    }
-    public int calculateTax(int amountOfHouses,int amountOfHotel){
+    private int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;
         return tax;

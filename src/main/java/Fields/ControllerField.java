@@ -2,11 +2,10 @@ package Fields;
 
 import java.awt.*;
 
+import Chancecard.ControllerChanceCard;
 import Game.ControllerGUI;
 import Game.ControllerGame;
 import Player.ControllerPlayer;
-
-import java.awt.*;
 
 public class ControllerField {
     private ModelField[] _fields;
@@ -125,7 +124,9 @@ public class ControllerField {
             System.out.println("WARNING: ControllerField, setPropertyOwner, fieldID not a property.");
             return;
         }
+
         ((ModelProperty)_fields[fieldID]).set_owner(playerID);
+        ControllerGUI.get().setPropertyOwner(fieldID, playerID);
     }
     public int getFieldLength (){
         return this._fields.length;
@@ -138,23 +139,33 @@ public class ControllerField {
     public int getHouseCount(int playerID){
         return 0;
     }
+
     public void landOnField(int playerID){
         ModelField field = _fields[ControllerPlayer.get().getPlayerPosition(playerID)];
+
         if (field instanceof ModelProperty){
             ModelProperty property = (ModelProperty) field;
             if (property.isOwned()){
-                ControllerPlayer.get().changeAmountOfMoney(- property.get_rent(),playerID);
-                ControllerPlayer.get().changeAmountOfMoney(property.get_rent(),property.get_owner());
+                chargeRent(property, playerID);
             }
             else {
-                if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")){
-                    ControllerPlayer.get().changeAmountOfMoney(-property.get_propertyPrice(),playerID);
-                    property.set_owner(playerID);
-                    ControllerGUI.get().setFieldOwner(ControllerPlayer.get().getPlayerPosition(playerID),playerID);
+                if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")) {
+                    ControllerPlayer.get().setPlayerMoney(-property.get_propertyPrice(), playerID);
+                    setPropertyOwner(ControllerPlayer.get().getPlayerPosition(playerID), playerID);
                 }
                 else
                     ControllerGame.get().auction(ControllerPlayer.get().getPlayerPosition(playerID));
             }
         }
+        else if (field instanceof ModelChanceField){
+            ControllerChanceCard.get().draw(playerID);
+        }
+
     }
+
+    private void chargeRent(ModelProperty property, int playerID){
+        ControllerPlayer.get().setPlayerMoney(-property.get_rent(),playerID);
+        ControllerPlayer.get().setPlayerMoney(property.get_rent(),property.get_owner());
+    }
+
 }

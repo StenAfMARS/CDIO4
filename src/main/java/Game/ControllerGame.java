@@ -52,17 +52,13 @@ public class ControllerGame {
 
     private void doTurn() {
         //Start of turn
+        c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-        c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
-        c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
         //Middle of turn
         c_field.landOnField(currentPlayer());
-
-        for (int i = 0; i < c_player.playerCount(); i++) {
-            c_gui.updatePlayer(i, c_player.getPlayerMoney(i));
-        }
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
@@ -98,7 +94,7 @@ public class ControllerGame {
         while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
             if (!c_player.hasPlayerLost(currentBidder)) {
                 if (c_gui.getPlayerBoolean("game.bid", "yes", "no")) {
-                    highestBid += round((int)(highestBid * 1.1), 50);
+                    highestBid = round((int)(highestBid * 1.1), 50);
                     lastBidder = currentBidder;
                 }
             }
@@ -109,7 +105,7 @@ public class ControllerGame {
 
         if (lastBidder != -1) {
             c_field.setPropertyOwner(fieldID, lastBidder);
-            c_player.changeAmountOfMoney(highestBid, lastBidder);
+            c_player.setPlayerMoney(-highestBid, lastBidder);
         }
     }
 

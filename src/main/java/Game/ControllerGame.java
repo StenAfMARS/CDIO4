@@ -41,20 +41,17 @@ public class ControllerGame {
     }
 
     private void doTurn() {
-
+        int placement = playerPosition[currentPlayer()];
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
         }
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
 
         if (currentPlayer() + diceCarrier.getDiceValueSum() >= c_field.getFieldLength()) {
-            c_gui.movePlayer(i, playerPositions[i], playerPositions[i] + diceCarrier.getDiceValueSum() - c_field.getFieldLength());
-            playerPositions[i] = playerPositions[i] + diceCarrier.getDiceValueSum() - 1 - c_field.getFieldLength();
+            playerPosition[currentPlayer()] = playerPosition[currentPlayer()] + diceCarrier.getDiceValueSum() - 1 - c_field.getFieldLength();
         } else {
-            c_gui.movePlayer(i, playerPositions[i], diceCarrier.getDiceValueSum() + playerPositions[i]);
-            playerPositions[i] += diceCarrier.getDiceValueSum();
-        c_gui.movePlayer(currentPlayer(),playerPosition[currentPlayer()] ,diceCarrier.getDiceValueSum());
-        playerPosition[currentPlayer()] += diceCarrier.getDiceValueSum();}
+            c_gui.movePlayer(currentPlayer(), playerPosition[currentPlayer()], diceCarrier.getDiceValueSum() + playerPosition[currentPlayer()]);
+            playerPosition[currentPlayer()] += diceCarrier.getDiceValueSum(); }
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());

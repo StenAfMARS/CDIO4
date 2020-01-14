@@ -107,8 +107,10 @@ public class ControllerGame {
             currentBidder %= c_player.playerCount();
         }
 
-        c_field.setPropertyOwner(fieldID, lastBidder);
-        c_player.changeAmountOfMoney(highestBid, lastBidder);
+        if (lastBidder != -1) {
+            c_field.setPropertyOwner(fieldID, lastBidder);
+            c_player.changeAmountOfMoney(highestBid, lastBidder);
+        }
     }
 
     private int round(int number, int roundTo){

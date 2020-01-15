@@ -45,21 +45,20 @@ public class ControllerGame {
         while (!won) {
             if (!c_player.hasPlayerLost(currentPlayer()))
                 doTurn();
+
             nextPlayer();
         }
     }
 
     private void doTurn() {
+        //Start of turn
+        c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
-        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            manageProperty(currentPlayer());
-        }
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-
-        c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
-        c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
-
-
+        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+        c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
+        //Middle of turn
+        c_field.landOnField(currentPlayer());
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
@@ -82,20 +81,20 @@ public class ControllerGame {
     }
 
     private void manageProperty(int playerID){
-        if (c_gui.getPlayerBoolean("Do you want to build a house?", "Yes", "No")) {
+        if (c_gui.getPlayerBoolean("question.buildHouse", "Yes", "No")) {
         }
     }
 
-    private void auction(int fieldID) {
+    public void auction(int fieldID) {
         int lastBidder = -1;
         int highestBid = c_field.getPropertyPrice(fieldID);
 
         int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
-        while (lastBidder != currentBidder || (lastBidder==-1 && currentBidder==currentPlayer())){
+        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
             if (!c_player.hasPlayerLost(currentBidder)) {
-                if (c_gui.getPlayerBoolean("game.bid", "Yes", "No")) {
-                    highestBid += round((int)(highestBid * 1.1), 50);
+                if (c_gui.getPlayerBoolean("game.bid", "yes", "no")) {
+                    highestBid = round((int)(highestBid * 1.1), 50);
                     lastBidder = currentBidder;
                 }
             }
@@ -104,14 +103,15 @@ public class ControllerGame {
             currentBidder %= c_player.playerCount();
         }
 
-        c_field.setPropertyOwner(fieldID, lastBidder);
-        c_player.changeAmountOfMoney(highestBid, lastBidder);
+        if (lastBidder != -1) {
+            c_field.setPropertyOwner(fieldID, lastBidder);
+            c_player.setPlayerMoney(-highestBid, lastBidder);
+        }
     }
 
     private int round(int number, int roundTo){
         return (Math.round(number / roundTo) * roundTo);
     }
-
 
 
 

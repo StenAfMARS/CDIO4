@@ -1,4 +1,9 @@
 package Fields;
 
- class ModelStart {
+import java.awt.*;
+
+class ModelStart extends ModelField{
+ public ModelStart(String name, Color backgroundColor) {
+  super(name, backgroundColor);
+ }
 }

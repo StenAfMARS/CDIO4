@@ -3,30 +3,12 @@ package Fields;
 import java.awt.*;
 
  abstract class ModelField {
-    private String _title;
-    private String _subtext;
-    private String _description;
+    private String _name;
     private Color _backgroundColor;
 
-     String get_title() {
-        return _title;
-    }
-     void set_title(String _title) {
-        this._title = _title;
-    }
-
-     String get_subtext() {
-        return _subtext;
-    }
-     void set_subtext(String _subtext) {
-        this._subtext = _subtext;
-    }
-
-     String get_description() {
-        return _description;
-    }
-     void set_description(String _description) {
-        this._description = _description;
+    protected ModelField(String name, Color backgroundColor){
+        this._name = name;
+        this._backgroundColor = backgroundColor;
     }
 
      Color get_backgroundColor() {
@@ -35,4 +17,8 @@ import java.awt.*;
      void set_backgroundColor(Color _backgroundColor) {
         this._backgroundColor = _backgroundColor;
     }
-}
+
+     public String get_name() {
+         return _name;
+     }
+ }

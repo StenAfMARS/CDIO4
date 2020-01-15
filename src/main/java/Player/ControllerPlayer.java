@@ -1,5 +1,8 @@
 package Player;
 
+import Fields.ControllerField;
+import Game.ControllerGUI;
+
 public class ControllerPlayer {
     private ModelPlayer[] _playerArray;
 
@@ -28,8 +31,21 @@ public class ControllerPlayer {
      * @param moneyChange Amount of money to change from the players account
      * @param playerID Which player to change
      */
-    public void changeAmountOfMoney(int moneyChange, int playerID){
-        _playerArray[playerID].get_account().set_money(_playerArray[playerID].get_account().get_money() - moneyChange);
+    public void setPlayerMoney(int moneyChange, int playerID){
+        ModelPlayer player = _playerArray[playerID];
+        ModelAccount account = player.get_account();
+
+        int newBalance = account.get_money() + moneyChange;
+
+        ControllerGUI.get().updatePlayer(playerID, newBalance);
+        account.set_money(newBalance);
+    }
+    public int getPlayerMoney(int playerID){
+        return _playerArray[playerID].get_account().get_money();
+    }
+
+    public String getPlayerName(int playerID){
+        return _playerArray[playerID].get_name();
     }
 
     public boolean hasPlayerLost(int playerID){
@@ -46,10 +62,19 @@ public class ControllerPlayer {
     public int getPlayerPosition(int playerID){
         return _playerArray[playerID].get_position();
     }
-    public void setPlayerPosition(int playerID , int playerPosition){
-        _playerArray[playerID].set_position(playerPosition);
+
+    public void setPlayerPosition(int playerID , int newPosition){
+        ModelPlayer player = _playerArray[playerID];
+        ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
+        player.set_position(newPosition % ControllerField.get().getFieldLength());
+        if (!player.is_outOfJailFree() && player.get_position() % 30 == 0){
+            ControllerGUI.get().movePlayer(playerID,player.get_position(),player.get_position() + 20);
+            player.set_position((player.get_position() + 20) % ControllerField.get().getFieldLength());
+        }
+        else if (newPosition > ControllerField.get().getFieldLength())
+            player.get_account().set_money(player.get_account().get_money() + 4000);
     }
-    public void updatePlayerPosition(int playerID, int playerPosition){
-        setPlayerPosition(playerID,getPlayerPosition(playerID) +  playerPosition);
+    public void changePlayerPosition(int playerID, int deltaPosition){
+        setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
     }
 }

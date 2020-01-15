@@ -30,7 +30,7 @@ public class ControllerField {
         _fields[1] = new ModelEstate("rødovrevej",Color.BLUE,1200, new int[]{50,250,750,2250,4000,6000}, 1000);
         _fields[2] = new ModelChanceField("prøvLykken", null);
         _fields[3] = new ModelEstate("hvidovrevej",Color.BLUE,1200, new int[]{50,250,750,2250,4000,6000}, 1000);
-        _fields[4] = new ModelIncomeTax("betalIndkomstskat",null);
+        _fields[4] = new ModelIncomeTax("betalIndkomstskat",null, 4000);
         _fields[5] = new ModelFerry("øresund",Color.ORANGE,4000,500);
         _fields[6] = new ModelEstate("roskildevej",Color.PINK,2000,new int[]{100,600,1800,5400,8000,11000}, 1000);
         _fields[7] = new ModelChanceField("prøvLykken", null);
@@ -64,7 +64,7 @@ public class ControllerField {
         _fields[35] = new ModelFerry("bornholm",Color.ORANGE,4000,500);
         _fields[36] = new ModelChanceField("prøvLykken",null);
         _fields[37] = new ModelEstate("frederiksberggade",Color.MAGENTA,7000,new int[]{700,3500,10000,22000,26000,30000},4000);
-        _fields[38] = new ModelIncomeTax("ekstraordinærStatsskat",null);
+        _fields[38] = new ModelIncomeTax("ekstraordinærStatsskat",null, 2000);
         _fields[39] = new ModelEstate("rådhuspladsen",Color.MAGENTA,8000,new int[]{1000,4000,12000,28000,34000,40000},4000);
     }
 

@@ -71,6 +71,9 @@ public class ControllerGUI {
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
+    public boolean getPlayerBoolean(String question, String yesOption, String noOption, Object... args){
+        return _gui.getUserLeftButtonPressed(_lang.getString(question, args),_lang.getString(yesOption),_lang.getString(noOption));
+    }
 
     public int getPlayerInt(String question){
         return _gui.getUserInteger(_lang.getString(question));

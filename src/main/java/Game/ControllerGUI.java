@@ -59,11 +59,14 @@ public class ControllerGUI {
         for (int i = 0; i < _gui.getFields().length; i++) {
             _gui.getFields()[i].setTitle(_lang.getString(c_field.getFieldTitle(i)));
             _gui.getFields()[i].setDescription(_lang.getString(c_field.getFieldDescription(i)));
-            _gui.getFields()[i].setSubText(_lang.getString(c_field.getFieldSubtext(i)));
+            _gui.getFields()[i].setSubText(_lang.getString(c_field.getFieldSubtext(i), c_field.getPropertyPrice(i)));
         }
     }
 
     //Is it better to return a reference to _gui instead of this?
+    public boolean getPlayerBoolean(String question){
+        return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString("yes"),_lang.getString("no"));
+    }
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
@@ -78,6 +81,9 @@ public class ControllerGUI {
 
     public void displayMessage(String message){
         _gui.showMessage(_lang.getString(message));
+    }
+    public void displayMessage(String message, Object... args){
+        _gui.showMessage(_lang.getString(message, args));
     }
 
     /**
@@ -120,7 +126,7 @@ public class ControllerGUI {
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
         for (int i = 0; i < playerID; i++) {
-            if (car.getPrimaryColor() == _ownedCarColors[i])
+            if (car.getPrimaryColor() == _ownedCarColors[i] && car.getPrimaryColor() == Color.WHITE)
                 car = createCar(playerID);
         }
         _ownedCarColors[playerID] = car.getPrimaryColor();
@@ -210,18 +216,16 @@ public class ControllerGUI {
             System.out.println("WARNING: ControllerGUI removeHotel() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }
     }
-
     /**
      * Sets the color and name of a field to indicate an owner of the field
-     * @param fieldID Which field to change owner of
-     * @param name The new owners name
-     * @param color The new owners color
+     * @param fieldID The field ID used to set which field we are setting the owner of.
+     * @param playerID The player ID used to set the owner name of the field.
      */
-    public void setFieldOwner(int fieldID, Color color, String name){
+    public void setPropertyOwner(int fieldID, int playerID){
         try{
             GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
-            ownable.setBorder(color);
-            ownable.setOwnerName(name);
+            ownable.setBorder(_ownedCarColors[playerID]);
+            ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
         }

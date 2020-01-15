@@ -52,16 +52,13 @@ public class ControllerGame {
 
     private void doTurn() {
         //Start of turn
-        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            manageProperty(currentPlayer());
-        }
+        c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
+
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-        c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),diceCarrier.getDiceValueSum() + c_player.getPlayerPosition(currentPlayer()));
-        c_player.updatePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
         //Middle of turn
         c_field.landOnField(currentPlayer());
-
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             manageProperty(currentPlayer());
@@ -94,10 +91,10 @@ public class ControllerGame {
 
         int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
-        while (lastBidder != currentBidder || (lastBidder==-1 && currentBidder==currentPlayer())){
+        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
             if (!c_player.hasPlayerLost(currentBidder)) {
-                if (c_gui.getPlayerBoolean("game.bid", "Yes", "No")) {
-                    highestBid += round((int)(highestBid * 1.1), 50);
+                if (c_gui.getPlayerBoolean("game.bid", "yes", "no")) {
+                    highestBid = round((int)(highestBid * 1.1), 50);
                     lastBidder = currentBidder;
                 }
             }
@@ -106,8 +103,10 @@ public class ControllerGame {
             currentBidder %= c_player.playerCount();
         }
 
-        c_field.setPropertyOwner(fieldID, lastBidder);
-        c_player.changeAmountOfMoney(highestBid, lastBidder);
+        if (lastBidder != -1) {
+            c_field.setPropertyOwner(fieldID, lastBidder);
+            c_player.setPlayerMoney(-highestBid, lastBidder);
+        }
     }
 
     private int round(int number, int roundTo){

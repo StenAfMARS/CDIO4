@@ -67,6 +67,8 @@ public class ControllerPlayer {
         ModelPlayer player = _playerArray[playerID];
         ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
+        if (newPosition > ControllerField.get().getFieldLength())
+            player.get_account().set_money(player.get_account().get_money() + 4000);
     }
     public void changePlayerPosition(int playerID, int deltaPosition){
         setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);

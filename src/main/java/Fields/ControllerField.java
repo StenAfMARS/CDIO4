@@ -131,13 +131,30 @@ public class ControllerField {
     public int getFieldLength (){
         return this._fields.length;
     }
+    private int _HotelCount;
+    public int getHotelCount(int playerID)
+    {
+        for(int i = 0; i<= 40; i++){
+            int fieldID = i;
 
-    public int getHotelCount(int playerID){
-        return 0;
+            if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() == 5 ){
+                _HotelCount = _HotelCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
+            }
+        }
+        return _HotelCount;
     }
 
-    public int getHouseCount(int playerID){
-        return 0;
+    private int _houseCount;
+    public int getHouseCount(int playerID)
+    {
+     for(int i = 0; i<= 40; i++){
+        int fieldID = i;
+
+        if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() != 5 ){
+            _houseCount = _houseCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
+        }
+     }
+        return _houseCount;
     }
 
     public void landOnField(int playerID){

@@ -67,7 +67,11 @@ public class ControllerPlayer {
         ModelPlayer player = _playerArray[playerID];
         ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
-        if (newPosition > ControllerField.get().getFieldLength())
+        if (!player.is_outOfJailFree() && player.get_position() % 30 == 0){
+            ControllerGUI.get().movePlayer(playerID,player.get_position(),player.get_position() + 20);
+            player.set_position((player.get_position() + 20) % ControllerField.get().getFieldLength());
+        }
+        else if (newPosition > ControllerField.get().getFieldLength())
             player.get_account().set_money(player.get_account().get_money() + 4000);
     }
     public void changePlayerPosition(int playerID, int deltaPosition){

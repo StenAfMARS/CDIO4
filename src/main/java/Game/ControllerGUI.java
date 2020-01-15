@@ -87,6 +87,19 @@ public class ControllerGUI {
         _gui.showMessage(_lang.getString(message, args));
     }
 
+    public String getPlayerSelection(String question, String[] options){
+        return _gui.getUserSelection(question,options);
+    }
+
+    public int getPlayerSelection(String question, int[] options){
+        String[] s = new String[options.length];
+        for (int i = 0; i < options.length; i++) {
+            s[i] = String.valueOf(options[i]);
+        }
+        return Integer.parseInt(_gui.getUserSelection(question,s));
+    }
+
+
     /**
      * This functions updates the player account on GUI
      * @param playerID Which player

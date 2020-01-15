@@ -6,6 +6,7 @@ import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
+import java.util.Random;
 
 public class ControllerGUI {
     private GUI _gui;
@@ -125,10 +126,11 @@ public class ControllerGUI {
      */
     private GUI_Car createCar(int playerID) {
         GUI_Car car = new GUI_Car();
-        for (int i = 0; i < playerID; i++) {
-            if (car.getPrimaryColor() == _ownedCarColors[i] && car.getPrimaryColor() == Color.WHITE)
+        car.setPrimaryColor(new Color((int) (Math.random() * 255), (int) (Math.random()*255), (int) (Math.random()*255)));
+        /*for (int i = 0; i < playerID; i++) {
+            if (car.getPrimaryColor() == _ownedCarColors[i] || car.getPrimaryColor() == Color.WHITE)
                 car = createCar(playerID);
-        }
+        }*/
         _ownedCarColors[playerID] = car.getPrimaryColor();
         return car;
     }

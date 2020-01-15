@@ -56,7 +56,7 @@ public class ControllerGame {
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
         c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
-
+        c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
         //Middle of turn
         c_field.landOnField(currentPlayer());
 

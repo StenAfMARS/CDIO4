@@ -1,5 +1,6 @@
 package Chancecard;
 
+import Fields.ControllerField;
 import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
@@ -83,23 +84,26 @@ public class ControllerChanceCard {
         }
         else if(upper instanceof ModelTaxCard){
             ModelTaxCard card = ((ModelTaxCard)upper);
-            int tax = calculateTax(3,3);// TEMPT
+            int tax = calculateTax(ControllerField.get().getHouseCount(playerID),ControllerField.get().getHotelCount(playerID));// TEMPT
             ControllerPlayer.get().setPlayerMoney(tax,playerID);
         }
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);
             ControllerPlayer.get().setPlayerPosition(playerID,card.get_destination()[0]);
+            ControllerField.get().landOnField(playerID);
         }
         else if(upper instanceof ModelMoveCard){
             ModelMoveCard card = ((ModelMoveCard)upper);
             int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+card.get_amount();
             ControllerPlayer.get().setPlayerPosition(playerID,moveToField);
+            ControllerField.get().landOnField(playerID);
         }
 
         return upper;
     }
 
-    private int calculateTax(int amountOfHouses,int amountOfHotel){
+
+    public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;
         return tax;

@@ -194,8 +194,43 @@ public class ControllerField {
     }
 
     private void chargeRent(ModelProperty property, int playerID){
-        ControllerPlayer.get().setPlayerMoney(-property.get_rent(),playerID);
-        ControllerPlayer.get().setPlayerMoney(property.get_rent(),property.get_owner());
+        // hvis det er en færge gør det her
+        if (property instanceof ModelFerry) {
+            ControllerPlayer.get().setPlayerMoney(-calculateShipRentPrice(playerID),playerID);
+            ControllerPlayer.get().setPlayerMoney(calculateShipRentPrice(playerID),property.get_owner());
+        }
+        // ellers fortsæt som normalt
+        else {
+            ControllerPlayer.get().setPlayerMoney(-property.get_rent(), playerID);
+            ControllerPlayer.get().setPlayerMoney(property.get_rent(), property.get_owner());
+        }
     }
+    public int calculateShipRentPrice(int playerID)
+    {
+        int ownedFerry = 0;
+        int rentPrice = 0;
+        for(int i = 0; i<= 40; i++){
+            int fieldID = i;
 
+            if(((ModelFerry)_fields[fieldID]).get_owner() == playerID){
+                ownedFerry++;
+            }
+        }
+        switch (ownedFerry){
+            case 1:
+                rentPrice = 500;
+                break;
+            case 2:
+                rentPrice = 1000;
+                break;
+            case 3:
+                rentPrice = 2000;
+                break;
+            case 4:
+                rentPrice = 4000;
+                break;
+        }
+
+        return rentPrice;
+    }
 }

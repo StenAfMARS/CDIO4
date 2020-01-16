@@ -102,7 +102,8 @@ public class ControllerChanceCard {
         return upper;
     }
 
-    private int calculateTax(int amountOfHouses,int amountOfHotel){
+
+    public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;
         return tax;

@@ -71,6 +71,9 @@ public class ControllerGUI {
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
+    public boolean getPlayerBoolean(String question, String yesOption, String noOption, Object... args){
+        return _gui.getUserLeftButtonPressed(_lang.getString(question, args),_lang.getString(yesOption),_lang.getString(noOption));
+    }
 
     public int getPlayerInt(String question){
         return _gui.getUserInteger(_lang.getString(question));
@@ -86,6 +89,19 @@ public class ControllerGUI {
     public void displayMessage(String message, Object... args){
         _gui.showMessage(_lang.getString(message, args));
     }
+
+    public String getPlayerSelection(String question, String[] options){
+        return _gui.getUserSelection(question,options);
+    }
+
+    public int getPlayerSelection(String question, int[] options){
+        String[] s = new String[options.length];
+        for (int i = 0; i < options.length; i++) {
+            s[i] = String.valueOf(options[i]);
+        }
+        return Integer.parseInt(_gui.getUserSelection(question,s));
+    }
+
 
     /**
      * This functions updates the player account on GUI
@@ -125,12 +141,22 @@ public class ControllerGUI {
      * @return Returns a car with a unique color
      */
     private GUI_Car createCar(int playerID) {
-        GUI_Car car = new GUI_Car();
-        car.setPrimaryColor(new Color((int) (Math.random() * 255), (int) (Math.random()*255), (int) (Math.random()*255)));
-        /*for (int i = 0; i < playerID; i++) {
-            if (car.getPrimaryColor() == _ownedCarColors[i] || car.getPrimaryColor() == Color.WHITE)
-                car = createCar(playerID);
-        }*/
+        GUI_Car car;
+        boolean matches;
+        do {
+            matches = false;
+            car = new GUI_Car();
+            //car.setPrimaryColor();
+
+            for (int i = 0; i < playerID; i++) {
+                if (car.getPrimaryColor() == _ownedCarColors[i]) {
+                    matches = true;
+                    break;
+                }
+            }
+        }
+        while (matches /*|| car.getPrimaryColor() == Color.WHITE*/);
+
         _ownedCarColors[playerID] = car.getPrimaryColor();
         return car;
     }

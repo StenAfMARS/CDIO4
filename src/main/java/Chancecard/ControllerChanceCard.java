@@ -1,8 +1,6 @@
 package Chancecard;
 
-import Chancecard.ModelTaxCard;
 import Fields.ControllerField;
-import Game.ControllerGUI;
 import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
@@ -56,7 +54,7 @@ public class ControllerChanceCard {
                 new ModelMoveTo(new int[]{7,17,27,37})
         };
     }
-    public void swap(int a, int b){
+    private void swap(int a, int b){
         ModelChanceCard cardA = _chanceCards[a];
         ModelChanceCard cardB = _chanceCards[b];
         _chanceCards[a] = cardB;
@@ -92,23 +90,19 @@ public class ControllerChanceCard {
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);
             ControllerPlayer.get().setPlayerPosition(playerID,card.get_destination()[0]);
+            ControllerField.get().landOnField(playerID);
         }
         else if(upper instanceof ModelMoveCard){
             ModelMoveCard card = ((ModelMoveCard)upper);
             int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+card.get_amount();
             ControllerPlayer.get().setPlayerPosition(playerID,moveToField);
+            ControllerField.get().landOnField(playerID);
         }
 
         return upper;
     }
 
-    public ModelChanceCard[] get_chanceCards() {
-        return _chanceCards;
-    }
 
-    public ModelChanceCard[] getChanceCards() {
-        return _chanceCards;
-    }
     public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;

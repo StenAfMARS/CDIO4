@@ -131,20 +131,7 @@ public class ControllerField {
     public int getFieldLength (){
         return this._fields.length;
     }
-    private int[] _ownedField;
-    public int[] getOwnedField(int playerID){
-        for (int i = 0; i<= 40; i++){
-            int fieldID = i;
-
-            if(((ModelProperty)_fields[fieldID]).get_owner() == playerID){
-                _ownedField[i] =  fieldID;
-            }
-        }
-
-        return _ownedField;
-    }
     private int _HotelCount;
-
     public int getHotelCount(int playerID)
     {
         for(int i = 0; i<= 40; i++){
@@ -154,7 +141,7 @@ public class ControllerField {
                 _HotelCount = _HotelCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
             }
         }
-        return _houseCount;
+        return _HotelCount;
     }
 
     private int _houseCount;

@@ -84,7 +84,7 @@ public class ControllerChanceCard {
         }
         else if(upper instanceof ModelTaxCard){
             ModelTaxCard card = ((ModelTaxCard)upper);
-            int tax = calculateTax(3,3);// TEMPT
+            int tax = calculateTax(ControllerField.get().getHouseCount(playerID),ControllerField.get().getHotelCount(playerID));// TEMPT
             ControllerPlayer.get().setPlayerMoney(tax,playerID);
         }
         else if(upper instanceof ModelMoveTo){

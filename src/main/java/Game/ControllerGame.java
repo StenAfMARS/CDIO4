@@ -49,7 +49,6 @@ public class ControllerGame {
             nextPlayer();
         }
     }
-
     private void doTurn() {
         //Start of turn
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));

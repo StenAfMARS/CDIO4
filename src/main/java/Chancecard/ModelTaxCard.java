@@ -4,7 +4,8 @@ package Chancecard;
     private int _pricePrHouse;
     private int _pricePrHotel;
 
-     ModelTaxCard(int pricePrHouse, int pricePrHotel){
+     ModelTaxCard(int iD,int pricePrHouse, int pricePrHotel){
+         super(iD);
         _pricePrHouse = pricePrHouse;
         _pricePrHotel = pricePrHotel;
     }

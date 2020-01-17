@@ -134,11 +134,12 @@ public class ControllerField {
     private int _HotelCount;
     public int getHotelCount(int playerID)
     {
-        for(int i = 0; i<= 40; i++){
+        for(int i = 0; i< _fields.length; i++){
             int fieldID = i;
-
-            if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() == 5 ){
-                _HotelCount = _HotelCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
+            if (_fields[i] instanceof ModelProperty) {
+                if (((ModelProperty) _fields[fieldID]).get_owner() == playerID && ((ModelEstate) _fields[fieldID]).get_amountOfHouses() == 5) {
+                    _HotelCount = _HotelCount + ((ModelEstate) _fields[fieldID]).get_amountOfHouses();
+                }
             }
         }
         return _HotelCount;
@@ -147,12 +148,14 @@ public class ControllerField {
     private int _houseCount;
     public int getHouseCount(int playerID)
     {
-     for(int i = 0; i<= 40; i++){
-        int fieldID = i;
+     for(int i = 0; i< _fields.length; i++) {
+         int fieldID = i;
+         if (_fields[i] instanceof ModelProperty) {
 
-        if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() != 5 ){
-            _houseCount = _houseCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
-        }
+             if (((ModelProperty) _fields[fieldID]).get_owner() == playerID && ((ModelEstate) _fields[fieldID]).get_amountOfHouses() != 5) {
+                 _houseCount = _houseCount + ((ModelEstate) _fields[fieldID]).get_amountOfHouses();
+             }
+         }
      }
         return _houseCount;
     }

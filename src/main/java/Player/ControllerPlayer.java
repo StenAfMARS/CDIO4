@@ -31,7 +31,10 @@ public class ControllerPlayer {
      * @param moneyChange Amount of money to change from the players account
      * @param playerID Which player to change
      */
-    public void setPlayerMoney(int moneyChange, int playerID){
+    public void changePlayerMoney(int moneyChange, int playerID){
+        if (_playerArray[playerID].is_inJail() && moneyChange > 0)
+            return;
+
         ModelPlayer player = _playerArray[playerID];
         ModelAccount account = player.get_account();
 
@@ -64,20 +67,31 @@ public class ControllerPlayer {
     }
 
     public void setPlayerPosition(int playerID , int newPosition){
+        if (_playerArray[playerID].is_inJail() && newPosition != 10)
+            return;
+
         if (newPosition < getPlayerPosition(playerID))
             newPosition += ControllerField.get().getFieldLength();
 
         ModelPlayer player = _playerArray[playerID];
         ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
-        if (!player.is_outOfJailFree() && player.get_position() % 30 == 0){
-            ControllerGUI.get().movePlayer(playerID,player.get_position(),player.get_position() + 20);
-            player.set_position((player.get_position() + 20) % ControllerField.get().getFieldLength());
-        }
-        else if (newPosition > ControllerField.get().getFieldLength())
+
+        if (newPosition >= ControllerField.get().getFieldLength())
             player.get_account().set_money(player.get_account().get_money() + 4000);
     }
     public void changePlayerPosition(int playerID, int deltaPosition){
         setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
+    }
+
+    public void setPlayerJailed(int playerID, boolean isInJail){
+        if (isInJail && _playerArray[playerID].is_outOfJailFree())
+            return;
+
+        _playerArray[playerID].set_inJail(isInJail);
+        setPlayerPosition(playerID, 10);
+    }
+    public boolean isPlayerJailed(int playerID){
+        return _playerArray[playerID].is_inJail();
     }
 }

@@ -2,6 +2,7 @@ package Chancecard;
 
 import Fields.ControllerField;
 import Game.ControllerGUI;
+import Language.LanguageManager;
 import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;
@@ -18,41 +19,41 @@ public class ControllerChanceCard {
 
     private ControllerChanceCard(){
         _chanceCards = new ModelChanceCard[]{
-                new ModelChangeMoneyCard(1,100),
-                new ModelChangeMoneyCard(2,500),
-                new ModelChangeMoneyCard(3,1000),
-                new ModelChangeMoneyCard(4,-500),
-                new ModelChangeMoneyCard(5,1500),
-                new ModelChangeMoneyCard(6,-200),
-                new ModelChangeMoneyCard(7,-2000),
-                new ModelChangeMoneyCard(8,100),
-                new ModelChangeMoneyCard(9,400),
-                new ModelChangeMoneyCard(10,-150),
-                new ModelChangeMoneyCard(11,100),
-                new ModelChangeMoneyCard(12,-750),
-                new ModelChangeMoneyCard(13,100),
-                new ModelChangeMoneyCard(14,400),
-                new ModelChangeMoneyCard(15,-750),
-                new ModelChangeMoneyCard(16,1000),
-                new ModelChangeMoneyCard(17,-50),
-                new ModelChangeMoneyCard(18,300),
-                new ModelChangeMoneyCard(19,150),
-                new ModelChangeMoneyCard(20,800),
-                new ModelChangeMoneyCard(21,-2750),
-                new ModelMoveCard(22,5),
-                new ModelMoveCard(23,3),
-                new ModelTaxCard(24,-500, -2000),
-                new ModelTaxCard(25,-800, -2300),
-                new ModelMoveTo(26,new int[]{5}),
-                new ModelMoveTo(27,new int[]{8}),
-                new ModelMoveTo(28,new int[]{1}),
+                new ModelChangeMoneyCard(12,100),
+                new ModelChangeMoneyCard(13,500),
+                new ModelChangeMoneyCard(14,1000),
+                new ModelChangeMoneyCard(2,-500),
+                new ModelChangeMoneyCard(15,1500),
+                new ModelChangeMoneyCard(11,-200),
+                new ModelChangeMoneyCard(2,-2000),
+                new ModelChangeMoneyCard(16,100),
+                new ModelChangeMoneyCard(21,400),
+                new ModelChangeMoneyCard(2,-150),
+                new ModelChangeMoneyCard(22,100),
+                new ModelChangeMoneyCard(2,-750),
+                new ModelChangeMoneyCard(23,100),
+                new ModelChangeMoneyCard(23,400),
+                new ModelChangeMoneyCard(2,-750),
+                new ModelChangeMoneyCard(23,1000),
+                new ModelChangeMoneyCard(11,-50),
+                new ModelChangeMoneyCard(21,300),
+                new ModelChangeMoneyCard(22,150),
+                new ModelChangeMoneyCard(21,800),
+                new ModelChangeMoneyCard(11,-2750),
+                new ModelMoveCard(31,5),
+                new ModelMoveCard(32,-3),
+                new ModelTaxCard(0,-500, -2000),
+                new ModelTaxCard(1,-800, -2300),
+                new ModelMoveTo(29,new int[]{5}),
+                new ModelMoveTo(29,new int[]{8}),
+                new ModelMoveTo(29,new int[]{1}),
                 new ModelMoveTo(29,new int[]{4}),
-                new ModelMoveTo(30,new int[]{8}),
-                new ModelMoveTo(31,new int[]{4}),
-                new ModelMoveTo(32,new int[]{2}),
-                new ModelMoveTo(33,new int[]{9}),
-                new ModelMoveTo(34,new int[]{1}),
-                new ModelMoveTo(35,new int[]{7,17,27,37})
+                new ModelMoveTo(29,new int[]{8}),
+                new ModelMoveTo(29,new int[]{4}),
+                new ModelMoveTo(29,new int[]{2}),
+                new ModelMoveTo(29,new int[]{9}),
+                new ModelMoveTo(29,new int[]{1}),
+                new ModelMoveTo(29,new int[]{7,17,27,37})
         };
     }
     private void swap(int a, int b){
@@ -82,20 +83,30 @@ public class ControllerChanceCard {
         if (upper instanceof ModelChangeMoneyCard) {
              ModelChangeMoneyCard card = ((ModelChangeMoneyCard)upper);
              ControllerPlayer.get().changePlayerMoney(card.get_amount(),playerID);
+
+             ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.get_amount()));
         }
         else if(upper instanceof ModelTaxCard){
             ModelTaxCard card = ((ModelTaxCard)upper);
             int tax = calculateTax(ControllerField.get().getHouseCount(playerID),ControllerField.get().getHotelCount(playerID));// TEMPT
             ControllerPlayer.get().changePlayerMoney(tax,playerID);
+            ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.getPricePrHouse()),Math.abs(card.getPricePrHotel()));
         }
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);
-            ControllerPlayer.get().setPlayerPosition(playerID,card.get_destination()[0]);
+            int destination = card.get_destination()[0];
+
+            ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), LanguageManager.get().getString(ControllerField.get().getFieldTitle(destination)));
+
+            ControllerPlayer.get().setPlayerPosition(playerID,destination);
             ControllerField.get().landOnField(playerID);
+
+
         }
         else if(upper instanceof ModelMoveCard){
             ModelMoveCard card = ((ModelMoveCard)upper);
             int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+card.get_amount();
+            ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.get_amount()));
             ControllerPlayer.get().setPlayerPosition(playerID,moveToField);
             ControllerField.get().landOnField(playerID);
         }

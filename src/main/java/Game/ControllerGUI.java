@@ -261,6 +261,12 @@ public class ControllerGUI {
     public void setPropertyOwner(int fieldID, int playerID){
         try{
             GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            if (playerID == -1){
+                ownable.setBorder(null);
+                ownable.setOwnerName(null);
+                return;
+            }
+
             ownable.setBorder(_ownedCarColors[playerID]);
             ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){
@@ -279,5 +285,8 @@ public class ControllerGUI {
 
     public void showChanceCard(String property, Object... args){
         _gui.displayChanceCard(_lang.getString(property, args));
+        try {
+            sleep(1500);
+        } catch (Exception ignored) {}
     }
 }

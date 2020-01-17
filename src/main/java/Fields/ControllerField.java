@@ -212,14 +212,27 @@ public class ControllerField {
         return rentPrice;
     }
 
+    public int ownedPropertyCount(int playerID){
+        int propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    propertyCount++;
+                }
+            }
+        }
+
+        return propertyCount;
+    }
 
     public void manageProperty(int playerID){
 
-        int choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+        int choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse"});
 
         while (choice != 0){
 
-            ModelProperty prop = (ModelProperty) _fields[ControllerGUI.get().getPlayerIntSelection("Choose property", ownedProperties(playerID))];
+            ModelProperty prop = ownedProperties(playerID)[ControllerGUI.get().getPlayerIntSelection("field.chooseProperty", ownedPropertyNames(playerID))];
 
             switch (choice){
                 case 1:
@@ -234,21 +247,15 @@ public class ControllerField {
                         sellHouse((ModelEstate)prop);
                     break;
             }
-
-            choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+            if (ownedPropertyCount(playerID) != 0)
+                choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse"});
+            else
+                choice = 0;
         }
     }
 
-    private String[] ownedProperties(int playerID){
-        int propertyCount = 0;
-
-        for (int i = 0; i < _fields.length; i++) {
-            if (_fields[i] instanceof ModelProperty){
-                if (((ModelProperty)_fields[i]).get_owner() == playerID){
-                    propertyCount++;
-                }
-            }
-        }
+    private String[] ownedPropertyNames(int playerID){
+        int propertyCount = ownedPropertyCount(playerID);
 
         String[] output = new String[propertyCount];
 
@@ -265,15 +272,79 @@ public class ControllerField {
         return output;
     }
 
-    private void buyHouse(ModelEstate estate){
+    private ModelProperty[] ownedProperties(int playerID){
+        int propertyCount = ownedPropertyCount(playerID);
 
+        ModelProperty[] output = new ModelProperty[propertyCount];
+
+        propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    output[propertyCount++] = (ModelProperty) _fields[i];
+                }
+            }
+        }
+
+        return output;
+    }
+
+    private void buyHouse(ModelEstate estate){
+        if (estate.get_amountOfHouses() >= 4)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice(), estate.get_owner());
+        estate.set_amountOfHouses(estate.get_amountOfHouses()+1);
+
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());
+
+    }
+
+    private int getFieldId(ModelField field) {
+        int fieldID = -1;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] == field) {
+                fieldID = i;
+                break;
+            }
+        }
+
+        return fieldID;
     }
 
     private void sellHouse(ModelEstate estate){
+        if (estate.get_amountOfHouses() <= 0)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice(), estate.get_owner());
+        estate.set_amountOfHouses(estate.get_amountOfHouses()-1);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());
 
     }
 
-    private void sellProperty(ModelProperty estate){
+    private void sellProperty(ModelProperty property){
+        if (property instanceof ModelEstate) {
+            ControllerPlayer.get().changePlayerMoney(((ModelEstate) property).get_housePrice() * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
+            ((ModelEstate)property).set_amountOfHouses(0);
+            ControllerGUI.get().setHouseCount(getFieldId(property), 0);
+        }
 
+        ControllerPlayer.get().changePlayerMoney(property.get_propertyPrice(), property.get_owner());
+        property.set_owner(-1);
+
+        int id = -1;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] == property) {
+                id = i;
+                break;
+            }
+        }
+
+        ControllerGUI.get().setPropertyOwner(id, -1);
     }
 }

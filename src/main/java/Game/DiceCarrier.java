@@ -2,6 +2,11 @@ package Game;
 
 public class DiceCarrier {
     private Die[] _diceArray;
+
+    /**
+     * DiceCarrier() used to make a private attribute _dicearray[] with the amount of dices.
+     * @param amountOfDices the total amount of dices.
+     */
     public DiceCarrier(int amountOfDices) {
         _diceArray =  new Die[amountOfDices];
         for (int i = 0; i < _diceArray.length; i++) {
@@ -22,8 +27,8 @@ public class DiceCarrier {
     }
 
     /**
-     *
-     * @return Returns the sum of the diceroll
+     * getDiceValueSum() used for
+     * @return sum. The sum of the diceroll.
      */
     public int getDiceValueSum(){
         int sum = 0;

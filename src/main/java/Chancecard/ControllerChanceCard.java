@@ -81,12 +81,12 @@ public class ControllerChanceCard {
 
         if (upper instanceof ModelChangeMoneyCard) {
              ModelChangeMoneyCard card = ((ModelChangeMoneyCard)upper);
-             ControllerPlayer.get().setPlayerMoney(card.get_amount(),playerID);
+             ControllerPlayer.get().changePlayerMoney(card.get_amount(),playerID);
         }
         else if(upper instanceof ModelTaxCard){
             ModelTaxCard card = ((ModelTaxCard)upper);
             int tax = calculateTax(ControllerField.get().getHouseCount(playerID),ControllerField.get().getHotelCount(playerID));// TEMPT
-            ControllerPlayer.get().setPlayerMoney(tax,playerID);
+            ControllerPlayer.get().changePlayerMoney(tax,playerID);
         }
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);

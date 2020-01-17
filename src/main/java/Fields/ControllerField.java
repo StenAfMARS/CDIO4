@@ -77,8 +77,8 @@ public class ControllerField {
 
     /**
      * getFieldType is used to get the _field type for the specific fieldID.
-     * @param fieldID
-     * @return _fields[fieldID]
+     * @param fieldID the ID of a given field.
+     * @return private attribute _fields[fieldID]
      */
     public int getFieldType(int fieldID){
       //  _fields[fieldID].
@@ -87,7 +87,7 @@ public class ControllerField {
 
     /**
      * getFieldTitle used to check if fieldID is out of boundary. If not it returns the field and the title of the field as a string.
-     * @param fieldID
+     * @param fieldID the ID of a given field.
      * @return field.get_name() and title.
      */
     public String getFieldTitle (int fieldID) {
@@ -103,7 +103,7 @@ public class ControllerField {
 
     /**
      * getFieldSubtext used to check if fieldID is out of boundary. If not it returns the field and the subtext of the field as a string.
-     * @param fieldID
+     * @param fieldID the ID of a given field.
      * @return field.get_name() and subtext.
      */
     public String getFieldSubtext (int fieldID){
@@ -117,7 +117,7 @@ public class ControllerField {
 
     /**
      * getFieldDescription used to check if fieldId is out of boundary. If not it returns the field and the description of the the field as a string.
-     * @param fieldID
+     * @param fieldID the ID of a given field.
      * @return field.get_name() and description.
      */
     public String getFieldDescription (int fieldID){
@@ -132,7 +132,7 @@ public class ControllerField {
     /**
      * getPropertyPrice is used to check if fieldID is out of boundary, and if it's not a property. If it is a property and not out of boundary
      * then it returns the price of the property as an int.
-     * @param fieldID
+     * @param fieldID the ID of a given field.
      * @return((ModelProperty)_fields[fieldID]).get_propertyPrice()
      */
     public int getPropertyPrice(int fieldID){
@@ -151,8 +151,8 @@ public class ControllerField {
 
     /**
      * setPropertyOwner used to set the owner of a fieldID to a playerID.
-     * @param fieldID
-     * @param playerID
+     * @param fieldID the ID of a given field.
+     * @param playerID the ID of a given player.
      */
     public void setPropertyOwner(int fieldID, int playerID){
         if (0 > fieldID || fieldID >= _fields.length){
@@ -180,8 +180,8 @@ public class ControllerField {
 
     /**
      * getHotelCount used to get the amount of hotels on every field belonging to a player.
-     * @param playerID
-     * @return _HotelCount
+     * @param playerID the ID of a given field.
+     * @return private attribute _HotelCount
      */
     public int getHotelCount(int playerID)
     {
@@ -199,8 +199,8 @@ public class ControllerField {
 
     /**
      * getHouseCount used to get the amount of houses on every field belonging to a player.
-     * @param playerID
-     * @return _houseCount.
+     * @param playerID the ID of a given player.
+     * @return priavte attribute _houseCount.
      */
     public int getHouseCount(int playerID)
     {
@@ -218,7 +218,7 @@ public class ControllerField {
      * landOnField used to check if property is owned. If it is owned then it the player gets charged rent.
      * If the field is not owned then the player is asked if he wants to buy it. If yes the price of the property it charged from the players account, if no the turn ends.
      * If the field is a chancefield then the player draws a card and does the consequence which is stated.
-     * @param playerID
+     * @param playerID the ID of a given player.
      */
     public void landOnField(int playerID){
         ModelField field = _fields[ControllerPlayer.get().getPlayerPosition(playerID)];
@@ -246,8 +246,8 @@ public class ControllerField {
     /**
      * chargeRent is used to charge money from the players account when landing on a field belonging to another player. After the money has been charged they get added to
      * the owner of the property.
-     * @param property
-     * @param playerID
+     * @param property a given property.
+     * @param playerID the ID of a given player.
      */
     private void chargeRent(ModelProperty property, int playerID){
         // if ferry do this
@@ -264,8 +264,8 @@ public class ControllerField {
 
     /**
      * calculateShipRentPrice is used to check how many ferries that are owned by one player, and what the rent is accordingly to the amount of ferries.
-     * @param playerID
-     * @return rentPrice
+     * @param playerID the ID of a given player.
+     * @return rentPrice of one, or more, ferries.
      */
     public int calculateShipRentPrice(int playerID)
     {

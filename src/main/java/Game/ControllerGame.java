@@ -55,13 +55,18 @@ public class ControllerGame {
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
+
         c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
-        c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
+
+        if (c_player.isPlayerJailed(currentPlayer())) {
+            c_player.changePlayerMoney(-1000, currentPlayer());
+            c_player.setPlayerJailed(currentPlayer(), false);
+        }
         //Middle of turn
         c_field.landOnField(currentPlayer());
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            manageProperty(currentPlayer());
+            c_field.manageProperty(currentPlayer());
         }
 
     }
@@ -78,11 +83,6 @@ public class ControllerGame {
 
     private int currentPlayer() {
         return _currentPlayer;
-    }
-
-    private void manageProperty(int playerID){
-        if (c_gui.getPlayerBoolean("question.buildHouse", "Yes", "No")) {
-        }
     }
 
     public void auction(int fieldID) {
@@ -105,7 +105,7 @@ public class ControllerGame {
 
         if (lastBidder != -1) {
             c_field.setPropertyOwner(fieldID, lastBidder);
-            c_player.setPlayerMoney(-highestBid, lastBidder);
+            c_player.changePlayerMoney(-highestBid, lastBidder);
         }
     }
 

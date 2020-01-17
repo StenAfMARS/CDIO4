@@ -158,6 +158,10 @@ public class ControllerField {
     }
 
     public void landOnField(int playerID){
+        try {
+            ControllerGUI.get().sleep(500);
+        } catch (Exception ignored){}
+
         ModelField field = _fields[ControllerPlayer.get().getPlayerPosition(playerID)];
 
         if (field instanceof ModelProperty){
@@ -167,7 +171,7 @@ public class ControllerField {
             }
             else {
                 if (ControllerGUI.get().getPlayerBoolean("field.buyProperty?","yes","no")) {
-                    ControllerPlayer.get().setPlayerMoney(-property.get_propertyPrice(), playerID);
+                    ControllerPlayer.get().changePlayerMoney(-property.get_propertyPrice(), playerID);
                     setPropertyOwner(ControllerPlayer.get().getPlayerPosition(playerID), playerID);
                 }
                 else
@@ -177,47 +181,99 @@ public class ControllerField {
         else if (field instanceof ModelChanceField){
             ControllerChanceCard.get().draw(playerID);
         }
-
+        else if (field instanceof ModelGotoJail){
+            ControllerPlayer.get().setPlayerJailed(playerID, true);
+        }
     }
 
     private void chargeRent(ModelProperty property, int playerID){
         // hvis det er en færge gør det her
         if (property instanceof ModelFerry) {
-            ControllerPlayer.get().setPlayerMoney(-calculateShipRentPrice(playerID),playerID);
-            ControllerPlayer.get().setPlayerMoney(calculateShipRentPrice(playerID),property.get_owner());
+            ControllerPlayer.get().changePlayerMoney(-calculateShipRentPrice((ModelFerry) property),playerID);
+            ControllerPlayer.get().changePlayerMoney(calculateShipRentPrice((ModelFerry) property),property.get_owner());
         }
         // ellers fortsæt som normalt
         else {
-            ControllerPlayer.get().setPlayerMoney(-property.get_rent(), playerID);
-            ControllerPlayer.get().setPlayerMoney(property.get_rent(), property.get_owner());
+            ControllerPlayer.get().changePlayerMoney(-property.get_rent(), playerID);
+            ControllerPlayer.get().changePlayerMoney(property.get_rent(), property.get_owner());
         }
     }
-    public int calculateShipRentPrice(int playerID)
+    public int calculateShipRentPrice(ModelFerry ferry)
     {
-        int ownedFerry = 0;
-        int rentPrice = 0;
-        for(int i = 0; i<= 40; i++){
-            int fieldID = i;
+        int rentPrice = ferry.get_rent() / 2;
 
-            if(((ModelFerry)_fields[fieldID]).get_owner() == playerID){
-                ownedFerry++;
+        for(int i = 0; i< _fields.length; i++){
+            if(_fields[i] instanceof ModelFerry){
+                if (((ModelFerry)_fields[i]).get_owner() == ferry.get_owner())
+                    rentPrice *= 2;
             }
-        }
-        switch (ownedFerry){
-            case 1:
-                rentPrice = 500;
-                break;
-            case 2:
-                rentPrice = 1000;
-                break;
-            case 3:
-                rentPrice = 2000;
-                break;
-            case 4:
-                rentPrice = 4000;
-                break;
         }
 
         return rentPrice;
+    }
+
+
+    public void manageProperty(int playerID){
+
+        int choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+
+        while (choice != 0){
+
+            ModelProperty prop = (ModelProperty) _fields[ControllerGUI.get().getPlayerIntSelection("Choose property", ownedProperties(playerID))];
+
+            switch (choice){
+                case 1:
+                    sellProperty(prop);
+                    break;
+                case 2:
+                    if (prop instanceof ModelEstate)
+                        buyHouse((ModelEstate)prop);
+                    break;
+                case 3:
+                    if (prop instanceof ModelEstate)
+                        sellHouse((ModelEstate)prop);
+                    break;
+            }
+
+            choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+        }
+    }
+
+    private String[] ownedProperties(int playerID){
+        int propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    propertyCount++;
+                }
+            }
+        }
+
+        String[] output = new String[propertyCount];
+
+        propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    output[propertyCount++] = getFieldTitle(i);
+                }
+            }
+        }
+
+        return output;
+    }
+
+    private void buyHouse(ModelEstate estate){
+
+    }
+
+    private void sellHouse(ModelEstate estate){
+
+    }
+
+    private void sellProperty(ModelProperty estate){
+
     }
 }

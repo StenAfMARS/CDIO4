@@ -27,6 +27,10 @@ class ModelEstate extends ModelProperty {
         _housePrice = Math.max(housePrice, 0);
     }
 
+    /**
+     * get_amountOfHouses() used to
+     * @return private attribute _amountOfHouses
+     */
      int get_amountOfHouses() {
         return _amountOfHouses;
     }
@@ -42,6 +46,10 @@ class ModelEstate extends ModelProperty {
     }
 
     @Override
+    /**
+     * get_rent() used to
+     * @return private attribute _rent[_amountOfHouses]. Which is the rent depending on the amount of houses on the given field.
+     */
      int get_rent() {
         return _rent[_amountOfHouses];
     }

@@ -55,7 +55,7 @@ public class ControllerGame {
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
 
-        c_player.changePlayerPosition(currentPlayer(),2);
+        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());

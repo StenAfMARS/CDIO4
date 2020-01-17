@@ -231,7 +231,7 @@ public class ControllerField {
 
     public void manageProperty(int playerID){
 
-        int choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse"});
+        int choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse", "field.buyHotel","field.sellHotel"});
 
         while (choice != 0){
 
@@ -249,9 +249,17 @@ public class ControllerField {
                     if (prop instanceof ModelEstate)
                         sellHouse((ModelEstate)prop);
                     break;
+                case 4:
+                    if (prop instanceof ModelEstate)
+                        buyHotel((ModelEstate)prop);
+                    break;
+                case 5:
+                    if (prop instanceof ModelEstate)
+                        sellHotel((ModelEstate)prop);
+                    break;
             }
             if (ownedPropertyCount(playerID) != 0)
-                choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse"});
+                choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse", "field.buyHotel","field.sellHotel"});
             else
                 choice = 0;
         }
@@ -349,5 +357,27 @@ public class ControllerField {
         }
 
         ControllerGUI.get().setPropertyOwner(id, -1);
+    }
+
+    private void buyHotel(ModelEstate estate){
+        if (estate.get_amountOfHouses() != 4)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice()*4, estate.get_owner());
+        estate.set_amountOfHouses(5);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), 0);
+        ControllerGUI.get().placeHotel(getFieldId(estate));
+    }
+
+    private void sellHotel(ModelEstate estate){
+        if (estate.get_amountOfHouses() != 5)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()*4, estate.get_owner());
+        estate.set_amountOfHouses(4);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), 4);
+        ControllerGUI.get().removeHotel(getFieldId(estate));
     }
 }

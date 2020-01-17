@@ -94,7 +94,11 @@ public class ControllerGUI {
         return _gui.getUserSelection(question,options);
     }
     public int getPlayerIntSelection(String question, String[] options){
-        String userSelection = _gui.getUserSelection(question,options);
+        for (int i = 0; i < options.length; i++) {
+            options[i] = _lang.getString(options[i]);
+        }
+
+        String userSelection = _gui.getUserSelection(_lang.getString(question),options);
 
         for (int i = 0; i < options.length; i++) {
             if (options[i].equals(userSelection))

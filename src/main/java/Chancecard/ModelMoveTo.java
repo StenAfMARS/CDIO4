@@ -2,7 +2,8 @@ package Chancecard;
 
  class ModelMoveTo extends ModelChanceCard {
     private int[] _destination;
-     ModelMoveTo(int[] desitnation){
+     ModelMoveTo(int iD, int[] desitnation){
+         super(iD);
         _destination = desitnation;
     }
 

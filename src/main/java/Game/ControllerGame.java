@@ -55,8 +55,13 @@ public class ControllerGame {
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
+
         c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
-        c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
+
+        if (c_player.isPlayerJailed(currentPlayer())) {
+            c_player.changePlayerMoney(-1000, currentPlayer());
+            c_player.setPlayerJailed(currentPlayer(), false);
+        }
         //Middle of turn
         c_field.landOnField(currentPlayer());
 
@@ -105,7 +110,7 @@ public class ControllerGame {
 
         if (lastBidder != -1) {
             c_field.setPropertyOwner(fieldID, lastBidder);
-            c_player.setPlayerMoney(-highestBid, lastBidder);
+            c_player.changePlayerMoney(-highestBid, lastBidder);
         }
     }
 

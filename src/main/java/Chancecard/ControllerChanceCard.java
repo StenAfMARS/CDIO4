@@ -53,7 +53,9 @@ public class ControllerChanceCard {
                 new ModelMoveTo(29,new int[]{2}),
                 new ModelMoveTo(29,new int[]{9}),
                 new ModelMoveTo(29,new int[]{1}),
-                new ModelMoveTo(29,new int[]{7,17,27,37})
+                new ModelMoveTo(29,new int[]{7,17,27,37}),
+                new ModelGoToJailCard(40),
+                new ModelOutOfJailFreeCard(69)
         };
     }
     private void swap(int a, int b){
@@ -104,7 +106,7 @@ public class ControllerChanceCard {
 
         }
         else if(upper instanceof ModelGoToJailCard){
-            ControllerPlayer.get().setPlayerPosition(playerID,10);
+            ControllerPlayer.get().setPlayerJailed(playerID,true);
         }
         else if(upper instanceof ModelOutOfJailFreeCard){
             ControllerPlayer.get().setOutOfJailFree(playerID);

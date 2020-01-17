@@ -154,21 +154,18 @@ public class ControllerGUI {
      * @return Returns a car with a unique color
      */
     private GUI_Car createCar(int playerID) {
-        GUI_Car car;
-        boolean matches;
-        do {
-            matches = false;
-            car = new GUI_Car();
-            //car.setPrimaryColor();
+        Color[] pColor = new Color[]{new Color(244, 44, 159),
+                new Color(99, 234, 83),
+                new Color(113, 163, 198),
+                new Color(242, 180, 33),
+                new Color(82, 233, 219),
+                new Color(149, 4, 4)
+        };
 
-            for (int i = 0; i < playerID; i++) {
-                if (car.getPrimaryColor() == _ownedCarColors[i]) {
-                    matches = true;
-                    break;
-                }
-            }
-        }
-        while (matches /*|| car.getPrimaryColor() == Color.WHITE*/);
+        GUI_Car car;
+
+        car = new GUI_Car();
+        car.setPrimaryColor(pColor[playerID]);
 
         _ownedCarColors[playerID] = car.getPrimaryColor();
         return car;

@@ -85,8 +85,10 @@ public class ControllerPlayer {
     }
 
     public void setPlayerJailed(int playerID, boolean isInJail){
-        if (isInJail && _playerArray[playerID].is_outOfJailFree())
+        if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
+            _playerArray[playerID].set_outOfJailFree(false);
             return;
+        }
 
         _playerArray[playerID].set_inJail(isInJail);
         setPlayerPosition(playerID, 10);

@@ -93,7 +93,7 @@ public class ControllerGame {
 
         while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
             if (!c_player.hasPlayerLost(currentBidder)) {
-                if (c_gui.getPlayerBoolean("game.bid", "yes", "no")) {
+                if (c_gui.getPlayerBoolean("game.bid", "yes", "no", ControllerPlayer.get().getPlayerName(currentBidder), round((int)(highestBid * 1.1), 50))) {
                     highestBid = round((int)(highestBid * 1.1), 50);
                     lastBidder = currentBidder;
                 }
@@ -112,6 +112,7 @@ public class ControllerGame {
     private int round(int number, int roundTo){
         return (Math.round(number / roundTo) * roundTo);
     }
+
 
 
 

@@ -65,7 +65,7 @@ public class ControllerGame {
         c_field.landOnField(currentPlayer());
 
         if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            manageProperty(currentPlayer());
+            c_field.manageProperty(currentPlayer());
         }
 
     }
@@ -82,11 +82,6 @@ public class ControllerGame {
 
     private int currentPlayer() {
         return _currentPlayer;
-    }
-
-    private void manageProperty(int playerID){
-        if (c_gui.getPlayerBoolean("question.buildHouse", "Yes", "No")) {
-        }
     }
 
     public void auction(int fieldID) {

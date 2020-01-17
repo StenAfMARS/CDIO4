@@ -18,6 +18,10 @@ public class ControllerGUI {
 
     private static ControllerGUI _instance;
 
+    /**
+     * get() used to get instance of ControllerGUI and
+     * @return private attribute _instance of Controller GUI.
+     */
     public static ControllerGUI get()
     {
         if (_instance == null) {
@@ -26,6 +30,9 @@ public class ControllerGUI {
         return _instance;
     }
 
+    /**
+     * ControllerGUI() used to make private attributes _gui, new instance of GUI(), and _lang, languagemanger.get() method.
+     */
     private ControllerGUI(){
         _gui = new GUI();
         _lang = LanguageManager.get();

@@ -32,7 +32,7 @@ public class ControllerPlayer {
      * @param playerID Which player to change
      */
     public void changePlayerMoney(int moneyChange, int playerID){
-        if (_playerArray[playerID].is_inJail() && moneyChange > 0)
+        if ((_playerArray[playerID].is_inJail() && moneyChange > 0) || _playerArray[playerID].is_dead())
             return;
 
         ModelPlayer player = _playerArray[playerID];
@@ -53,9 +53,9 @@ public class ControllerPlayer {
 
     public boolean hasPlayerLost(int playerID){
         if (playerID < 0 || playerID >= _playerArray.length)
-            return true;
+            _playerArray[playerID].set_dead(true);
 
-        return _playerArray[playerID].get_account().get_money() < 0;
+        return _playerArray[playerID].is_dead();
     }
 
     public int playerCount(){
@@ -67,7 +67,7 @@ public class ControllerPlayer {
     }
 
     public void setPlayerPosition(int playerID , int newPosition){
-        if (_playerArray[playerID].is_inJail() && newPosition != 10)
+        if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
             return;
 
         if (newPosition < getPlayerPosition(playerID))

@@ -6,6 +6,7 @@ public class ModelPlayer {
     private boolean _outOfJailFree;
     private boolean _inJail;
     private int _position;
+    private boolean _dead;
 
     /**
      * Keeps information about a player
@@ -46,5 +47,13 @@ public class ModelPlayer {
     }
     void set_inJail(boolean _inJail) {
         this._inJail = _inJail;
+    }
+
+    public boolean is_dead() {
+        return _dead;
+    }
+
+    public void set_dead(boolean _dead) {
+        this._dead = _dead;
     }
 }

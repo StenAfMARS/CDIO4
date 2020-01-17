@@ -63,8 +63,8 @@ public class ControllerGame {
         }
         //Middle of turn
         c_field.landOnField(currentPlayer());
-
-        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
+        if (c_field.ownedPropertyCount(currentPlayer()) != 0)
+            if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             c_field.manageProperty(currentPlayer());
         }
 

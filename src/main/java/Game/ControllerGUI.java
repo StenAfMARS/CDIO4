@@ -94,7 +94,11 @@ public class ControllerGUI {
         return _gui.getUserSelection(question,options);
     }
     public int getPlayerIntSelection(String question, String[] options){
-        String userSelection = _gui.getUserSelection(question,options);
+        for (int i = 0; i < options.length; i++) {
+            options[i] = _lang.getString(options[i]);
+        }
+
+        String userSelection = _gui.getUserSelection(_lang.getString(question),options);
 
         for (int i = 0; i < options.length; i++) {
             if (options[i].equals(userSelection))
@@ -261,6 +265,12 @@ public class ControllerGUI {
     public void setPropertyOwner(int fieldID, int playerID){
         try{
             GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            if (playerID == -1){
+                ownable.setBorder(null);
+                ownable.setOwnerName(null);
+                return;
+            }
+
             ownable.setBorder(_ownedCarColors[playerID]);
             ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){
@@ -279,5 +289,8 @@ public class ControllerGUI {
 
     public void showChanceCard(String property, Object... args){
         _gui.displayChanceCard(_lang.getString(property, args));
+        try {
+            sleep(1500);
+        } catch (Exception ignored) {}
     }
 }

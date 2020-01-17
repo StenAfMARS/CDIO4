@@ -12,8 +12,8 @@ package Chancecard;
     }
 
      /**
-      * get_amount(9
-      * @return private attribut _amount. Amount of money.
+      * get_amount() used to
+      * @return private attribut _amount.
       */
      int get_amount() {
         return _amount;

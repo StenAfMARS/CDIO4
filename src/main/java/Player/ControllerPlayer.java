@@ -94,4 +94,7 @@ public class ControllerPlayer {
     public boolean isPlayerJailed(int playerID){
         return _playerArray[playerID].is_inJail();
     }
+    public void setOutOfJailFree(int playerID){
+        _playerArray[playerID].set_outOfJailFree(true);
+    }
 }

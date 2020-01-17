@@ -103,6 +103,12 @@ public class ControllerChanceCard {
 
 
         }
+        else if(upper instanceof ModelGoToJailCard){
+            ControllerPlayer.get().setPlayerPosition(playerID,10);
+        }
+        else if(upper instanceof ModelOutOfJailFreeCard){
+            ControllerPlayer.get().setOutOfJailFree(playerID);
+        }
         else if(upper instanceof ModelMoveCard){
             ModelMoveCard card = ((ModelMoveCard)upper);
             int moveToField = ControllerPlayer.get().getPlayerPosition(playerID)+card.get_amount();

@@ -42,6 +42,8 @@ public class ControllerPlayer {
 
         ControllerGUI.get().updatePlayer(playerID, newBalance);
         account.set_money(newBalance);
+
+        hasPlayerLost(playerID);
     }
     public int getPlayerMoney(int playerID){
         return _playerArray[playerID].get_account().get_money();
@@ -53,7 +55,12 @@ public class ControllerPlayer {
 
     public boolean hasPlayerLost(int playerID){
         if (playerID < 0 || playerID >= _playerArray.length)
+            return false;
+
+        if (_playerArray[playerID].get_account().get_money() < 0) {
             _playerArray[playerID].set_dead(true);
+            ControllerGUI.get().killPlayer(playerID);
+        }
 
         return _playerArray[playerID].is_dead();
     }

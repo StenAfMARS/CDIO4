@@ -2,17 +2,17 @@ package Game;
 
 import Fields.ControllerField;
 import Language.LanguageManager;
+import Player.ControllerPlayer;
 import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
-import java.util.Random;
 
 public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    private Color[] _ownedCarColors;
+    private Color[] _playerColors;
 
     private ControllerField c_field = ControllerField.get();
 
@@ -133,7 +133,7 @@ public class ControllerGUI {
     public String[] addPlayers(int startBalance){
         String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("gui.selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
-        _ownedCarColors = new Color[names.length];
+        _playerColors = new Color[names.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = _gui.getUserString(_lang.getString("gui.selectPlayerName"));
             //No players with the same name
@@ -164,11 +164,18 @@ public class ControllerGUI {
 
         GUI_Car car;
 
-        car = new GUI_Car();
-        car.setPrimaryColor(pColor[playerID]);
+        car = new GUI_Car(pColor[playerID], pColor[playerID], GUI_Car.Type.CAR, GUI_Car.Pattern.ZEBRA);
+        //car.setPrimaryColor(pColor[playerID]);
 
-        _ownedCarColors[playerID] = car.getPrimaryColor();
+        _playerColors[playerID] = car.getPrimaryColor();
         return car;
+    }
+
+    public void killPlayer(int playerID){
+        _players[playerID].getCar().setSecondaryColor(Color.WHITE);
+
+        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],false);
+        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],true);
     }
 
     /**
@@ -268,7 +275,7 @@ public class ControllerGUI {
                 return;
             }
 
-            ownable.setBorder(_ownedCarColors[playerID]);
+            ownable.setBorder(_playerColors[playerID]);
             ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());

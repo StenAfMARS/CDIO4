@@ -9,8 +9,8 @@ public class DiceCarrier {
         }
     }
     /**
-     * Gives a random value between 1 and 6
-     * @return The values of the dice rolls as an array.
+     * rollDice() gives a random value between 1 and 6
+     * @return diceValues. The values of the dice rolls as an array.
      */
     public int[] rollDice() {
         int[] diceValues = new int[_diceArray.length];
@@ -22,8 +22,8 @@ public class DiceCarrier {
     }
 
     /**
-     *
-     * @return Returns the sum of the diceroll
+     * getDiceValueSum() used for
+     * @return sum. The sum of the diceroll.
      */
     public int getDiceValueSum(){
         int sum = 0;

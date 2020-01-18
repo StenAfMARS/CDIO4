@@ -24,6 +24,9 @@ public class ControllerField {
         createBoard();
     }
 
+    /**
+     * createBoard() used for creating the board.
+     */
     public void createBoard (){
         _fields = new ModelField[40];
         _fields[0] = new ModelStart("start",null);
@@ -72,7 +75,12 @@ public class ControllerField {
       //  _fields[fieldID].
         return 1;
     }
-    
+
+    /**
+     * getFieldTitle() used to get title of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".title". The title to a given field.
+     */
     public String getFieldTitle (int fieldID) {
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldTitle, fieldID out of boundary.");
@@ -83,6 +91,12 @@ public class ControllerField {
         return "field." + field.get_name() + ".title";
 
     }
+
+    /**
+     * getFieldSubtext() used to get subtext of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".description". The subtext to a given field.
+     */
     public String getFieldSubtext (int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldSubtext, fieldID out of boundary.");
@@ -91,6 +105,12 @@ public class ControllerField {
         ModelField field = _fields[fieldID];
         return "field." + field.get_name() + ".subtext";
     }
+
+    /**
+     * getFieldDescription() used to get description of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".description". The description to a given field.
+     */
     public String getFieldDescription (int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldDescription, fieldID out of boundary.");
@@ -100,6 +120,11 @@ public class ControllerField {
         return "field." + field.get_name() + ".description";
     }
 
+    /**
+     * getPropertyPrice() used to get the price of a property.
+     * @param fieldID the ID of a given field.
+     * @return ((ModelProperty)_fields[fieldID]).get_propertyPrice(). Property price for the given field.
+     */
     public int getPropertyPrice(int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldPrice, fieldID out of boundary.");
@@ -114,6 +139,11 @@ public class ControllerField {
         return ((ModelProperty)_fields[fieldID]).get_propertyPrice();
     }
 
+    /**
+     * setPropertyOwner() used to set the owner of a filedID to a playerID.
+     * @param fieldID the ID of a given field.
+     * @param playerID the ID of a given player.
+     */
     public void setPropertyOwner(int fieldID, int playerID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, setPropertyOwner, fieldID out of boundary.");
@@ -132,6 +162,11 @@ public class ControllerField {
         return this._fields.length;
     }
     private int _HotelCount;
+    /**
+     * getHotelCount() used to get the amount of hotels on every field belonging to a player.
+     * @param playerID the ID of a given player.
+     * @return private attribute _HotelCount.
+     */
     public int getHotelCount(int playerID)
     {
         for(int i = 0; i< _fields.length; i++){
@@ -146,6 +181,12 @@ public class ControllerField {
     }
 
     private int _houseCount;
+
+    /**
+     * getHouseCount() used to get the amount of houses on every field belonging to a player.
+     * @param playerID the ID of a given player.
+     * @return private attribute _houseCount.
+     */
     public int getHouseCount(int playerID)
     {
      for(int i = 0; i< _fields.length; i++) {
@@ -160,6 +201,12 @@ public class ControllerField {
         return _houseCount;
     }
 
+    /**
+     * landOnField() used to check if property is owned. If it is owned then the player gets charged rent.
+     * If the field is not owned then the player is asked if he wants to buy it. If yes the price of the property is charged from the player.
+     * If the field is a chance field then the player draws a card and does the consequence  which is stated on the card.
+     * @param playerID the ID of a given player.
+     */
     public void landOnField(int playerID){
         try {
             ControllerGUI.get().sleep(500);

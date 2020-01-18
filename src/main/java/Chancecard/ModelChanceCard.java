@@ -4,7 +4,7 @@ package Chancecard;
   private int _iD;
 
   /**
-   * ModelChanceCard() used for making a model of a chance card.
+   * ModelChanceCard() constructor used for making a model of a chance card.
    * @param iD chance card ID
    */
   ModelChanceCard(int iD) {

@@ -9,6 +9,10 @@ public class ControllerChanceCard {
 
     private static ControllerChanceCard _instance;
 
+    /**
+     * get() used to
+     * @return _private attribute _instance. The instance of a new ControllerChanceCard
+     */
     public static ControllerChanceCard get()
     {
         if (_instance == null) {
@@ -17,6 +21,9 @@ public class ControllerChanceCard {
         return _instance;
     }
 
+    /**
+     * ControllerChanceCard used to make the different models of chance cards in an array.
+     */
     private ControllerChanceCard(){
         _chanceCards = new ModelChanceCard[]{
                 new ModelChangeMoneyCard(12,100),
@@ -58,6 +65,12 @@ public class ControllerChanceCard {
                 new ModelOutOfJailFreeCard(69)
         };
     }
+
+    /**
+     * swap() used for swapping ownable chance cards.
+     * @param a chancecard a.
+     * @param b chancecard b.
+     */
     private void swap(int a, int b){
         ModelChanceCard cardA = _chanceCards[a];
         ModelChanceCard cardB = _chanceCards[b];
@@ -65,6 +78,9 @@ public class ControllerChanceCard {
         _chanceCards[b] = cardA;
     }
 
+    /**
+     * shuffle() used to shuffle the deck of chance cards.
+     */
     public void shuffle(){
         for (int i=0; i<30000; i++ ){
             int a= (int) (Math.random()*_chanceCards.length);
@@ -73,6 +89,11 @@ public class ControllerChanceCard {
         }
     }
 
+    /**
+     * draw() used for drawing chance cards. Checks which type of chance card is drawn, and does the consequence of the given card.
+     * @param playerID ID of a player.
+     * @return upper. The card on top of the deck.
+     */
     public ModelChanceCard draw(int playerID){
 
         ModelChanceCard upper= _chanceCards[0];
@@ -122,7 +143,12 @@ public class ControllerChanceCard {
         return upper;
     }
 
-
+    /**
+     * calculateTax() used for calculating the tax a player has to pay when drawing a specific chance card.
+     * @param amountOfHouses amount of houses.
+     * @param amountOfHotel amount of hotels.
+     * @return tax as an int. The tax for houses and hotels.
+     */
     public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;

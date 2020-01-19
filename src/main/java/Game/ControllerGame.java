@@ -80,8 +80,10 @@ public class ControllerGame {
             if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             c_field.manageProperty(currentPlayer());
         }
-        if (temp[0] == temp[1])
+        if (temp[0] == temp[1]) {
             doTurn();
+            c_gui.displayMessage(c_player.getPlayerName(currentPlayer()) + "");
+        }
     }
 
     private void endGame(){

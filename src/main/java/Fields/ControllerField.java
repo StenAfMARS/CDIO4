@@ -158,6 +158,10 @@ public class ControllerField {
     }
 
     public void landOnField(int playerID){
+        try {
+            ControllerGUI.get().sleep(500);
+        } catch (Exception ignored){}
+
         ModelField field = _fields[ControllerPlayer.get().getPlayerPosition(playerID)];
 
         if (field instanceof ModelProperty){
@@ -177,9 +181,7 @@ public class ControllerField {
         else if (field instanceof ModelChanceField){
             ControllerChanceCard.get().draw(playerID);
         }
-        else if (field instanceof ModelGotoJail){
-            ControllerPlayer.get().setPlayerJailed(playerID, true);
-        }
+
     }
 
     private void chargeRent(ModelProperty property, int playerID){
@@ -206,5 +208,70 @@ public class ControllerField {
         }
 
         return rentPrice;
+    }
+
+
+    public void manageProperty(int playerID){
+
+        int choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+
+        while (choice != 0){
+
+            ModelProperty prop = (ModelProperty) _fields[ControllerGUI.get().getPlayerIntSelection("Choose property", ownedProperties(playerID))];
+
+            switch (choice){
+                case 1:
+                    sellProperty(prop);
+                    break;
+                case 2:
+                    if (prop instanceof ModelEstate)
+                        buyHouse((ModelEstate)prop);
+                    break;
+                case 3:
+                    if (prop instanceof ModelEstate)
+                        sellHouse((ModelEstate)prop);
+                    break;
+            }
+
+            choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+        }
+    }
+
+    private String[] ownedProperties(int playerID){
+        int propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    propertyCount++;
+                }
+            }
+        }
+
+        String[] output = new String[propertyCount];
+
+        propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    output[propertyCount++] = getFieldTitle(i);
+                }
+            }
+        }
+
+        return output;
+    }
+
+    private void buyHouse(ModelEstate estate){
+
+    }
+
+    private void sellHouse(ModelEstate estate){
+
+    }
+
+    private void sellProperty(ModelProperty estate){
+
     }
 }

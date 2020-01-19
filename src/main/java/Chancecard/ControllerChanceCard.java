@@ -1,6 +1,7 @@
 package Chancecard;
 
 import Fields.ControllerField;
+import Game.ControllerGUI;
 import Player.ControllerPlayer;
 public class ControllerChanceCard {
     private ModelChanceCard[] _chanceCards;

@@ -93,6 +93,15 @@ public class ControllerGUI {
     public String getPlayerSelection(String question, String[] options){
         return _gui.getUserSelection(question,options);
     }
+    public int getPlayerIntSelection(String question, String[] options){
+        String userSelection = _gui.getUserSelection(question,options);
+
+        for (int i = 0; i < options.length; i++) {
+            if (options[i].equals(userSelection))
+                return i;
+        }
+        return -1;
+    }
 
     public int getPlayerSelection(String question, int[] options){
         String[] s = new String[options.length];
@@ -264,7 +273,11 @@ public class ControllerGUI {
      * @param milliseconds How many milliseconds to sleep for
      * @throws InterruptedException Throws exception from Thread.sleep
      */
-    private void sleep(long milliseconds) throws InterruptedException {
+    public void sleep(long milliseconds) throws InterruptedException {
         Thread.sleep(milliseconds);
+    }
+
+    public void showChanceCard(String property, Object... args){
+        _gui.displayChanceCard(_lang.getString(property, args));
     }
 }

@@ -53,9 +53,9 @@ public class ControllerPlayer {
 
     public boolean hasPlayerLost(int playerID){
         if (playerID < 0 || playerID >= _playerArray.length)
-            return true;
+            _playerArray[playerID].set_Lost(true);;
 
-        return _playerArray[playerID].get_account().get_money() < 0;
+            return _playerArray[playerID].get_Lost();
     }
 
     public int playerCount(){

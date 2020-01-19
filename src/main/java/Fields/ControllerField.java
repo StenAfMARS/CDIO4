@@ -381,7 +381,7 @@ public class ControllerField {
 
     private void sellProperty(ModelProperty property){
         if (property instanceof ModelEstate) {
-            ControllerPlayer.get().changePlayerMoney(((ModelEstate) property).get_housePrice() * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
+            ControllerPlayer.get().changePlayerMoney((((ModelEstate) property).get_housePrice()/2) * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
             ((ModelEstate)property).set_amountOfHouses(0);
             ControllerGUI.get().setHouseCount(getFieldId(property), 0);
         }

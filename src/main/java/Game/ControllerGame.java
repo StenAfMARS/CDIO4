@@ -66,21 +66,25 @@ public class ControllerGame {
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-        int[] temp = diceCarrier.get_diceFaces();
-
-        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+        int lastPos = c_player.getPlayerPosition(currentPlayer());
+        c_player.changePlayerPosition(currentPlayer(), diceCarrier.getDiceValueSum());
+        c_gui.movePlayer(currentPlayer(),lastPos,c_player.getPlayerPosition(currentPlayer()));
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());
+            c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
             c_player.setPlayerJailed(currentPlayer(), false);
+            //Need to change 10 to be more flexible for jail on field
+            c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),10);
         }
         //Middle of turn
         c_field.landOnField(currentPlayer());
-        if (c_field.ownedPropertyCount(currentPlayer()) != 0)
-            if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            c_field.manageProperty(currentPlayer());
+        if (c_field.ownedPropertyCount(currentPlayer()) != 0) {
+            if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")) {
+                c_field.manageProperty(currentPlayer());
+            }
         }
-        if (temp[0] == temp[1]) {
+        if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
             doTurn();
             c_gui.displayMessage(c_player.getPlayerName(currentPlayer()) + "");
         }
@@ -118,6 +122,8 @@ public class ControllerGame {
                     lastBidder = currentBidder;
                 }
             }
+            else
+                c_gui.killPlayer(currentBidder,c_player.getPlayerPosition(currentBidder));
 
             currentBidder++;
             currentBidder %= c_player.playerCount();
@@ -126,6 +132,7 @@ public class ControllerGame {
         if (lastBidder != -1) {
             c_field.setPropertyOwner(fieldID, lastBidder);
             c_player.changePlayerMoney(-highestBid, lastBidder);
+            c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
         }
     }
 

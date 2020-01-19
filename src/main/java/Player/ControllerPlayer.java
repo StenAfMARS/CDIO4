@@ -1,7 +1,6 @@
 package Player;
 
 import Fields.ControllerField;
-import Game.ControllerGUI;
 
 public class ControllerPlayer {
     private ModelPlayer[] _playerArray;
@@ -40,7 +39,6 @@ public class ControllerPlayer {
 
         int newBalance = account.get_money() + moneyChange;
 
-        ControllerGUI.get().updatePlayer(playerID, newBalance);
         account.set_money(newBalance);
 
         hasPlayerLost(playerID);
@@ -59,7 +57,6 @@ public class ControllerPlayer {
 
         if (_playerArray[playerID].get_account().get_money() < 0) {
             _playerArray[playerID].set_dead(true);
-            ControllerGUI.get().killPlayer(playerID,getPlayerPosition(playerID));
         }
 
         return _playerArray[playerID].is_dead();
@@ -81,7 +78,6 @@ public class ControllerPlayer {
             newPosition += ControllerField.get().getFieldLength();
 
         ModelPlayer player = _playerArray[playerID];
-        ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
 
         if (newPosition >= ControllerField.get().getFieldLength())
@@ -96,7 +92,6 @@ public class ControllerPlayer {
             _playerArray[playerID].set_outOfJailFree(false);
             return;
         }
-
         _playerArray[playerID].set_inJail(isInJail);
         setPlayerPosition(playerID, 10);
     }

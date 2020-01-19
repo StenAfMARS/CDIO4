@@ -71,11 +71,6 @@ public class ControllerField {
         _fields[39] = new ModelEstate("rådhuspladsen",Color.MAGENTA,8000,new int[]{1000,4000,12000,28000,34000,40000},4000);
     }
 
-    public int getFieldType(int fieldID){
-      //  _fields[fieldID].
-        return 1;
-    }
-
     /**
      * getFieldTitle() used to get title of a given field.
      * @param fieldID ID of a given field.

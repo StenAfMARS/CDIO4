@@ -88,7 +88,6 @@ public class ControllerGame {
         }
         if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
             doTurn();
-            c_gui.displayMessage(c_player.getPlayerName(currentPlayer()) + "");
         }
     }
 

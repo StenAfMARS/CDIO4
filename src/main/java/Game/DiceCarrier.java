@@ -33,4 +33,16 @@ public class DiceCarrier {
         }
         return sum;
     }
+
+    /**
+     * Returns an array of ints which is all the dice faces
+     * @return an array with the same size as the amount of dices in the cup
+     */
+    public int[] get_diceFaces() {
+        int temp[] = new int[_diceArray.length];
+        for (int i = 0; i < _diceArray.length; i++) {
+            temp[i] = _diceArray[i].get_value();
+        }
+        return temp;
+    }
 }

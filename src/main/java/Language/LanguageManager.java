@@ -30,7 +30,7 @@ public class LanguageManager {
 
         for (String language : _languages) {
             if (language.equalsIgnoreCase(newLanguage)) {
-                _currentLanguage = newLanguage;
+                _currentLanguage = language;
                 break;
             }
         }

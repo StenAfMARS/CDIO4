@@ -28,6 +28,10 @@ public class ControllerPlayer {
         }
     }
 
+    public int getPlayerMoney(int playerID){
+        return _playerArray[playerID].get_account().get_money();
+    }
+
     /**
      * Method for charging players a fee or adding money to their account
      * @param moneyChange Amount of money to change from the players account

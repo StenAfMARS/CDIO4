@@ -294,7 +294,10 @@ public class ControllerGUI {
     public void showChanceCard(String property, Object... args){
         _gui.displayChanceCard(_lang.getString(property, args));
         try {
-            sleep(1500);
-        } catch (Exception ignored) {}
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
     }
 }

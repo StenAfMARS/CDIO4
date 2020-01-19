@@ -372,7 +372,7 @@ public class ControllerField {
         if (estate.get_amountOfHouses() <= 0)
             return;
 
-        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice(), estate.get_owner());
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()/2, estate.get_owner());
         estate.set_amountOfHouses(estate.get_amountOfHouses()-1);
 
         ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());

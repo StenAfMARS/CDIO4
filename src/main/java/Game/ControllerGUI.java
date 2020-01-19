@@ -204,7 +204,7 @@ public class ControllerGUI {
             try {
                 sleep(65);
             } catch (InterruptedException e){
-                _gui.showMessage("An error occurred");
+                System.out.println("WARNING: Error in ControllerGUI movePlayer sleep");
             }
         }
     }

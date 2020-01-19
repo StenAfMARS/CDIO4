@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Game.ControllerGame</OriginalElement>
+  <nodes>
+    <node x="3191.6188222202454" y="145.0">Game.ControllerGUI</node>
+    <node x="3152.8153990299816" y="679.0">Game.ControllerGame</node>
+    <node x="1875.301587301587" y="189.0">Fields.ModelField</node>
+    <node x="645.9999999999998" y="1212.0">Chancecard.ModelGoToJailCard</node>
+    <node x="198.0" y="1191.0">Chancecard.ModelChangeMoneyCard</node>
+    <node x="1180.7123897707222" y="513.0">Fields.ModelStart</node>
+    <node x="2335.897574955907" y="734.0">Fields.ModelEstate</node>
+    <node x="2612.897574955907" y="756.0">Fields.ModelBrewery</node>
+    <node x="0.0" y="1191.0">Chancecard.ModelMoveTo</node>
+    <node x="1179.7505682519914" y="1212.0">Chancecard.ModelOutOfJailFreeCard</node>
+    <node x="1384.7123897707222" y="492.0">Fields.ModelIncomeTax</node>
+    <node x="3471.6591490299816" y="145.0">Player.ModelPlayer</node>
+    <node x="444.9999999999998" y="1191.0">Chancecard.ModelMoveCard</node>
+    <node x="3434.825815696648" y="481.0">Player.ControllerPlayer</node>
+    <node x="2872.897574955907" y="756.0">Fields.ModelFerry</node>
+    <node x="957.7123897707222" y="513.0">Fields.ModelGotoJail</node>
+    <node x="2439.647574955907" y="1158.0">Fields.ControllerField</node>
+    <node x="1640.712389770722" y="513.0">Fields.ModelChanceField</node>
+    <node x="1883.712389770722" y="513.0">Fields.ModelVisitJail</node>
+    <node x="2773.611772486772" y="470.0">Fields.ModelProperty</node>
+    <node x="1405.7505682519914" y="1180.0">Chancecard.ModelTaxCard</node>
+    <node x="2102.712389770722" y="513.0">Fields.ModelParking</node>
+    <node x="774.7524830920013" y="756.0">Chancecard.ModelChanceCard</node>
+    <node x="1295.308950617283" y="1459.0">Chancecard.ControllerChanceCard</node>
+    <node x="3514.5341490299816" y="0.0">Player.ModelAccount</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Player.ControllerPlayer" target="Game.ControllerGUI">
+      <point x="-79.58333333333326" y="-58.5" />
+      <point x="3450.7424823633146" y="440.0" />
+      <point x="3337.0563222202454" y="440.0" />
+      <point x="55.9375" y="102.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelMoveTo">
+      <point x="-97.71428571428578" y="-58.5" />
+      <point x="1311.5946649029972" y="1429.0" />
+      <point x="133.5" y="1429.0" />
+      <point x="44.5" y="47.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelStart">
+      <point x="-72.51851851851848" y="-80.5" />
+      <point x="2456.129056437389" y="1048.0" />
+      <point x="1272.7123897707222" y="1048.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="Game.ControllerGame" target="Chancecard.ControllerChanceCard">
+      <point x="48.0" y="124.5" />
+      <point x="3320.8153990299816" y="1108.0" />
+      <point x="3241.99719208671" y="1108.0" />
+      <point x="3241.99719208671" y="1409.0" />
+      <point x="1485.308950617283" y="1409.0" />
+      <point x="76.0" y="-58.5" />
+    </edge>
+    <edge source="Chancecard.ModelTaxCard" target="Chancecard.ModelChanceCard">
+      <point x="47.25" y="-58.5" />
+      <point x="1547.5005682519914" y="1108.0" />
+      <point x="905.8524830920012" y="1108.0" />
+      <point x="45.59999999999991" y="47.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Game.ControllerGUI">
+      <point x="97.71428571428578" y="-58.5" />
+      <point x="1507.0232363315688" y="1429.0" />
+      <point x="3403.3153990299816" y="1429.0" />
+      <point x="3403.3153990299816" y="450.0" />
+      <point x="3314.6813222202454" y="450.0" />
+      <point x="33.5625" y="102.5" />
+    </edge>
+    <edge source="Fields.ModelFerry" target="Fields.ModelProperty">
+      <point x="55.75" y="-47.5" />
+      <point x="3040.147574955907" y="659.0" />
+      <point x="2940.674272486772" y="659.0" />
+      <point x="45.5625" y="69.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelEstate">
+      <point x="-6.592592592592609" y="-80.5" />
+      <point x="2522.0549823633146" y="948.0" />
+      <point x="2400.147574955907" y="948.0" />
+      <point x="-64.25" y="69.5" />
+    </edge>
+    <edge source="Game.ControllerGame" target="Fields.ControllerField">
+      <point x="-48.0" y="124.5" />
+      <point x="3224.8153990299816" y="1088.0" />
+      <point x="2594.5735008818333" y="1088.0" />
+      <point x="65.92592592592587" y="-80.5" />
+    </edge>
+    <edge source="Fields.ModelEstate" target="Fields.ModelProperty">
+      <point x="64.25" y="-69.5" />
+      <point x="2528.647574955907" y="639.0" />
+      <point x="2819.174272486772" y="639.0" />
+      <point x="-75.9375" y="69.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Game.ControllerGUI">
+      <point x="46.148148148148266" y="-80.5" />
+      <point x="2574.7957231040555" y="1058.0" />
+      <point x="3135.722806437389" y="1058.0" />
+      <point x="3135.722806437389" y="420.0" />
+      <point x="3225.1813222202454" y="420.0" />
+      <point x="-55.9375" y="102.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Player.ControllerPlayer">
+      <point x="85.7037037037037" y="-80.5" />
+      <point x="2614.351278659611" y="1138.0" />
+      <point x="3566.3221119929444" y="1138.0" />
+      <point x="3566.3221119929444" y="659.0" />
+      <point x="3568.5258156966484" y="659.0" />
+      <point x="38.200000000000045" y="58.5" />
+    </edge>
+    <edge source="Fields.ModelBrewery" target="Fields.ModelProperty">
+      <point x="60.0" y="-47.5" />
+      <point x="2792.897574955907" y="659.0" />
+      <point x="2879.924272486772" y="659.0" />
+      <point x="-15.1875" y="69.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Player.ControllerPlayer">
+      <point x="108.57142857142844" y="-58.5" />
+      <point x="1517.8803791887115" y="1439.0" />
+      <point x="3577.3221119929444" y="1439.0" />
+      <point x="3577.3221119929444" y="659.0" />
+      <point x="3606.725815696648" y="659.0" />
+      <point x="76.40000000000009" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Chancecard.ControllerChanceCard">
+      <point x="44.5" y="80.5" />
+      <point x="2573.147574955907" y="1399.0" />
+      <point x="1474.4518077601404" y="1399.0" />
+      <point x="65.14285714285734" y="-58.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelMoveCard">
+      <point x="-54.28571428571422" y="-58.5" />
+      <point x="1355.0232363315688" y="1389.0" />
+      <point x="580.7499999999998" y="1389.0" />
+      <point x="45.25" y="47.5" />
+    </edge>
+    <edge source="Player.ControllerPlayer" target="Fields.ControllerField">
+      <point x="0.0" y="58.5" />
+      <point x="3530.325815696648" y="659.0" />
+      <point x="3559.729519400352" y="659.0" />
+      <point x="3559.729519400352" y="1128.0" />
+      <point x="2607.7586860670185" y="1128.0" />
+      <point x="79.11111111111109" y="-80.5" />
+    </edge>
+    <edge source="Fields.ModelChanceField" target="Fields.ModelField">
+      <point x="-55.75" y="-26.5" />
+      <point x="1696.462389770722" y="430.0" />
+      <point x="1946.0368814192339" y="430.0" />
+      <point x="-21.764705882352928" y="58.5" />
+    </edge>
+    <edge source="Game.ControllerGame" target="Game.ControllerGUI">
+      <point x="-30.0" y="-124.5" />
+      <point x="3242.8153990299816" y="450.0" />
+      <point x="3292.3063222202454" y="450.0" />
+      <point x="11.1875" y="102.5" />
+    </edge>
+    <edge source="Player.ModelPlayer" target="Player.ModelAccount">
+      <point x="58.66666666666666" y="-102.5" />
+      <point x="3618.325815696648" y="120.0" />
+      <point x="3608.9091490299816" y="120.0" />
+      <point x="18.875" y="47.5" />
+    </edge>
+    <edge source="Game.ControllerGUI" target="Fields.ControllerField">
+      <point x="-33.5625" y="102.5" />
+      <point x="3247.5563222202454" y="430.0" />
+      <point x="3142.3153990299816" y="430.0" />
+      <point x="3142.3153990299816" y="1068.0" />
+      <point x="2581.388315696648" y="1068.0" />
+      <point x="52.74074074074065" y="-80.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelChanceField">
+      <point x="-46.148148148148266" y="-80.5" />
+      <point x="2482.499426807759" y="1008.0" />
+      <point x="1755.5086860670183" y="1008.0" />
+      <point x="1755.5086860670183" y="659.0" />
+      <point x="1807.962389770722" y="659.0" />
+      <point x="55.75" y="26.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Fields.ControllerField">
+      <point x="54.28571428571422" y="-58.5" />
+      <point x="1463.5946649029972" y="1389.0" />
+      <point x="2484.147574955907" y="1389.0" />
+      <point x="-44.5" y="80.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelVisitJail">
+      <point x="-39.55555555555566" y="-80.5" />
+      <point x="2489.0920194003515" y="998.0" />
+      <point x="1983.212389770722" y="998.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Game.ControllerGame">
+      <point x="59.33333333333326" y="-80.5" />
+      <point x="2587.9809082892407" y="1078.0" />
+      <point x="3176.8153990299816" y="1078.0" />
+      <point x="-96.0" y="124.5" />
+    </edge>
+    <edge source="Chancecard.ModelMoveTo" target="Chancecard.ModelChanceCard">
+      <point x="44.5" y="-47.5" />
+      <point x="133.5" y="1078.0" />
+      <point x="791.8524830920012" y="1078.0" />
+      <point x="-68.40000000000009" y="47.5" />
+    </edge>
+    <edge source="Fields.ModelIncomeTax" target="Fields.ModelField">
+      <point x="-59.0" y="-47.5" />
+      <point x="1443.7123897707222" y="410.0" />
+      <point x="1924.2721755368812" y="410.0" />
+      <point x="-43.529411764705856" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelFerry">
+      <point x="19.77777777777783" y="-80.5" />
+      <point x="2548.425352733685" y="1018.0" />
+      <point x="3040.147574955907" y="1018.0" />
+      <point x="55.75" y="47.5" />
+    </edge>
+    <edge source="Fields.ModelProperty" target="Fields.ModelField">
+      <point x="60.75" y="-69.5" />
+      <point x="2955.861772486772" y="380.0" />
+      <point x="2054.8604108309987" y="380.0" />
+      <point x="87.05882352941171" y="58.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelChangeMoneyCard">
+      <point x="-86.85714285714312" y="-58.5" />
+      <point x="1322.45180776014" y="1419.0" />
+      <point x="254.75" y="1419.0" />
+      <point x="-56.75" y="47.5" />
+    </edge>
+    <edge source="Fields.ModelGotoJail" target="Fields.ModelField">
+      <point x="-50.75" y="-26.5" />
+      <point x="1008.4623897707222" y="370.0" />
+      <point x="1880.7427637721753" y="370.0" />
+      <point x="-87.05882352941171" y="58.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelOutOfJailFreeCard">
+      <point x="-21.71428571428578" y="-58.5" />
+      <point x="1387.5946649029972" y="1359.0" />
+      <point x="1231.2505682519914" y="1359.0" />
+      <point x="-51.5" y="26.5" />
+    </edge>
+    <edge source="Fields.ModelParking" target="Fields.ModelField">
+      <point x="-49.75" y="-26.5" />
+      <point x="2152.462389770722" y="440.0" />
+      <point x="1989.5662931839397" y="440.0" />
+      <point x="21.764705882352928" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelBrewery">
+      <point x="6.592592592592609" y="-80.5" />
+      <point x="2535.2401675485" y="998.0" />
+      <point x="2732.897574955907" y="998.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="Chancecard.ModelGoToJailCard" target="Chancecard.ModelChanceCard">
+      <point x="44.5" y="-26.5" />
+      <point x="779.4999999999998" y="1138.0" />
+      <point x="860.2524830920013" y="1138.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="Player.ControllerPlayer" target="Player.ModelPlayer">
+      <point x="-15.916666666666742" y="-58.5" />
+      <point x="3514.4091490299816" y="450.0" />
+      <point x="3500.9924823633146" y="450.0" />
+      <point x="-58.666666666666664" y="102.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelTaxCard">
+      <point x="10.857142857142662" y="-58.5" />
+      <point x="1420.1660934744257" y="1349.0" />
+      <point x="1547.5005682519914" y="1349.0" />
+      <point x="47.25" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelProperty">
+      <point x="32.96296296296305" y="-80.5" />
+      <point x="2561.6105379188702" y="1038.0" />
+      <point x="3112.9901675485" y="1038.0" />
+      <point x="3112.9901675485" y="639.0" />
+      <point x="3001.424272486772" y="639.0" />
+      <point x="106.3125" y="69.5" />
+    </edge>
+    <edge source="Fields.ModelVisitJail" target="Fields.ModelField">
+      <point x="49.75" y="-26.5" />
+      <point x="2032.962389770722" y="450.0" />
+      <point x="1978.6839402427636" y="450.0" />
+      <point x="10.882352941176578" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelIncomeTax">
+      <point x="-59.33333333333326" y="-80.5" />
+      <point x="2469.314241622574" y="1028.0" />
+      <point x="1506.1081178150266" y="1028.0" />
+      <point x="1506.1081178150266" y="659.0" />
+      <point x="1561.7123897707222" y="659.0" />
+      <point x="59.0" y="47.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelField">
+      <point x="-13.185185185185219" y="-80.5" />
+      <point x="2515.462389770722" y="958.0" />
+      <point x="2325.397574955907" y="958.0" />
+      <point x="2325.397574955907" y="400.0" />
+      <point x="2033.0957049486456" y="400.0" />
+      <point x="65.29411764705878" y="58.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelGotoJail">
+      <point x="-85.7037037037037" y="-80.5" />
+      <point x="2442.9438712522037" y="1068.0" />
+      <point x="1055.916093474426" y="1068.0" />
+      <point x="1055.916093474426" y="659.0" />
+      <point x="1008.4623897707222" y="659.0" />
+      <point x="-50.75" y="26.5" />
+    </edge>
+    <edge source="Fields.ModelStart" target="Fields.ModelField">
+      <point x="-46.0" y="-26.5" />
+      <point x="1226.7123897707222" y="390.0" />
+      <point x="1902.507469654528" y="390.0" />
+      <point x="-65.29411764705878" y="58.5" />
+    </edge>
+    <edge source="Chancecard.ModelChangeMoneyCard" target="Chancecard.ModelChanceCard">
+      <point x="56.75" y="-47.5" />
+      <point x="368.25" y="1098.0" />
+      <point x="814.6524830920014" y="1098.0" />
+      <point x="-45.59999999999991" y="47.5" />
+    </edge>
+    <edge source="Player.ControllerPlayer" target="Player.ModelAccount">
+      <point x="79.58333333333326" y="-58.5" />
+      <point x="3609.9091490299816" y="450.0" />
+      <point x="3658.1591490299816" y="450.0" />
+      <point x="3658.1591490299816" y="120.0" />
+      <point x="3646.6591490299816" y="120.0" />
+      <point x="56.625" y="47.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelChanceCard">
+      <point x="21.71428571428578" y="-58.5" />
+      <point x="1431.0232363315688" y="1359.0" />
+      <point x="1605.2505682519914" y="1359.0" />
+      <point x="1605.2505682519914" y="1098.0" />
+      <point x="917.2524830920013" y="1098.0" />
+      <point x="57.0" y="47.5" />
+    </edge>
+    <edge source="Fields.ControllerField" target="Fields.ModelParking">
+      <point x="-32.96296296296305" y="-80.5" />
+      <point x="2495.684611992944" y="988.0" />
+      <point x="2202.212389770722" y="988.0" />
+      <point x="0.0" y="26.5" />
+    </edge>
+    <edge source="Game.ControllerGUI" target="Player.ControllerPlayer">
+      <point x="78.3125" y="102.5" />
+      <point x="3359.4313222202454" y="430.0" />
+      <point x="3482.575815696648" y="430.0" />
+      <point x="-47.75" y="-58.5" />
+    </edge>
+    <edge source="Chancecard.ControllerChanceCard" target="Chancecard.ModelGoToJailCard">
+      <point x="-43.42857142857156" y="-58.5" />
+      <point x="1365.8803791887115" y="1379.0" />
+      <point x="690.4999999999998" y="1379.0" />
+      <point x="-44.5" y="26.5" />
+    </edge>
+    <edge source="Chancecard.ModelOutOfJailFreeCard" target="Chancecard.ModelChanceCard">
+      <point x="51.5" y="-26.5" />
+      <point x="1334.2505682519914" y="1128.0" />
+      <point x="883.0524830920015" y="1128.0" />
+      <point x="22.800000000000182" y="47.5" />
+    </edge>
+    <edge source="Game.ControllerGame" target="Player.ControllerPlayer">
+      <point x="90.0" y="-124.5" />
+      <point x="3362.8153990299816" y="659.0" />
+      <point x="3492.125815696648" y="659.0" />
+      <point x="-38.200000000000045" y="58.5" />
+    </edge>
+    <edge source="Chancecard.ModelMoveCard" target="Chancecard.ModelChanceCard">
+      <point x="45.25" y="-47.5" />
+      <point x="580.7499999999998" y="1118.0" />
+      <point x="837.4524830920011" y="1118.0" />
+      <point x="-22.800000000000182" y="47.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3564926372155288" x="1621.9218166982953" y="980.3267989641232" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

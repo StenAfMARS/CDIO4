@@ -8,4 +8,8 @@ class ModelIncomeTax extends ModelField {
   super(name, backgroundColor);
   this._rent = rent;
  }
+
+ public int get_rent() {
+  return _rent;
+ }
 }

@@ -31,7 +31,6 @@ public class ControllerGUI {
         _lang = LanguageManager.get();
     }
 
-
     /**
      * Allows the players to choose the language of the game
      */
@@ -64,10 +63,6 @@ public class ControllerGUI {
         }
     }
 
-    //Is it better to return a reference to _gui instead of this?
-    public boolean getPlayerBoolean(String question){
-        return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString("yes"),_lang.getString("no"));
-    }
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
@@ -75,24 +70,10 @@ public class ControllerGUI {
         return _gui.getUserLeftButtonPressed(_lang.getString(question, args),_lang.getString(yesOption),_lang.getString(noOption));
     }
 
-    public int getPlayerInt(String question){
-        return _gui.getUserInteger(_lang.getString(question));
-    }
-
-    public int getPlayerInt(String question,int minValue, int maxValue){
-        return _gui.getUserInteger(_lang.getString(question),minValue,maxValue);
-    }
-
-    public void displayMessage(String message){
-        _gui.showMessage(_lang.getString(message));
-    }
     public void displayMessage(String message, Object... args){
         _gui.showMessage(_lang.getString(message, args));
     }
 
-    public String getPlayerSelection(String question, String[] options){
-        return _gui.getUserSelection(question,options);
-    }
     public int getPlayerIntSelection(String question, String[] options){
         for (int i = 0; i < options.length; i++) {
             options[i] = _lang.getString(options[i]);
@@ -106,15 +87,6 @@ public class ControllerGUI {
         }
         return -1;
     }
-
-    public int getPlayerSelection(String question, int[] options){
-        String[] s = new String[options.length];
-        for (int i = 0; i < options.length; i++) {
-            s[i] = String.valueOf(options[i]);
-        }
-        return Integer.parseInt(_gui.getUserSelection(question,s));
-    }
-
 
     /**
      * This functions updates the player account on GUI

@@ -14,8 +14,6 @@ public class TestPassingStart {
        c_player.createPlayerArray(pNames);
        c_player.setPlayerPosition(0,1);
        c_player.changePlayerPosition(0,10);
-
-
    }
 
 

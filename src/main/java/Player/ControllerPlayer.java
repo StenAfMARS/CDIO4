@@ -8,7 +8,7 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
-    //
+    //Singleton so there is only one instance of ControllerPlayer
     private ControllerPlayer(){}
     public static ControllerPlayer get()
     {
@@ -35,7 +35,8 @@ public class ControllerPlayer {
      * @param playerID Which player to change
      */
     public void changePlayerMoney(int moneyChange, int playerID){
-        //If player in
+        //If player is in jail and moneyChange is large than 0 return.
+        // Prevents player from getting rent in jail. If player is dead skip as well
         if ((_playerArray[playerID].is_inJail() && moneyChange > 0) || _playerArray[playerID].is_dead())
             return;
         //Current Player
@@ -85,14 +86,16 @@ public class ControllerPlayer {
         if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
             return;
 
-        //If the new position
+        //If the new position is less that player pos then add field length
         if (newPosition < getPlayerPosition(playerID))
             newPosition += ControllerField.get().getFieldLength();
-
+        //Current player
         ModelPlayer player = _playerArray[playerID];
+        //Move player to new position on GUI
         ControllerGUI.get().movePlayer(playerID,getPlayerPosition(playerID),newPosition);
+        //Remember move in Model
         player.set_position(newPosition % ControllerField.get().getFieldLength());
-
+        //If the player has passed start give money
         if (newPosition >= ControllerField.get().getFieldLength())
             changePlayerMoney(4000, playerID);
     }
@@ -100,6 +103,11 @@ public class ControllerPlayer {
         setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
     }
 
+    /**
+     * Place/remove a player from Jail
+     * @param playerID Which player
+     * @param isInJail
+     */
     public void setPlayerJailed(int playerID, boolean isInJail){
         if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
             _playerArray[playerID].set_outOfJailFree(false);

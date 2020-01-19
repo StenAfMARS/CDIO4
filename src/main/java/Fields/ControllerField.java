@@ -12,6 +12,10 @@ public class ControllerField {
 
     private static ControllerField _instance;
 
+    /**
+     * Singleton getter
+     * @return The only instance of ControllerField
+     */
     public static ControllerField get()
     {
         if (_instance == null) {
@@ -20,6 +24,9 @@ public class ControllerField {
         return _instance;
     }
 
+    /**
+     * Constructer; Initializes the board
+     */
     private ControllerField(){
         createBoard();
     }
@@ -153,6 +160,11 @@ public class ControllerField {
         ((ModelProperty)_fields[fieldID]).set_owner(playerID);
         ControllerGUI.get().setPropertyOwner(fieldID, playerID);
     }
+
+    /**
+     *
+     * @return The amount of fields on the board
+     */
     public int getFieldLength (){
         return this._fields.length;
     }
@@ -176,7 +188,6 @@ public class ControllerField {
     }
 
     private int _houseCount;
-
     /**
      * getHouseCount() used to get the amount of houses on every field belonging to a player.
      * @param playerID the ID of a given player.
@@ -234,6 +245,11 @@ public class ControllerField {
         }
     }
 
+    /**
+     * Charges the rent of a property after a player has landed on an owned property.
+     * @param property the property the player landed on
+     * @param playerID the player that landed on the property
+     */
     private void chargeRent(ModelProperty property, int playerID){
         // hvis det er en færge gør det her
         if (property instanceof ModelFerry) {
@@ -246,6 +262,12 @@ public class ControllerField {
             ControllerPlayer.get().changePlayerMoney(property.get_rent(), property.get_owner());
         }
     }
+
+    /**
+     * Calculates the rent price of the ferries
+     * @param ferry the ferry a player landed on
+     * @return the rent of the tile
+     */
     public int calculateShipRentPrice(ModelFerry ferry)
     {
         int rentPrice = ferry.get_rent() / 2;
@@ -260,6 +282,11 @@ public class ControllerField {
         return rentPrice;
     }
 
+    /**
+     * Counts the amount of properties a player owns
+     * @param playerID The player to base the count on
+     * @return The amount of owned properties
+     */
     public int ownedPropertyCount(int playerID){
         int propertyCount = 0;
 
@@ -274,6 +301,10 @@ public class ControllerField {
         return propertyCount;
     }
 
+    /**
+     * Presents the player with options for managing their property
+     * @param playerID the player makingthe choice
+     */
     public void manageProperty(int playerID){
 
         int choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse", "field.buyHotel","field.sellHotel"});
@@ -310,6 +341,11 @@ public class ControllerField {
         }
     }
 
+    /**
+     * A methoed to get the names of all the properties owned by a specific player
+     * @param playerID The player who owns properties
+     * @return an array of property names
+     */
     private String[] ownedPropertyNames(int playerID){
         int propertyCount = ownedPropertyCount(playerID);
 
@@ -328,6 +364,11 @@ public class ControllerField {
         return output;
     }
 
+    /**
+     * A methoed to get the properties owned by a specific player
+     * @param playerID The player who owns property
+     * @return An array of ModelProperties
+     */
     private ModelProperty[] ownedProperties(int playerID){
         int propertyCount = ownedPropertyCount(playerID);
 
@@ -346,6 +387,10 @@ public class ControllerField {
         return output;
     }
 
+    /**
+     * Places a house on an estate and charges the owner
+     * @param estate the estate to place a house on
+     */
     private void buyHouse(ModelEstate estate){
         if (estate.get_amountOfHouses() >= 4)
             return;
@@ -358,6 +403,11 @@ public class ControllerField {
 
     }
 
+    /**
+     * Gets the id of a field
+     * @param field the field to get an id of
+     * @return the id of the field
+     */
     private int getFieldId(ModelField field) {
         int fieldID = -1;
 
@@ -371,6 +421,10 @@ public class ControllerField {
         return fieldID;
     }
 
+    /**
+     * Sells a house on an estate and refunds the owner
+     * @param estate the estate to sell a house on
+     */
     private void sellHouse(ModelEstate estate){
         if (estate.get_amountOfHouses() <= 0)
             return;
@@ -382,6 +436,10 @@ public class ControllerField {
 
     }
 
+    /**
+     * Sell a property and refund the owner
+     * @param property the property to sell
+     */
     private void sellProperty(ModelProperty property){
         if (property instanceof ModelEstate) {
             ControllerPlayer.get().changePlayerMoney((((ModelEstate) property).get_housePrice()/2) * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
@@ -404,6 +462,10 @@ public class ControllerField {
         ControllerGUI.get().setPropertyOwner(id, -1);
     }
 
+    /**
+     * Places a hotel on an estate and charges the owner, removing all houses
+     * @param estate the estate to place a hotel on
+     */
     private void buyHotel(ModelEstate estate){
         if (estate.get_amountOfHouses() != 4)
             return;
@@ -415,6 +477,10 @@ public class ControllerField {
         ControllerGUI.get().placeHotel(getFieldId(estate));
     }
 
+    /**
+     * Sells a hotel on an estate and refunds the owner, replacing it with 4 houses
+     * @param estate the estate to sell a hotel on
+     */
     private void sellHotel(ModelEstate estate){
         if (estate.get_amountOfHouses() != 5)
             return;

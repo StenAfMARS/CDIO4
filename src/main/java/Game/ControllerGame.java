@@ -13,6 +13,10 @@ public class ControllerGame {
     private ControllerField c_field = ControllerField.get();
     private ControllerChanceCard c_chanceCard = ControllerChanceCard.get();
 
+    private ControllerGame(){
+
+    }
+
     private static ControllerGame _instance;
 
     public static ControllerGame get()
@@ -84,6 +88,7 @@ public class ControllerGame {
         }
         if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
             doTurn();
+            c_gui.displayMessage(c_player.getPlayerName(currentPlayer()) + "");
         }
     }
 
@@ -112,7 +117,7 @@ public class ControllerGame {
 
         int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
-        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
+        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer() )){
             if (!c_player.hasPlayerLost(currentBidder)) {
                 if (c_gui.getPlayerBoolean("game.bid", "yes", "no", ControllerPlayer.get().getPlayerName(currentBidder), round((int)(highestBid * 1.1), 50))) {
                     highestBid = round((int)(highestBid * 1.1), 50);

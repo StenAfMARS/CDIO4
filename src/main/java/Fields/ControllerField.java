@@ -229,6 +229,9 @@ public class ControllerField {
         else if (field instanceof ModelGotoJail){
             ControllerPlayer.get().setPlayerJailed(playerID, true);
         }
+        else if (field instanceof ModelIncomeTax){
+            ControllerPlayer.get().changePlayerMoney(-((ModelIncomeTax)field).get_rent(), playerID);
+        }
     }
 
     private void chargeRent(ModelProperty property, int playerID){

@@ -78,7 +78,6 @@ public class ControllerPlayer {
             newPosition += ControllerField.get().getFieldLength();
 
         ModelPlayer player = _playerArray[playerID];
-        ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
 
         if (newPosition >= ControllerField.get().getFieldLength())

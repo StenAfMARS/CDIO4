@@ -8,6 +8,8 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
+    private ControllerPlayer(){}
+
     public static ControllerPlayer get()
     {
         if (_instance == null) {

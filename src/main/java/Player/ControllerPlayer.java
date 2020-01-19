@@ -45,9 +45,6 @@ public class ControllerPlayer {
 
         hasPlayerLost(playerID);
     }
-    public int getPlayerMoney(int playerID){
-        return _playerArray[playerID].get_account().get_money();
-    }
 
     public String getPlayerName(int playerID){
         return _playerArray[playerID].get_name();

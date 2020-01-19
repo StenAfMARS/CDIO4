@@ -7,7 +7,6 @@ import Player.ControllerPlayer;
 public class ControllerGame {
     private int _currentPlayer;
     private DiceCarrier diceCarrier = new DiceCarrier(2);
-    private int[] playerPosition;
 
     private ControllerGUI c_gui = ControllerGUI.get();
     private ControllerPlayer c_player = ControllerPlayer.get();
@@ -128,9 +127,4 @@ public class ControllerGame {
     private int round(int number, int roundTo){
         return (Math.round(number / roundTo) * roundTo);
     }
-
-
-
-
-
 }

@@ -10,7 +10,7 @@ public class TestPassingStart {
     public void shouldGet4000WhenPassingStart() throws InterruptedException {
 
       String[] pNames = {"FørsteFisk"};
-      ControllerPlayer c_player = new ControllerPlayer();
+      ControllerPlayer c_player = ControllerPlayer.get();
       ControllerGUI c_gui = ControllerGUI.get();
 
       c_player.createPlayerArray(c_gui.addPlayers(30000));
@@ -26,7 +26,7 @@ public class TestPassingStart {
       c_gui.movePlayer(0,2,0);
 
 
-      assertEquals(c_player.get_account(0), 34000);
+      assertEquals(c_player.getPlayerMoney(0), 34000);
 
    }
 

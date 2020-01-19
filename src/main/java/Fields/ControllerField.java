@@ -405,7 +405,7 @@ public class ControllerField {
         if (estate.get_amountOfHouses() != 4)
             return;
 
-        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice()*4, estate.get_owner());
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice(), estate.get_owner());
         estate.set_amountOfHouses(5);
 
         ControllerGUI.get().setHouseCount(getFieldId(estate), 0);

@@ -8,13 +8,17 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
-    //Singleton so there is only one instance of ControllerPlayer
+    //Use a Singleton so there is only one instance of ControllerPlayer
+    //Private constructor so only way to create a ControllerPlayer is with ControllerPlayer.get()
     private ControllerPlayer(){}
+    //Singleton
     public static ControllerPlayer get()
     {
+        //If there is no ControllerPlayer instance create an instance
         if (_instance == null) {
             _instance = new ControllerPlayer();
         }
+        //Return found or created instance
         return _instance;
     }
     /**
@@ -78,14 +82,6 @@ public class ControllerPlayer {
         return _playerArray[playerID].is_dead();
     }
 
-    public int playerCount(){
-        return _playerArray.length;
-    }
-
-    public int getPlayerPosition(int playerID){
-        return _playerArray[playerID].get_position();
-    }
-
     public void setPlayerPosition(int playerID , int newPosition){
         if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
             return;
@@ -103,28 +99,38 @@ public class ControllerPlayer {
         if (newPosition >= ControllerField.get().getFieldLength())
             changePlayerMoney(4000, playerID);
     }
+
     public void changePlayerPosition(int playerID, int deltaPosition){
         setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
     }
-
     /**
      * Place/remove a player from Jail
      * @param playerID Which player
-     * @param isInJail
+     * @param isInJail Place in jai with true
      */
     public void setPlayerJailed(int playerID, boolean isInJail){
+        //If player is going to jail and has get out of free card don't go to jail
         if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
             _playerArray[playerID].set_outOfJailFree(false);
             return;
         }
-
+        //Remember if player is in jail
         _playerArray[playerID].set_inJail(isInJail);
+        //Set player pos to be at jail field
         setPlayerPosition(playerID, 10);
     }
+
     public boolean isPlayerJailed(int playerID){
         return _playerArray[playerID].is_inJail();
     }
     public void setOutOfJailFree(int playerID){
         _playerArray[playerID].set_outOfJailFree(true);
+    }
+    public int playerCount(){
+        return _playerArray.length;
+    }
+
+    public int getPlayerPosition(int playerID){
+        return _playerArray[playerID].get_position();
     }
 }

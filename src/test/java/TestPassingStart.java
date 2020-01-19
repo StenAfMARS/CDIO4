@@ -4,20 +4,29 @@ import Player.*;
 import Game.*;
 import java.lang.reflect.Array;
 
-public class shouldGet4000WhenPassingStart {
+public class TestPassingStart {
 
    @Test
-    public void shouldGet4000WhenPassingStart(){
-       String[] pNames = {"FørsteFisk"};
-       ControllerPlayer c_player = new ControllerPlayer();
-       ControllerGUI c_gui = ControllerGUI.get();
+    public void shouldGet4000WhenPassingStart() throws InterruptedException {
 
-       c_player.createPlayerArray(c_gui.addPlayers(30000));
-       c_player.setPlayerPosition(0,1);
-       c_player.changePlayerPosition(0,10);
+      String[] pNames = {"FørsteFisk"};
+      ControllerPlayer c_player = new ControllerPlayer();
+      ControllerGUI c_gui = ControllerGUI.get();
+
+      c_player.createPlayerArray(c_gui.addPlayers(30000));
+      for (int i = 0; i < c_player.playerCount(); i++) {
+         c_gui.placePlayerOnStart(i);
+      }
 
 
+      c_player.setPlayerPosition(0,2);
+      c_gui.movePlayer(0,0,2);
 
+      c_player.setPlayerPosition(0,0);
+      c_gui.movePlayer(0,2,0);
+
+
+      assertEquals(c_player.get_account(0), 34000);
 
    }
 

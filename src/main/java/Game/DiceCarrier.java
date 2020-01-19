@@ -1,17 +1,16 @@
 package Game;
-/**
- *
- */
+
 public class DiceCarrier {
     private Die[] _diceArray;
-
     public DiceCarrier(int amountOfDices) {
-        _diceArray = new Die[amountOfDices];
+        _diceArray =  new Die[amountOfDices];
+        for (int i = 0; i < _diceArray.length; i++) {
+            _diceArray[i] = new Die(6);
+        }
     }
-
     /**
-     * Gives a random value between 1 and 6
-     * @return The values of the dice rolls as an array.
+     * rollDice() gives a random value between 1 and 6
+     * @return diceValues. The values of the dice rolls as an array.
      */
     public int[] rollDice() {
         int[] diceValues = new int[_diceArray.length];
@@ -20,5 +19,30 @@ public class DiceCarrier {
             diceValues[i] = _diceArray[i].get_value();
         }
         return diceValues;
+    }
+
+    /**
+     * getDiceValueSum() used for
+     * @return sum. The sum of the diceroll.
+     */
+    public int getDiceValueSum(){
+        int sum = 0;
+        for (int i = 0; i < _diceArray.length; i++) {
+            int temp = _diceArray[i].get_value();
+            sum += temp;
+        }
+        return sum;
+    }
+
+    /**
+     * Returns an array of ints which is all the dice faces
+     * @return an array with the same size as the amount of dices in the cup
+     */
+    public int[] get_diceFaces() {
+        int temp[] = new int[_diceArray.length];
+        for (int i = 0; i < _diceArray.length; i++) {
+            temp[i] = _diceArray[i].get_value();
+        }
+        return temp;
     }
 }

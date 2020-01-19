@@ -4,29 +4,56 @@ public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
     private boolean _outOfJailFree;
+    private boolean _inJail;
+    private int _position;
+    private boolean _dead;
 
     /**
      * Keeps information about a player
      * @param name takes String for name to player
      */
-    public ModelPlayer(String name,int money){
+    ModelPlayer(String name,int money){
         _name = name;
         _account = new ModelAccount(money);
         _outOfJailFree = false;
+        _position = 0;
     }
 
-    public String get_name() {
+    String get_name() {
         return _name;
     }
-    public boolean is_outOfJailFree() {
+    boolean is_outOfJailFree() {
         return _outOfJailFree;
     }
 
-    public void set_outOfJailFree(boolean outOfJailFree) {
+    void set_outOfJailFree(boolean outOfJailFree) {
         _outOfJailFree = outOfJailFree;
     }
 
-    public ModelAccount get_account() {
+    ModelAccount get_account() {
         return _account;
+    }
+
+    int get_position() {
+        return _position;
+    }
+
+    void set_position(int _position) {
+        this._position = _position;
+    }
+
+    boolean is_inJail() {
+        return _inJail;
+    }
+    void set_inJail(boolean _inJail) {
+        this._inJail = _inJail;
+    }
+
+    public boolean is_dead() {
+        return _dead;
+    }
+
+    public void set_dead(boolean _dead) {
+        this._dead = _dead;
     }
 }

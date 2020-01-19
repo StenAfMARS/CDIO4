@@ -1,6 +1,8 @@
 package Fields;
 
-public class ModelEstate extends ModelProperty {
+import java.awt.*;
+
+class ModelEstate extends ModelProperty {
     private int[] _rent;
     private int _amountOfHouses;
     private int _housePrice;
@@ -9,8 +11,10 @@ public class ModelEstate extends ModelProperty {
      * @param rent an array of how much rent is with x amount of houses. MUST be 6 long
      * @param housePrice The price of a house on the Estate.
      */
-    public ModelEstate(int[] rent, int housePrice) {
-        _rent = rent.clone();
+     ModelEstate(String name, Color backgroundColor, int propertyPrice, int[] rent, int housePrice) {
+         super(name,backgroundColor,propertyPrice,propertyPrice/2);
+         _rent = rent.clone();
+         this._housePrice = housePrice;
 
         // make sure rent is positive
         for (int i = 0; i < _rent.length; i++) {
@@ -23,22 +27,22 @@ public class ModelEstate extends ModelProperty {
         _housePrice = Math.max(housePrice, 0);
     }
 
-    public int get_amountOfHouses() {
+     int get_amountOfHouses() {
         return _amountOfHouses;
     }
-    public void set_amountOfHouses(int _amountOfHouses) {
+     void set_amountOfHouses(int _amountOfHouses) {
         this._amountOfHouses = _amountOfHouses;
     }
 
-    public int get_housePrice() {
+     int get_housePrice() {
         return _housePrice;
     }
-    public void set_housePrice(int _housePrice) {
+     void set_housePrice(int _housePrice) {
         this._housePrice = _housePrice;
     }
 
     @Override
-    public int get_rent() {
+     int get_rent() {
         return _rent[_amountOfHouses];
     }
 }

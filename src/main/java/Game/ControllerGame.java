@@ -71,7 +71,6 @@ public class ControllerGame {
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());
-            c_gui.updatePlayer(currentPlayer(),c_player.getPlayerMoney(currentPlayer()));
             c_player.setPlayerJailed(currentPlayer(), false);
             //Need to change 10 to be more flexible for jail on field
             c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),10);

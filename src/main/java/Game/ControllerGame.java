@@ -66,6 +66,7 @@ public class ControllerGame {
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
+        int[] temp = diceCarrier.get_diceFaces();
 
         c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
 
@@ -79,7 +80,8 @@ public class ControllerGame {
             if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
             c_field.manageProperty(currentPlayer());
         }
-
+        if (temp[0] == temp[1])
+            doTurn();
     }
 
     private void endGame(){

@@ -53,16 +53,16 @@ public class ControllerChanceCard {
                 new ModelMoveCard(32,-3),
                 new ModelTaxCard(0,-500, -2000),
                 new ModelTaxCard(1,-800, -2300),
-                new ModelMoveTo(29,new int[]{5}),
-                new ModelMoveTo(29,new int[]{8}),
-                new ModelMoveTo(29,new int[]{1}),
+                new ModelMoveTo(29,new int[]{39}),
+                new ModelMoveTo(29,new int[]{29}),
+                new ModelMoveTo(29,new int[]{20}),
                 new ModelMoveTo(29,new int[]{4}),
                 new ModelMoveTo(29,new int[]{8}),
                 new ModelMoveTo(29,new int[]{4}),
-                new ModelMoveTo(29,new int[]{2}),
+                new ModelMoveTo(29,new int[]{12}),
                 new ModelMoveTo(29,new int[]{9}),
                 new ModelMoveTo(29,new int[]{1}),
-                new ModelMoveTo(29,new int[]{7,17,27,37}),
+                new ModelMoveTo(29,new int[]{5,15,25,35}),
                 new ModelGoToJailCard(40),
                 new ModelOutOfJailFreeCard(69)
         };
@@ -111,7 +111,7 @@ public class ControllerChanceCard {
              ModelChangeMoneyCard card = ((ModelChangeMoneyCard)upper);
              // her ændre jeg spillerens penge beholdning
              ControllerPlayer.get().changePlayerMoney(card.get_amount(),playerID);
-            // her fortæller jeg hvad guin skal sige til spilleren
+
              ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.get_amount()));
         }
         // her fortæller jeg hvad programmen skal gøre hvis det er tax kort
@@ -128,8 +128,19 @@ public class ControllerChanceCard {
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);
             // her hendter jeg kortet destination
+
             int destination = card.get_destination()[0];
             // her siger jeg til guien hvad den skal sige til spilleren
+            int moveAmount = ControllerField.get().getFieldLength();
+
+            for (int i = 0; i < card.get_destination().length; i++) {
+                if ((card.get_destination()[i] + ControllerField.get().getFieldLength() - ControllerPlayer.get().getPlayerPosition(playerID)) % ControllerField.get().getFieldLength() < moveAmount){
+                    moveAmount = (card.get_destination()[i] + ControllerField.get().getFieldLength() - ControllerPlayer.get().getPlayerPosition(playerID)) % ControllerField.get().getFieldLength();
+                    destination = card.get_destination()[i];
+                }
+            }
+
+
             ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), LanguageManager.get().getString(ControllerField.get().getFieldTitle(destination)));
             // her ændre jeg spilleresn position
             ControllerPlayer.get().setPlayerPosition(playerID,destination);

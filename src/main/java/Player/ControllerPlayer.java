@@ -8,7 +8,7 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
-
+    private ControllerPlayer(){}
 
     public static ControllerPlayer get()
     {
@@ -26,6 +26,10 @@ public class ControllerPlayer {
         for (int i = 0; i < names.length; i++) {
             _playerArray[i] = new ModelPlayer(names[i],30000);
         }
+    }
+
+    public int getPlayerMoney(int playerID){
+        return _playerArray[playerID].get_account().get_money();
     }
 
     /**
@@ -47,9 +51,7 @@ public class ControllerPlayer {
 
         hasPlayerLost(playerID);
     }
-    public int get_account(int playerId){
-        return _playerArray[playerId].get_account().get_money();
-    }
+
     public String getPlayerName(int playerID){
         return _playerArray[playerID].get_name();
     }
@@ -82,10 +84,11 @@ public class ControllerPlayer {
             newPosition += ControllerField.get().getFieldLength();
 
         ModelPlayer player = _playerArray[playerID];
+        ControllerGUI.get().movePlayer(playerID,getPlayerPosition(playerID),newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
 
         if (newPosition >= ControllerField.get().getFieldLength())
-            player.get_account().set_money(player.get_account().get_money() + 4000);
+            changePlayerMoney(4000, playerID);
     }
     public void changePlayerPosition(int playerID, int deltaPosition){
         setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);

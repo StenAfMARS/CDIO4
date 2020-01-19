@@ -7,12 +7,15 @@ import Player.ControllerPlayer;
 public class ControllerGame {
     private int _currentPlayer;
     private DiceCarrier diceCarrier = new DiceCarrier(2);
-    private int[] playerPosition;
 
     private ControllerGUI c_gui = ControllerGUI.get();
     private ControllerPlayer c_player = ControllerPlayer.get();
     private ControllerField c_field = ControllerField.get();
     private ControllerChanceCard c_chanceCard = ControllerChanceCard.get();
+
+    private ControllerGame(){
+
+    }
 
     private static ControllerGame _instance;
 
@@ -68,7 +71,6 @@ public class ControllerGame {
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
         int lastPos = c_player.getPlayerPosition(currentPlayer());
         c_player.changePlayerPosition(currentPlayer(), diceCarrier.getDiceValueSum());
-        c_gui.movePlayer(currentPlayer(),lastPos,c_player.getPlayerPosition(currentPlayer()));
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());
@@ -83,7 +85,9 @@ public class ControllerGame {
                 c_field.manageProperty(currentPlayer());
             }
         }
-
+        if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
+            doTurn();
+        }
     }
 
     private void endGame(){
@@ -111,7 +115,7 @@ public class ControllerGame {
 
         int currentBidder = (currentPlayer() + 1) % c_player.playerCount();
 
-        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer())){
+        while (lastBidder != currentBidder && !(lastBidder==-1 && currentBidder==currentPlayer() )){
             if (!c_player.hasPlayerLost(currentBidder)) {
                 if (c_gui.getPlayerBoolean("game.bid", "yes", "no", ControllerPlayer.get().getPlayerName(currentBidder), round((int)(highestBid * 1.1), 50))) {
                     highestBid = round((int)(highestBid * 1.1), 50);

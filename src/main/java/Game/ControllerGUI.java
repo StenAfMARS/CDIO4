@@ -2,17 +2,17 @@ package Game;
 
 import Fields.ControllerField;
 import Language.LanguageManager;
+import Player.ControllerPlayer;
 import gui_fields.*;
 import gui_main.GUI;
 
 import java.awt.*;
-import java.util.Random;
 
 public class ControllerGUI {
     private GUI _gui;
     private LanguageManager _lang;
     private GUI_Player[] _players;
-    private Color[] _ownedCarColors;
+    private Color[] _playerColors;
 
     private ControllerField c_field = ControllerField.get();
 
@@ -30,7 +30,6 @@ public class ControllerGUI {
         _gui = new GUI();
         _lang = LanguageManager.get();
     }
-
 
     /**
      * Allows the players to choose the language of the game
@@ -64,10 +63,6 @@ public class ControllerGUI {
         }
     }
 
-    //Is it better to return a reference to _gui instead of this?
-    public boolean getPlayerBoolean(String question){
-        return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString("yes"),_lang.getString("no"));
-    }
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
@@ -75,26 +70,16 @@ public class ControllerGUI {
         return _gui.getUserLeftButtonPressed(_lang.getString(question, args),_lang.getString(yesOption),_lang.getString(noOption));
     }
 
-    public int getPlayerInt(String question){
-        return _gui.getUserInteger(_lang.getString(question));
-    }
-
-    public int getPlayerInt(String question,int minValue, int maxValue){
-        return _gui.getUserInteger(_lang.getString(question),minValue,maxValue);
-    }
-
-    public void displayMessage(String message){
-        _gui.showMessage(_lang.getString(message));
-    }
     public void displayMessage(String message, Object... args){
         _gui.showMessage(_lang.getString(message, args));
     }
 
-    public String getPlayerSelection(String question, String[] options){
-        return _gui.getUserSelection(question,options);
-    }
     public int getPlayerIntSelection(String question, String[] options){
-        String userSelection = _gui.getUserSelection(question,options);
+        for (int i = 0; i < options.length; i++) {
+            options[i] = _lang.getString(options[i]);
+        }
+
+        String userSelection = _gui.getUserSelection(_lang.getString(question),options);
 
         for (int i = 0; i < options.length; i++) {
             if (options[i].equals(userSelection))
@@ -102,15 +87,6 @@ public class ControllerGUI {
         }
         return -1;
     }
-
-    public int getPlayerSelection(String question, int[] options){
-        String[] s = new String[options.length];
-        for (int i = 0; i < options.length; i++) {
-            s[i] = String.valueOf(options[i]);
-        }
-        return Integer.parseInt(_gui.getUserSelection(question,s));
-    }
-
 
     /**
      * This functions updates the player account on GUI
@@ -129,7 +105,7 @@ public class ControllerGUI {
     public String[] addPlayers(int startBalance){
         String[] names = new String[Integer.parseInt(_gui.getUserSelection(_lang.getString("gui.selectPlayerCount"),"3","4","5","6"))];
         _players = new GUI_Player[names.length];
-        _ownedCarColors = new Color[names.length];
+        _playerColors = new Color[names.length];
         for (int i = 0; i < names.length; i++) {
             names[i] = _gui.getUserString(_lang.getString("gui.selectPlayerName"));
             //No players with the same name
@@ -150,24 +126,28 @@ public class ControllerGUI {
      * @return Returns a car with a unique color
      */
     private GUI_Car createCar(int playerID) {
+        Color[] pColor = new Color[]{new Color(244, 44, 159),
+                new Color(99, 234, 83),
+                new Color(113, 163, 198),
+                new Color(242, 180, 33),
+                new Color(82, 233, 219),
+                new Color(149, 4, 4)
+        };
+
         GUI_Car car;
-        boolean matches;
-        do {
-            matches = false;
-            car = new GUI_Car();
-            //car.setPrimaryColor();
 
-            for (int i = 0; i < playerID; i++) {
-                if (car.getPrimaryColor() == _ownedCarColors[i]) {
-                    matches = true;
-                    break;
-                }
-            }
-        }
-        while (matches /*|| car.getPrimaryColor() == Color.WHITE*/);
+        car = new GUI_Car(pColor[playerID], pColor[playerID], GUI_Car.Type.CAR, GUI_Car.Pattern.ZEBRA);
+        //car.setPrimaryColor(pColor[playerID]);
 
-        _ownedCarColors[playerID] = car.getPrimaryColor();
+        _playerColors[playerID] = car.getPrimaryColor();
         return car;
+    }
+
+    public void killPlayer(int playerID){
+        _players[playerID].getCar().setSecondaryColor(Color.WHITE);
+
+        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],false);
+        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],true);
     }
 
     /**
@@ -261,7 +241,13 @@ public class ControllerGUI {
     public void setPropertyOwner(int fieldID, int playerID){
         try{
             GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
-            ownable.setBorder(_ownedCarColors[playerID]);
+            if (playerID == -1){
+                ownable.setBorder(null);
+                ownable.setOwnerName(null);
+                return;
+            }
+
+            ownable.setBorder(_playerColors[playerID]);
             ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){
             System.out.println("WARNING: ControllerGUI setTileOwner() casting not successful. Object that got casted to street: " + _gui.getFields()[fieldID].getClass().getName());
@@ -279,5 +265,8 @@ public class ControllerGUI {
 
     public void showChanceCard(String property, Object... args){
         _gui.displayChanceCard(_lang.getString(property, args));
+        try {
+            sleep(1500);
+        } catch (Exception ignored) {}
     }
 }

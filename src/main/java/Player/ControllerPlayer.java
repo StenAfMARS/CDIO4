@@ -32,7 +32,7 @@ public class ControllerPlayer {
      * @param playerID Which player to change
      */
     public void changePlayerMoney(int moneyChange, int playerID){
-        if (_playerArray[playerID].is_inJail() && moneyChange > 0)
+        if ((_playerArray[playerID].is_inJail() && moneyChange > 0) || _playerArray[playerID].is_dead())
             return;
 
         ModelPlayer player = _playerArray[playerID];
@@ -42,9 +42,8 @@ public class ControllerPlayer {
 
         ControllerGUI.get().updatePlayer(playerID, newBalance);
         account.set_money(newBalance);
-    }
-    public int getPlayerMoney(int playerID){
-        return _playerArray[playerID].get_account().get_money();
+
+        hasPlayerLost(playerID);
     }
 
     public String getPlayerName(int playerID){
@@ -53,9 +52,14 @@ public class ControllerPlayer {
 
     public boolean hasPlayerLost(int playerID){
         if (playerID < 0 || playerID >= _playerArray.length)
-            _playerArray[playerID].set_Lost(true);;
+            return false;
 
-            return _playerArray[playerID].get_Lost();
+        if (_playerArray[playerID].get_account().get_money() < 0) {
+            _playerArray[playerID].set_dead(true);
+            ControllerGUI.get().killPlayer(playerID);
+        }
+
+        return _playerArray[playerID].is_dead();
     }
 
     public int playerCount(){
@@ -67,14 +71,13 @@ public class ControllerPlayer {
     }
 
     public void setPlayerPosition(int playerID , int newPosition){
-        if (_playerArray[playerID].is_inJail() && newPosition != 10)
+        if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
             return;
 
         if (newPosition < getPlayerPosition(playerID))
             newPosition += ControllerField.get().getFieldLength();
 
         ModelPlayer player = _playerArray[playerID];
-        ControllerGUI.get().movePlayer(playerID, player.get_position(), newPosition);
         player.set_position(newPosition % ControllerField.get().getFieldLength());
 
         if (newPosition >= ControllerField.get().getFieldLength())
@@ -85,13 +88,18 @@ public class ControllerPlayer {
     }
 
     public void setPlayerJailed(int playerID, boolean isInJail){
-        if (isInJail && _playerArray[playerID].is_outOfJailFree())
+        if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
+            _playerArray[playerID].set_outOfJailFree(false);
             return;
+        }
 
         _playerArray[playerID].set_inJail(isInJail);
         setPlayerPosition(playerID, 10);
     }
     public boolean isPlayerJailed(int playerID){
         return _playerArray[playerID].is_inJail();
+    }
+    public void setOutOfJailFree(int playerID){
+        _playerArray[playerID].set_outOfJailFree(true);
     }
 }

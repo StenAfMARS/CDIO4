@@ -26,6 +26,9 @@ public class ControllerGame {
 
     private boolean won = false;
 
+    /**
+     * startGame() used to change board language, add players, add balance. All in GUI. Furthermore it runs the gameLoop() and endGame().
+     */
     public void startGame() {
         c_gui.changeBoardLanguage();
         c_player.createPlayerArray(c_gui.addPlayers(30000));
@@ -39,6 +42,11 @@ public class ControllerGame {
         endGame();
     }
 
+    /**
+     * gameloop() shuffles the chance cards.
+     * It runs a while loop as longe as there is no winner. If a loser is found the turn is given onto the next player.
+     * It runs the method doTurn() in the while loop as well.
+     */
     private void gameLoop(){
         //Main game loop
         c_chanceCard.shuffle();
@@ -50,23 +58,30 @@ public class ControllerGame {
         }
     }
 
+    /**
+     * doTurn() runs the turn for a player.
+     */
     private void doTurn() {
         //Start of turn
         c_gui.displayMessage("game.playersTurn", c_player.getPlayerName(currentPlayer()));
 
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
-
-        c_player.changePlayerPosition(currentPlayer(),diceCarrier.getDiceValueSum());
+        int lastPos = c_player.getPlayerPosition(currentPlayer());
+        c_player.changePlayerPosition(currentPlayer(), diceCarrier.getDiceValueSum());
+        c_gui.movePlayer(currentPlayer(),lastPos,c_player.getPlayerPosition(currentPlayer()));
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());
             c_player.setPlayerJailed(currentPlayer(), false);
+            //Need to change 10 to be more flexible for jail on field
+            c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),10);
         }
         //Middle of turn
         c_field.landOnField(currentPlayer());
-
-        if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")){
-            c_field.manageProperty(currentPlayer());
+        if (c_field.ownedPropertyCount(currentPlayer()) != 0) {
+            if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")) {
+                c_field.manageProperty(currentPlayer());
+            }
         }
 
     }
@@ -85,6 +100,11 @@ public class ControllerGame {
         return _currentPlayer;
     }
 
+    /**
+     * auction() used to create an auction for a field that the original player, whose turn it is, landed on.
+     * The auction works with each player being asked if they want to bid higher than the player before. This continues until one of the players has the highest bid and the two others declines bidding higher.
+     * @param fieldID ID of a given field.
+     */
     public void auction(int fieldID) {
         int lastBidder = -1;
         int highestBid = c_field.getPropertyPrice(fieldID);
@@ -112,9 +132,4 @@ public class ControllerGame {
     private int round(int number, int roundTo){
         return (Math.round(number / roundTo) * roundTo);
     }
-
-
-
-
-
 }

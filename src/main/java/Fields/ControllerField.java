@@ -24,6 +24,9 @@ public class ControllerField {
         createBoard();
     }
 
+    /**
+     * createBoard() used for creating the board.
+     */
     public void createBoard (){
         _fields = new ModelField[40];
         _fields[0] = new ModelStart("start",null);
@@ -68,11 +71,11 @@ public class ControllerField {
         _fields[39] = new ModelEstate("rådhuspladsen",Color.MAGENTA,8000,new int[]{1000,4000,12000,28000,34000,40000},4000);
     }
 
-    public int getFieldType(int fieldID){
-      //  _fields[fieldID].
-        return 1;
-    }
-    
+    /**
+     * getFieldTitle() used to get title of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".title". The title to a given field.
+     */
     public String getFieldTitle (int fieldID) {
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldTitle, fieldID out of boundary.");
@@ -83,6 +86,12 @@ public class ControllerField {
         return "field." + field.get_name() + ".title";
 
     }
+
+    /**
+     * getFieldSubtext() used to get subtext of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".description". The subtext to a given field.
+     */
     public String getFieldSubtext (int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldSubtext, fieldID out of boundary.");
@@ -91,6 +100,12 @@ public class ControllerField {
         ModelField field = _fields[fieldID];
         return "field." + field.get_name() + ".subtext";
     }
+
+    /**
+     * getFieldDescription() used to get description of a given field.
+     * @param fieldID ID of a given field.
+     * @return "field." + field.get_name() + ".description". The description to a given field.
+     */
     public String getFieldDescription (int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldDescription, fieldID out of boundary.");
@@ -100,6 +115,11 @@ public class ControllerField {
         return "field." + field.get_name() + ".description";
     }
 
+    /**
+     * getPropertyPrice() used to get the price of a property.
+     * @param fieldID the ID of a given field.
+     * @return ((ModelProperty)_fields[fieldID]).get_propertyPrice(). Property price for the given field.
+     */
     public int getPropertyPrice(int fieldID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, getFieldPrice, fieldID out of boundary.");
@@ -114,6 +134,11 @@ public class ControllerField {
         return ((ModelProperty)_fields[fieldID]).get_propertyPrice();
     }
 
+    /**
+     * setPropertyOwner() used to set the owner of a filedID to a playerID.
+     * @param fieldID the ID of a given field.
+     * @param playerID the ID of a given player.
+     */
     public void setPropertyOwner(int fieldID, int playerID){
         if (0 > fieldID || fieldID >= _fields.length){
             System.out.println("WARNING: ControllerField, setPropertyOwner, fieldID out of boundary.");
@@ -132,31 +157,51 @@ public class ControllerField {
         return this._fields.length;
     }
     private int _HotelCount;
+    /**
+     * getHotelCount() used to get the amount of hotels on every field belonging to a player.
+     * @param playerID the ID of a given player.
+     * @return private attribute _HotelCount.
+     */
     public int getHotelCount(int playerID)
     {
-        for(int i = 0; i<= 40; i++){
+        for(int i = 0; i< _fields.length; i++){
             int fieldID = i;
-
-            if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() == 5 ){
-                _HotelCount = _HotelCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
+            if (_fields[i] instanceof ModelProperty) {
+                if (((ModelProperty) _fields[fieldID]).get_owner() == playerID && ((ModelEstate) _fields[fieldID]).get_amountOfHouses() == 5) {
+                    _HotelCount = _HotelCount + ((ModelEstate) _fields[fieldID]).get_amountOfHouses();
+                }
             }
         }
         return _HotelCount;
     }
 
     private int _houseCount;
+
+    /**
+     * getHouseCount() used to get the amount of houses on every field belonging to a player.
+     * @param playerID the ID of a given player.
+     * @return private attribute _houseCount.
+     */
     public int getHouseCount(int playerID)
     {
-     for(int i = 0; i<= 40; i++){
-        int fieldID = i;
+     for(int i = 0; i< _fields.length; i++) {
+         int fieldID = i;
+         if (_fields[i] instanceof ModelProperty) {
 
-        if(((ModelProperty)_fields[fieldID]).get_owner() == playerID && ((ModelEstate)_fields[fieldID]).get_amountOfHouses() != 5 ){
-            _houseCount = _houseCount + ((ModelEstate)_fields[fieldID]).get_amountOfHouses();
-        }
+             if (((ModelProperty) _fields[fieldID]).get_owner() == playerID && ((ModelEstate) _fields[fieldID]).get_amountOfHouses() != 5) {
+                 _houseCount = _houseCount + ((ModelEstate) _fields[fieldID]).get_amountOfHouses();
+             }
+         }
      }
         return _houseCount;
     }
 
+    /**
+     * landOnField() used to check if property is owned. If it is owned then the player gets charged rent.
+     * If the field is not owned then the player is asked if he wants to buy it. If yes the price of the property is charged from the player.
+     * If the field is a chance field then the player draws a card and does the consequence  which is stated on the card.
+     * @param playerID the ID of a given player.
+     */
     public void landOnField(int playerID){
         try {
             ControllerGUI.get().sleep(500);
@@ -181,7 +226,9 @@ public class ControllerField {
         else if (field instanceof ModelChanceField){
             ControllerChanceCard.get().draw(playerID);
         }
-
+        else if (field instanceof ModelGotoJail){
+            ControllerPlayer.get().setPlayerJailed(playerID, true);
+        }
     }
 
     private void chargeRent(ModelProperty property, int playerID){
@@ -210,14 +257,27 @@ public class ControllerField {
         return rentPrice;
     }
 
+    public int ownedPropertyCount(int playerID){
+        int propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    propertyCount++;
+                }
+            }
+        }
+
+        return propertyCount;
+    }
 
     public void manageProperty(int playerID){
 
-        int choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+        int choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse", "field.buyHotel","field.sellHotel"});
 
         while (choice != 0){
 
-            ModelProperty prop = (ModelProperty) _fields[ControllerGUI.get().getPlayerIntSelection("Choose property", ownedProperties(playerID))];
+            ModelProperty prop = ownedProperties(playerID)[ControllerGUI.get().getPlayerIntSelection("field.chooseProperty", ownedPropertyNames(playerID))];
 
             switch (choice){
                 case 1:
@@ -231,22 +291,24 @@ public class ControllerField {
                     if (prop instanceof ModelEstate)
                         sellHouse((ModelEstate)prop);
                     break;
+                case 4:
+                    if (prop instanceof ModelEstate)
+                        buyHotel((ModelEstate)prop);
+                    break;
+                case 5:
+                    if (prop instanceof ModelEstate)
+                        sellHotel((ModelEstate)prop);
+                    break;
             }
-
-            choice = ControllerGUI.get().getPlayerIntSelection("What to do?", new String[]{"End turn", "Sell property", "Buy House","Sell house"});
+            if (ownedPropertyCount(playerID) != 0)
+                choice = ControllerGUI.get().getPlayerIntSelection("field.manageOption", new String[]{"endTurn", "field.sellProperty", "field.buyHouse","field.sellHouse", "field.buyHotel","field.sellHotel"});
+            else
+                choice = 0;
         }
     }
 
-    private String[] ownedProperties(int playerID){
-        int propertyCount = 0;
-
-        for (int i = 0; i < _fields.length; i++) {
-            if (_fields[i] instanceof ModelProperty){
-                if (((ModelProperty)_fields[i]).get_owner() == playerID){
-                    propertyCount++;
-                }
-            }
-        }
+    private String[] ownedPropertyNames(int playerID){
+        int propertyCount = ownedPropertyCount(playerID);
 
         String[] output = new String[propertyCount];
 
@@ -263,15 +325,101 @@ public class ControllerField {
         return output;
     }
 
-    private void buyHouse(ModelEstate estate){
+    private ModelProperty[] ownedProperties(int playerID){
+        int propertyCount = ownedPropertyCount(playerID);
 
+        ModelProperty[] output = new ModelProperty[propertyCount];
+
+        propertyCount = 0;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] instanceof ModelProperty){
+                if (((ModelProperty)_fields[i]).get_owner() == playerID){
+                    output[propertyCount++] = (ModelProperty) _fields[i];
+                }
+            }
+        }
+
+        return output;
+    }
+
+    private void buyHouse(ModelEstate estate){
+        if (estate.get_amountOfHouses() >= 4)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice(), estate.get_owner());
+        estate.set_amountOfHouses(estate.get_amountOfHouses()+1);
+
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());
+
+    }
+
+    private int getFieldId(ModelField field) {
+        int fieldID = -1;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] == field) {
+                fieldID = i;
+                break;
+            }
+        }
+
+        return fieldID;
     }
 
     private void sellHouse(ModelEstate estate){
+        if (estate.get_amountOfHouses() <= 0)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice(), estate.get_owner());
+        estate.set_amountOfHouses(estate.get_amountOfHouses()-1);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());
 
     }
 
-    private void sellProperty(ModelProperty estate){
+    private void sellProperty(ModelProperty property){
+        if (property instanceof ModelEstate) {
+            ControllerPlayer.get().changePlayerMoney(((ModelEstate) property).get_housePrice() * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
+            ((ModelEstate)property).set_amountOfHouses(0);
+            ControllerGUI.get().setHouseCount(getFieldId(property), 0);
+        }
 
+        ControllerPlayer.get().changePlayerMoney(property.get_propertyPrice(), property.get_owner());
+        property.set_owner(-1);
+
+        int id = -1;
+
+        for (int i = 0; i < _fields.length; i++) {
+            if (_fields[i] == property) {
+                id = i;
+                break;
+            }
+        }
+
+        ControllerGUI.get().setPropertyOwner(id, -1);
+    }
+
+    private void buyHotel(ModelEstate estate){
+        if (estate.get_amountOfHouses() != 4)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice()*4, estate.get_owner());
+        estate.set_amountOfHouses(5);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), 0);
+        ControllerGUI.get().placeHotel(getFieldId(estate));
+    }
+
+    private void sellHotel(ModelEstate estate){
+        if (estate.get_amountOfHouses() != 5)
+            return;
+
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()*4, estate.get_owner());
+        estate.set_amountOfHouses(4);
+
+        ControllerGUI.get().setHouseCount(getFieldId(estate), 4);
+        ControllerGUI.get().removeHotel(getFieldId(estate));
     }
 }

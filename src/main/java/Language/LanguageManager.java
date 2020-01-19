@@ -30,25 +30,19 @@ public class LanguageManager {
 
         for (String language : _languages) {
             if (language.equalsIgnoreCase(newLanguage)) {
-                _currentLanguage = newLanguage;
+                _currentLanguage = language;
                 break;
             }
         }
 
-        File file = new File(
-                getClass().getClassLoader().getResource("LanguageFiles/" + _currentLanguage + ".properties").getFile()
-        );
-
         Properties prop = new Properties();
 
-        try (InputStream input = new FileInputStream(file)) {
-            // load a properties file
-            prop.load(input);
-            _loadedText = prop;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Failed to load language");
+        try {
+            prop.load(ClassLoader.getSystemResourceAsStream("LanguageFiles/" + _currentLanguage + ".properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        _loadedText = prop;
     }
     public String[] getLanguages(){
         return _languages.clone();

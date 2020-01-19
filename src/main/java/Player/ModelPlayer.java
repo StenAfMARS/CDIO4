@@ -4,8 +4,9 @@ public class ModelPlayer {
     private String _name;
     private ModelAccount _account;
     private boolean _outOfJailFree;
+    private boolean _inJail;
     private int _position;
-    private boolean _Lost;
+    private boolean _dead;
 
     /**
      * Keeps information about a player
@@ -16,7 +17,6 @@ public class ModelPlayer {
         _account = new ModelAccount(money);
         _outOfJailFree = false;
         _position = 0;
-        _Lost = false;
     }
 
     String get_name() {
@@ -49,9 +49,11 @@ public class ModelPlayer {
         this._inJail = _inJail;
     }
 
-    public boolean get_Lost(){return _Lost;}
+    public boolean is_dead() {
+        return _dead;
+    }
 
-    public void set_Lost(Boolean Lost) {
-        this._Lost = true;
+    public void set_dead(boolean _dead) {
+        this._dead = _dead;
     }
 }

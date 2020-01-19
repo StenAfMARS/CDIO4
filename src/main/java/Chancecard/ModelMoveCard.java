@@ -2,7 +2,8 @@ package Chancecard;
 
  class ModelMoveCard extends ModelChanceCard {
     private int _amount;
-     ModelMoveCard(int amount){
+     ModelMoveCard(int iD, int amount) {
+         super(iD);
         _amount = amount;
     }
 

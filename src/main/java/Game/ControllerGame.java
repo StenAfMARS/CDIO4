@@ -13,6 +13,10 @@ public class ControllerGame {
     private ControllerField c_field = ControllerField.get();
     private ControllerChanceCard c_chanceCard = ControllerChanceCard.get();
 
+    private ControllerGame(){
+
+    }
+
     private static ControllerGame _instance;
 
     public static ControllerGame get()

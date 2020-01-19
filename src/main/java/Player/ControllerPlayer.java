@@ -59,7 +59,7 @@ public class ControllerPlayer {
 
         if (_playerArray[playerID].get_account().get_money() < 0) {
             _playerArray[playerID].set_dead(true);
-            ControllerGUI.get().killPlayer(playerID);
+            ControllerGUI.get().killPlayer(playerID,getPlayerPosition(playerID));
         }
 
         return _playerArray[playerID].is_dead();

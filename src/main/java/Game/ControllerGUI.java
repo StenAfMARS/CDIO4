@@ -2,7 +2,6 @@ package Game;
 
 import Fields.ControllerField;
 import Language.LanguageManager;
-import Player.ControllerPlayer;
 import gui_fields.*;
 import gui_main.GUI;
 
@@ -171,11 +170,14 @@ public class ControllerGUI {
         return car;
     }
 
-    public void killPlayer(int playerID){
+    public void killPlayer(int playerID, int playerPosition){
         _players[playerID].getCar().setSecondaryColor(Color.WHITE);
 
-        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],false);
-        _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],true);
+        //_gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],false);
+        //_gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],true);
+        _gui.getFields()[playerPosition].setCar(_players[playerID],false);
+        _gui.getFields()[playerPosition].setCar(_players[playerID],true);
+
     }
 
     /**

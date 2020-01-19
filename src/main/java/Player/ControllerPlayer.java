@@ -8,6 +8,8 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
+
+
     public static ControllerPlayer get()
     {
         if (_instance == null) {
@@ -45,7 +47,9 @@ public class ControllerPlayer {
 
         hasPlayerLost(playerID);
     }
-
+    public int get_account(int playerId){
+        return _playerArray[playerId].get_account().get_money();
+    }
     public String getPlayerName(int playerID){
         return _playerArray[playerID].get_name();
     }

@@ -71,7 +71,6 @@ public class ControllerGame {
         c_gui.displayDieOnBoard(diceCarrier.rollDice());
         int lastPos = c_player.getPlayerPosition(currentPlayer());
         c_player.changePlayerPosition(currentPlayer(), diceCarrier.getDiceValueSum());
-        c_gui.movePlayer(currentPlayer(),lastPos,c_player.getPlayerPosition(currentPlayer()));
 
         if (c_player.isPlayerJailed(currentPlayer())) {
             c_player.changePlayerMoney(-1000, currentPlayer());
@@ -88,7 +87,6 @@ public class ControllerGame {
         }
         if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
             doTurn();
-            c_gui.displayMessage(c_player.getPlayerName(currentPlayer()) + "");
         }
     }
 

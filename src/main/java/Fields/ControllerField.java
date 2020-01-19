@@ -375,7 +375,7 @@ public class ControllerField {
         if (estate.get_amountOfHouses() <= 0)
             return;
 
-        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice(), estate.get_owner());
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()/2, estate.get_owner());
         estate.set_amountOfHouses(estate.get_amountOfHouses()-1);
 
         ControllerGUI.get().setHouseCount(getFieldId(estate), estate.get_amountOfHouses());
@@ -384,7 +384,7 @@ public class ControllerField {
 
     private void sellProperty(ModelProperty property){
         if (property instanceof ModelEstate) {
-            ControllerPlayer.get().changePlayerMoney(((ModelEstate) property).get_housePrice() * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
+            ControllerPlayer.get().changePlayerMoney((((ModelEstate) property).get_housePrice()/2) * ((ModelEstate) property).get_amountOfHouses(), property.get_owner());
             ((ModelEstate)property).set_amountOfHouses(0);
             ControllerGUI.get().setHouseCount(getFieldId(property), 0);
         }
@@ -408,7 +408,7 @@ public class ControllerField {
         if (estate.get_amountOfHouses() != 4)
             return;
 
-        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice()*4, estate.get_owner());
+        ControllerPlayer.get().changePlayerMoney(-estate.get_housePrice(), estate.get_owner());
         estate.set_amountOfHouses(5);
 
         ControllerGUI.get().setHouseCount(getFieldId(estate), 0);
@@ -419,7 +419,7 @@ public class ControllerField {
         if (estate.get_amountOfHouses() != 5)
             return;
 
-        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()*4, estate.get_owner());
+        ControllerPlayer.get().changePlayerMoney(estate.get_housePrice()/2, estate.get_owner());
         estate.set_amountOfHouses(4);
 
         ControllerGUI.get().setHouseCount(getFieldId(estate), 4);

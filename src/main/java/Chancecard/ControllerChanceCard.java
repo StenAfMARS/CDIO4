@@ -15,7 +15,7 @@ public class ControllerChanceCard {
      */
     public static ControllerChanceCard get()
     {
-        // her constructor jeg classen
+        // Constructor for the class
         if (_instance == null) {
             _instance = new ControllerChanceCard();
         }
@@ -26,7 +26,7 @@ public class ControllerChanceCard {
      * ControllerChanceCard used to make the different models of chance cards in an array.
      */
     private ControllerChanceCard(){
-        // her fylder jeg et array op med opbjector
+        // Array of ModelChangeMoneyCards being filled with objects.
         _chanceCards = new ModelChanceCard[]{
                 new ModelChangeMoneyCard(12,100),
                 new ModelChangeMoneyCard(13,500),
@@ -69,12 +69,12 @@ public class ControllerChanceCard {
     }
 
     /**
-     * swap() used for swapping ownable chance cards.
+     * swap() used for swapping  chance cards.
      * @param a chancecard a.
      * @param b chancecard b.
      */
     private void swap(int a, int b){
-        // her fortæller jeg hvordan jeg vil have den til at blande mit deck
+        // How to swap cards. Used in shuffle().
         ModelChanceCard cardA = _chanceCards[a];
         ModelChanceCard cardB = _chanceCards[b];
         _chanceCards[a] = cardB;
@@ -85,7 +85,7 @@ public class ControllerChanceCard {
      * shuffle() used to shuffle the deck of chance cards.
      */
     public void shuffle(){
-        // her blander jeg mit deck 300000 gange
+        // The deck getting shuffled 30000 times.
         for (int i=0; i<30000; i++ ){
             int a= (int) (Math.random()*_chanceCards.length);
             int b= (int) (Math.random()*_chanceCards.length);
@@ -99,38 +99,38 @@ public class ControllerChanceCard {
      * @return upper. The card on top of the deck.
      */
     public ModelChanceCard draw(int playerID){
-        //her trækker man det øverste kort
+        //Drawing the upper card.
         ModelChanceCard upper= _chanceCards[0];
         for (int i=0; i<_chanceCards.length-1;i++){
             _chanceCards[i] =_chanceCards [i+1];
         }
-        // her gør jeg decket 1 mindre
+        //The deck becomes on card smaller.
         _chanceCards[_chanceCards.length-1]=upper;
-        // her fortæller jeg hvad koden skal gører hvis kortet er af typen modelChangeMoneyCard
+        //If the card being drawn is a ModelChangeMoneyCard do this.
         if (upper instanceof ModelChangeMoneyCard) {
              ModelChangeMoneyCard card = ((ModelChangeMoneyCard)upper);
-             // her ændre jeg spillerens penge beholdning
+             //Changing the amount of money on players accounts.
              ControllerPlayer.get().changePlayerMoney(card.get_amount(),playerID);
 
              ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.get_amount()));
         }
-        // her fortæller jeg hvad programmen skal gøre hvis det er tax kort
+        //If the upper card being drawn is a ModelTaxCard do this.
         else if(upper instanceof ModelTaxCard){
             ModelTaxCard card = ((ModelTaxCard)upper);
-            // her beder jeg om at beregne skatten
+            //Calcuating tax.
             int tax = calculateTax(ControllerField.get().getHouseCount(playerID),ControllerField.get().getHotelCount(playerID));// TEMPT
-            // her ændre jeg spillerens penge
+            //Changing amount of money on player account.
             ControllerPlayer.get().changePlayerMoney(tax,playerID);
-            // her fortæller jeg hvad guien skal sige til spilleren
+            //GUI telling something to the player.
             ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), Math.abs(card.getPricePrHouse()),Math.abs(card.getPricePrHotel()));
         }
-        // her siger jeg hvad koden skal gøre hvis kortet er Move to
+        //If the upper card being drawn is a ModelMoveTo do this.
         else if(upper instanceof ModelMoveTo){
             ModelMoveTo card = ((ModelMoveTo)upper);
-            // her hendter jeg kortet destination
+            //Getting the destination of the card.
 
             int destination = card.get_destination()[0];
-            // her siger jeg til guien hvad den skal sige til spilleren
+            //GUI telling something to the player.
             int moveAmount = ControllerField.get().getFieldLength();
 
             for (int i = 0; i < card.get_destination().length; i++) {
@@ -142,21 +142,21 @@ public class ControllerChanceCard {
 
 
             ControllerGUI.get().showChanceCard("chanceCard.description." + upper.get_iD(), LanguageManager.get().getString(ControllerField.get().getFieldTitle(destination)));
-            // her ændre jeg spilleresn position
+            //Changing player position.
             ControllerPlayer.get().setPlayerPosition(playerID,destination);
-            // her beder jeg den om køre en funktion landOnField der fortæller programmen hvad der skal ske på de forskellige felter
+            //Running the function landOnField, that tells the program what happens if you land on the different fields.
             ControllerField.get().landOnField(playerID);
 
 
         }
-        // her fortæller jeg koden hvad skal gører hvis kortet er en ModelGoToJailCard
+        //If the upper card being drawn is a ModelGoToJailCard do this.
         else if(upper instanceof ModelGoToJailCard){
-            // ryk i fængsel
+            //Move to jail
             ControllerPlayer.get().setPlayerJailed(playerID,true);
         }
 
         else if(upper instanceof ModelOutOfJailFreeCard){
-            // her for du et kort der kan få dig ud af fængsel
+            //Getting a card that gets you out of jail.
 
             ControllerPlayer.get().setOutOfJailFree(playerID);
         }
@@ -177,7 +177,7 @@ public class ControllerChanceCard {
      * @param amountOfHotel amount of hotels.
      * @return tax as an int. The tax for houses and hotels.
      */
-    // her beregnes skatten
+    //Calculating taxes.
     public int calculateTax(int amountOfHouses,int amountOfHotel){
         int tax;
         tax = 500*amountOfHouses + 1000*amountOfHotel;

@@ -4,7 +4,7 @@ import Player.*;
 import Game.*;
 
 public class TestMoneyTransfer {
-/*
+
     @Test
     public void transferMoneyToPlayer() {
         String[] playerNames = {"TestPlayer"};
@@ -33,6 +33,5 @@ public class TestMoneyTransfer {
             assertTrue(c_player.getPlayerMoney(0)>=30000 || c_player.getPlayerMoney(0)<=30000);
         }
     }
-
-*/
+    
 }

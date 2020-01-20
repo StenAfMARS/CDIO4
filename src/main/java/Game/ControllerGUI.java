@@ -42,8 +42,10 @@ public class ControllerGUI {
      * @param newLanguage the new language of the game
      */
     public void changeBoardLanguage(String newLanguage){
+        //For the amount of languages check if new language is a language in language manager
         for (String language:_lang.getLanguages()) {
             if (language.equalsIgnoreCase(newLanguage)){
+                //Create a board with new language
                 _lang.setLanguage(language);
                 break;
             }
@@ -56,6 +58,7 @@ public class ControllerGUI {
      * Updates all text on the board to match the current language.
      */
     public void updateBoardLanguage(){
+        //For each field update description, title and sub text. Get information from properties
         for (int i = 0; i < _gui.getFields().length; i++) {
             _gui.getFields()[i].setTitle(_lang.getString(c_field.getFieldTitle(i)));
             _gui.getFields()[i].setDescription(_lang.getString(c_field.getFieldDescription(i)));
@@ -63,6 +66,7 @@ public class ControllerGUI {
         }
     }
 
+    //Methods to display/ask something on GUI
     public boolean getPlayerBoolean(String question, String yesOption, String noOption){
         return _gui.getUserLeftButtonPressed(_lang.getString(question),_lang.getString(yesOption),_lang.getString(noOption));
     }
@@ -74,13 +78,22 @@ public class ControllerGUI {
         _gui.showMessage(_lang.getString(message, args));
     }
 
+    /**
+     * Display a selection of options the player can chose one
+     * @param question What the player has to answer
+     * @param options The options the player has to answer with
+     * @return returns the chosen answer from player
+     */
     public int getPlayerIntSelection(String question, String[] options){
+        //Translate from properties to correct string in correct language
         for (int i = 0; i < options.length; i++) {
             options[i] = _lang.getString(options[i]);
         }
 
+        //Display and ask player. Remember player choice from GUI
         String userSelection = _gui.getUserSelection(_lang.getString(question),options);
 
+        //If the answer matches option return the position of option
         for (int i = 0; i < options.length; i++) {
             if (options[i].equals(userSelection))
                 return i;
@@ -126,6 +139,7 @@ public class ControllerGUI {
      * @return Returns a car with a unique color
      */
     private GUI_Car createCar(int playerID) {
+        //Create 6 colors, with no white and black so players never have the same colors
         Color[] pColor = new Color[]{new Color(244, 44, 159),
                 new Color(99, 234, 83),
                 new Color(113, 163, 198),
@@ -134,18 +148,20 @@ public class ControllerGUI {
                 new Color(149, 4, 4)
         };
 
-        GUI_Car car;
 
-        car = new GUI_Car(pColor[playerID], pColor[playerID], GUI_Car.Type.CAR, GUI_Car.Pattern.ZEBRA);
+        //Create GUI car
+        GUI_Car car = new GUI_Car(pColor[playerID], pColor[playerID], GUI_Car.Type.CAR, GUI_Car.Pattern.ZEBRA);
         //car.setPrimaryColor(pColor[playerID]);
-
+        //Remember color for setting border colors
         _playerColors[playerID] = car.getPrimaryColor();
         return car;
     }
 
+    //Remove player from GUI
     public void killPlayer(int playerID){
+        //Set color white to indicate dead player
         _players[playerID].getCar().setSecondaryColor(Color.WHITE);
-
+        //Update player car on board. If not done shows old car
         _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],false);
         _gui.getFields()[ControllerPlayer.get().getPlayerPosition(playerID)].setCar(_players[playerID],true);
     }
@@ -171,9 +187,13 @@ public class ControllerGUI {
      */
     public void movePlayer(int playerID, int currentPosition, int newPosition){
         for (int i = currentPosition; i < newPosition; i++) {
+            //Moving the player
+            //If i is larger than 40 or equal to 40 divide with 40 and use the remnant instead
             _gui.getFields()[i%40].setCar(_players[playerID],false);
+            //+1 for next field
             _gui.getFields()[(i+1)%40].setCar(_players[playerID],true);
             try {
+                //Sleep for illusion car is driving.
                 sleep(65);
             } catch (InterruptedException e){
                 _gui.showMessage("An error occurred");
@@ -241,12 +261,14 @@ public class ControllerGUI {
     public void setPropertyOwner(int fieldID, int playerID){
         try{
             GUI_Ownable ownable = (GUI_Ownable) _gui.getFields()[fieldID];
+            //-1 to remove a owner
             if (playerID == -1){
                 ownable.setBorder(null);
                 ownable.setOwnerName(null);
                 return;
             }
 
+            //Set border to indicate owner of field
             ownable.setBorder(_playerColors[playerID]);
             ownable.setOwnerName(_players[playerID].getName());
         } catch (RuntimeException e){

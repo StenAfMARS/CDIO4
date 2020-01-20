@@ -8,13 +8,17 @@ public class ControllerPlayer {
 
     private static ControllerPlayer _instance;
 
-    //
+    //Use a Singleton so there is only one instance of ControllerPlayer
+    //Private constructor so only way to create a ControllerPlayer is with ControllerPlayer.get()
     private ControllerPlayer(){}
+    //Singleton
     public static ControllerPlayer get()
     {
+        //If there is no ControllerPlayer instance create an instance
         if (_instance == null) {
             _instance = new ControllerPlayer();
         }
+        //Return found or created instance
         return _instance;
     }
     /**
@@ -39,7 +43,8 @@ public class ControllerPlayer {
      * @param playerID Which player to change
      */
     public void changePlayerMoney(int moneyChange, int playerID){
-        //If player in
+        //If player is in jail and moneyChange is large than 0 return.
+        // Prevents player from getting rent in jail. If player is dead skip as well
         if ((_playerArray[playerID].is_inJail() && moneyChange > 0) || _playerArray[playerID].is_dead())
             return;
         //Current Player
@@ -77,46 +82,55 @@ public class ControllerPlayer {
         return _playerArray[playerID].is_dead();
     }
 
+    public void setPlayerPosition(int playerID , int newPosition){
+        if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
+            return;
+
+        //If the new position is less that player pos then add field length
+        if (newPosition < getPlayerPosition(playerID))
+            newPosition += ControllerField.get().getFieldLength();
+        //Current player
+        ModelPlayer player = _playerArray[playerID];
+        //Move player to new position on GUI
+        ControllerGUI.get().movePlayer(playerID,getPlayerPosition(playerID),newPosition);
+        //Remember move in Model
+        player.set_position(newPosition % ControllerField.get().getFieldLength());
+        //If the player has passed start give money
+        if (newPosition >= ControllerField.get().getFieldLength())
+            changePlayerMoney(4000, playerID);
+    }
+
+    public void changePlayerPosition(int playerID, int deltaPosition){
+        setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
+    }
+    /**
+     * Place/remove a player from Jail
+     * @param playerID Which player
+     * @param isInJail Place in jai with true
+     */
+    public void setPlayerJailed(int playerID, boolean isInJail){
+        //If player is going to jail and has get out of free card don't go to jail
+        if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
+            _playerArray[playerID].set_outOfJailFree(false);
+            return;
+        }
+        //Remember if player is in jail
+        _playerArray[playerID].set_inJail(isInJail);
+        //Set player pos to be at jail field
+        setPlayerPosition(playerID, 10);
+    }
+
+    public boolean isPlayerJailed(int playerID){
+        return _playerArray[playerID].is_inJail();
+    }
+    public void setOutOfJailFree(int playerID){
+        _playerArray[playerID].set_outOfJailFree(true);
+    }
     public int playerCount(){
         return _playerArray.length;
     }
 
     public int getPlayerPosition(int playerID){
         return _playerArray[playerID].get_position();
-    }
-
-    public void setPlayerPosition(int playerID , int newPosition){
-        if ((_playerArray[playerID].is_inJail() && newPosition != 10) || _playerArray[playerID].is_dead())
-            return;
-
-        //If the new position
-        if (newPosition < getPlayerPosition(playerID))
-            newPosition += ControllerField.get().getFieldLength();
-
-        ModelPlayer player = _playerArray[playerID];
-        ControllerGUI.get().movePlayer(playerID,getPlayerPosition(playerID),newPosition);
-        player.set_position(newPosition % ControllerField.get().getFieldLength());
-
-        if (newPosition >= ControllerField.get().getFieldLength())
-            changePlayerMoney(4000, playerID);
-    }
-    public void changePlayerPosition(int playerID, int deltaPosition){
-        setPlayerPosition(playerID, _playerArray[playerID].get_position() + deltaPosition);
-    }
-
-    public void setPlayerJailed(int playerID, boolean isInJail){
-        if (isInJail && _playerArray[playerID].is_outOfJailFree()) {
-            _playerArray[playerID].set_outOfJailFree(false);
-            return;
-        }
-
-        _playerArray[playerID].set_inJail(isInJail);
-        setPlayerPosition(playerID, 10);
-    }
-    public boolean isPlayerJailed(int playerID){
-        return _playerArray[playerID].is_inJail();
-    }
-    public void setOutOfJailFree(int playerID){
-        _playerArray[playerID].set_outOfJailFree(true);
     }
 }

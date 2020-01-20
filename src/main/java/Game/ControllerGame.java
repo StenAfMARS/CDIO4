@@ -72,19 +72,24 @@ public class ControllerGame {
         int lastPos = c_player.getPlayerPosition(currentPlayer());
         c_player.changePlayerPosition(currentPlayer(), diceCarrier.getDiceValueSum());
 
+        //Check if player is in jail
         if (c_player.isPlayerJailed(currentPlayer())) {
+            //Pay 1k to get out of jail
             c_player.changePlayerMoney(-1000, currentPlayer());
+            //Take player out jail in Models
             c_player.setPlayerJailed(currentPlayer(), false);
             //Need to change 10 to be more flexible for jail on field
             c_gui.movePlayer(currentPlayer(),c_player.getPlayerPosition(currentPlayer()),10);
         }
         //Middle of turn
         c_field.landOnField(currentPlayer());
+        //If player has no properties don't ask. Else allow them to manage properties(build houses/hotel)
         if (c_field.ownedPropertyCount(currentPlayer()) != 0) {
             if (c_gui.getPlayerBoolean("game.manageProperties?", "yes", "no")) {
                 c_field.manageProperty(currentPlayer());
             }
         }
+        //If player got 2 identical faces the player gets an extra turn
         if (diceCarrier.get_diceFaces()[0] == diceCarrier.get_diceFaces()[1]) {
             doTurn();
         }
@@ -106,7 +111,8 @@ public class ControllerGame {
 
     /**
      * auction() used to create an auction for a field that the original player, whose turn it is, landed on.
-     * The auction works with each player being asked if they want to bid higher than the player before. This continues until one of the players has the highest bid and the two others declines bidding higher.
+     * The auction works with each player being asked if they want to bid higher than the player before.
+     * This continues until one of the players has the highest bid and the two others declines bidding higher.
      * @param fieldID ID of a given field.
      */
     public void auction(int fieldID) {
